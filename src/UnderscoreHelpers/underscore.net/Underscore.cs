@@ -656,6 +656,43 @@ namespace underscore.net
         /// <summary>
         /// TODO #doc
         /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="comparer"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEqualityComparer<T> comparer<T>(Func<T, T, bool> comparer)
+        {
+            return new GenericEqualityComparer<T>(comparer);
+        }
+
+        internal class GenericEqualityComparer<T> : IEqualityComparer<T>
+        {
+            private readonly Func<T, T, bool> _comparer;
+
+            public GenericEqualityComparer(Func<T, T, bool> comparer)
+            {
+                _comparer = comparer;
+            }
+
+            public bool Equals(T x, T y)
+            {
+                return _comparer(x, y);
+            }
+
+            public int GetHashCode(T obj)
+            {
+                // TODO 
+                /* 
+                 * this was obj.GetHashCode(). Since for the structs this always generates different
+                 * value and it does not enter (short-circuit) Equals(T x, T y) method.
+                 */
+                return base.GetHashCode();
+            }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
         /// <param name="value"></param>
         /// <param name="trueValues"></param>
         /// <returns></returns>

@@ -325,6 +325,19 @@ namespace underscore.net.tests
         {
             Assert.Equal(expected, _.boolean(v));
         }
+
+        [Fact]
+        public void equality_comparer()
+        {
+            IEqualityComparer<Point> comparer = _.comparer<Point>((a, b) => a.X == b.X && a.Y == b.Y);
+
+            Assert.True(comparer.Equals(new Point(0, 0), new Point(0, 0)));
+
+            Assert.False(comparer.Equals(new Point(1, 0), new Point(0, 0)));
+            Assert.False(comparer.Equals(new Point(0, 1), new Point(0, 0)));
+            Assert.False(comparer.Equals(new Point(0, 0), new Point(1, 0)));
+            Assert.False(comparer.Equals(new Point(0, 0), new Point(0, 1)));
+        }
     }
 
     public class StreamHelperTests : UnderscoreTestBase
@@ -340,6 +353,18 @@ namespace underscore.net.tests
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(message));
             string s = _.read(stream);
             Assert.Equal(expected: message, actual: s);
+        }
+    }
+
+    internal class Point
+    {
+        public int X { get; protected set; }
+        public int Y { get; protected set; }
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
         }
     }
 }
