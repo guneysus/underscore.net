@@ -101,6 +101,28 @@ namespace underscore.net
             return new DateTime(year, 12, DateTime.DaysInMonth(year, 12), 0, 0, 0, kind);
         }
 
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [Pure]
+        public static DateTime firstday(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1, 0, 0, 0, 0, date.Kind);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [Pure]
+        public static DateTime firstday(int year, DateTimeKind kind = DateTimeKind.Unspecified)
+        {
+            return new DateTime(year, 1, 1, 0, 0, 0, 0, kind);
+        }
+
 
         #endregion
 
