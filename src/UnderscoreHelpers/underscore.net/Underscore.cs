@@ -426,6 +426,32 @@ namespace underscore.net
         }
 
         /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="vs"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string concat(IEnumerable<char> vs)
+        {
+            return string.Concat(vs);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="vs"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string concat(IEnumerable<string> vs)
+        {
+            var sb = new StringBuilder();
+            foreach (var item in vs)
+                sb.Append(item);
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// https://stackoverflow.com/a/311179/1766716
         /// </summary>
         /// <param name="byteArray"></param>

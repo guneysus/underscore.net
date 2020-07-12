@@ -238,6 +238,21 @@ namespace underscore.net.tests
             Assert.Equal(expected, _.repeat(s, count));
         }
 
+        [Theory]
+        [InlineData("abc", 'a', 'b', 'c')]
+        [InlineData("0xff", '0', 'x', 'f', 'f')]
+        public void concat_char(string expected, params char[] args)
+        {
+            Assert.Equal(expected, _.concat(args));
+        }
+
+        [Theory]
+        [InlineData("abc", "a", "bc")]
+        public void concat_str(string expected, params string[] args)
+        {
+            Assert.Equal(expected, _.concat(args));
+        }
+
     }
 
     public class StreamHelperTests : UnderscoreTestBase
