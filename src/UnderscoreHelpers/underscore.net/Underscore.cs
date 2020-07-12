@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 
@@ -62,12 +63,32 @@ namespace underscore.net
         /// <param name="utcDateTime"></param>
         /// <returns></returns>
         [Pure]
-        public static int timestamp(DateTime utcDateTime)
-        {
-            int result = (int)((DateTimeOffset)utcDateTime).ToUnixTimeSeconds();
-            return result;
-        }
+        public static int timestamp(DateTime utcDateTime) => (int)((DateTimeOffset)utcDateTime).ToUnixTimeSeconds();
 
+        /// <summary>
+        /// from: https://stackoverflow.com/a/26225951/1766716
+        /// TODO #test
+        /// TOOD Test with TZs, local and UTC
+        /// </summary>
+        /// <param name="datetime"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long miliseconds(DateTime datetime) => ((DateTimeOffset)datetime).ToUnixTimeMilliseconds();
+
+        #endregion
+
+        #region Generators
+        /// <summary>
+        /// Get list of month names
+        /// </summary>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<string> months(CultureInfo cultureInfo)
+        {
+            for (int i = 1; i <= 12; i++)
+                yield return cultureInfo.DateTimeFormat.GetMonthName(i);
+        }
         #endregion
     }
 }

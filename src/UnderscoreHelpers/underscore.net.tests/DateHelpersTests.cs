@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using _ = underscore.net.Underscore;
@@ -37,8 +40,8 @@ namespace underscore.net.tests
         }
 
         [Theory]
-        [InlineData(2000, 1, 1, 0, 0,0, 946684800, DateTimeKind.Unspecified)]
-        [InlineData(2000, 1, 1, 0, 0,0, 946684800, DateTimeKind.Utc)]
+        [InlineData(2000, 1, 1, 0, 0, 0, 946684800, DateTimeKind.Unspecified)]
+        [InlineData(2000, 1, 1, 0, 0, 0, 946684800, DateTimeKind.Utc)]
         public void From_unix_timestamp(int year, int month, int day, int hour, int minute, int second, long seconds, DateTimeKind kind)
         {
             DateTime expected = new DateTime(year, month, day, hour, minute, second, kind);
@@ -53,7 +56,56 @@ namespace underscore.net.tests
             DateTime date = new DateTime(year, month, day, hour, minute, second, kind);
             int actual = _.timestamp(date);
             Assert.Equal(expected, actual);
+        }
 
+
+        [Theory]
+        [InlineData(2000, 1, 13, 0, 0, 0, DateTimeKind.Local, 947714400000)]
+        public void UnixTime_Milliseconds(int year, int month, int day, int hour, int minute, int second, DateTimeKind kind, long expected)
+        {
+            var actual = _.miliseconds(new DateTime(year, month, day, hour, minute, second, kind));
+            Assert.Equal(expected, actual);
+        }
+    }
+
+    /// <summary>
+    /// Python-like generators (functions that returns IEnumerables) helpers tests. 
+    /// </summary>
+    public class GeneratorTests : UnderscoreTestBase
+    {
+        public GeneratorTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void Month_Names()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("tr-TR");
+
+            IEnumerable<string> actual = _.months(culture);
+
+            IEnumerable<string> expected = new List<string>()
+            {
+                "Ocak",
+                "Şubat",
+                "Mart",
+                "Nisan",
+                "Mayıs",
+                "Haziran",
+                "Temmuz",
+                "Ağustos",
+                "Eylül",
+                "Ekim",
+                "Kasım",
+                "Aralık",
+            }.AsEnumerable();
+
+            foreach (string month in actual)
+            {
+                WriteLine(month);
+            }
+
+            Assert.Equal(expected, actual);
         }
     }
 }
