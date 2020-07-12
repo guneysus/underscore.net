@@ -111,4 +111,19 @@ namespace underscore.net.tests
             Assert.NotEmpty(bytes);
         }
     }
+
+    public class StringHelperTests : UnderscoreTestBase
+    {
+        public StringHelperTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void String_to_hex()
+        {
+            var actual = _.hex("hello world");
+            const string expected = "68656c6c6f20776f726c64";
+            Assert.Equal(expected, actual);
+        }
+    }
 }

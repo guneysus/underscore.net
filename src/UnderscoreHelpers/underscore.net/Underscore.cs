@@ -270,6 +270,33 @@ namespace underscore.net
         /// <returns></returns>
         [Pure]
         public static string strip(string source, string s) => source.Replace(s, string.Empty);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<char> hex(string text)
+        {
+            return hex(utf8bytearray(text));
+        }
+
+        /// <summary>
+        /// https://stackoverflow.com/a/311179/1766716
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<char> hex(byte[] byteArray)
+        {
+            StringBuilder hex = new StringBuilder(byteArray.Length * 2);
+            foreach (byte b in byteArray)
+                _ = hex.AppendFormat("{0:x2}", b);
+
+            return hex.ToString();
+        }
+
         #endregion
 
         #region Random Value Generators
