@@ -56,6 +56,18 @@ namespace underscore.net
             // TODO REVIEW return new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind).AddSeconds(unixTimeStamp);
         }
 
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="utcDateTime"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int timestamp(DateTime utcDateTime)
+        {
+            int result = (int)((DateTimeOffset)utcDateTime).ToUnixTimeSeconds();
+            return result;
+        }
+
         #endregion
     }
 }

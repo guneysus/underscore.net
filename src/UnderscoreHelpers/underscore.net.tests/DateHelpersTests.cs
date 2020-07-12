@@ -45,5 +45,15 @@ namespace underscore.net.tests
             DateTime actual = _.datetime(seconds, kind);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(2000, 1, 1, 0, 0, 0, 946684800, DateTimeKind.Utc)]
+        public void To_Unixtimestamp(int year, int month, int day, int hour, int minute, int second, long expected, DateTimeKind kind)
+        {
+            DateTime date = new DateTime(year, month, day, hour, minute, second, kind);
+            int actual = _.timestamp(date);
+            Assert.Equal(expected, actual);
+
+        }
     }
 }
