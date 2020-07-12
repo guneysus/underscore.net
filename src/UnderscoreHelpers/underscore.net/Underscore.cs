@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -157,6 +160,52 @@ namespace underscore.net
                 yield return cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)(i % 7));
             }
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<int> range(int count) => Enumerable.Range(0, count);
+
+        [Pure]
+        public static IEnumerable<int> range(int start, int end)
+        {
+            int count = end - start + 1;
+            return Enumerable.Range(start, count);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<int> range(int start, int end, int step)
+        {
+            if (step == decimal.Zero) throw new ArgumentOutOfRangeException(nameof(step));
+
+            if (end < 0 && step < 0)
+            {
+                while (start >= end)
+                {
+                    yield return start;
+                    start += step;
+                }
+            }
+            else
+            {
+                while ((step < 0 && start >= end) || start <= end)
+                {
+                    yield return start;
+                    start += step;
+                }
+            }
+        }
+
         #endregion
 
         #region Hash tools
@@ -321,6 +370,76 @@ namespace underscore.net
             byte[] buff = new byte[count];
             rnd.NextBytes(buff);
             return buff;
+        }
+        #endregion
+
+        #region Stream Helpers
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string read(Stream stream)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8, false, 4096))
+                return reader.ReadToEnd();
+        }
+        #endregion
+
+        #region Gzip
+        /// <summary>
+        /// https://stackoverflow.com/a/7343623/1766716
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte[] compress(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+
+            using (var msi = new MemoryStream(bytes))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                {
+                    copy(msi, gs);
+                }
+
+                return mso.ToArray();
+            }
+        }
+
+        [Pure]
+        public static string decompress(byte[] data)
+        {
+            using (var msi = new MemoryStream(data))
+            using (var mso = new MemoryStream())
+            {
+                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                    copy(gs, mso);
+
+                return read(mso);
+            }
+        }
+
+        /// <summary>
+        /// https://stackoverflow.com/a/7343623/1766716
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        [Pure]
+        public static void copy(Stream source, Stream destination)
+        {
+            byte[] bytes = new byte[4096];
+
+            int cnt;
+
+            while ((cnt = source.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                destination.Write(bytes, 0, cnt);
+            }
         }
         #endregion
     }

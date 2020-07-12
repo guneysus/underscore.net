@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 using _ = underscore.net.Underscore;
@@ -110,6 +112,16 @@ namespace underscore.net.tests
             byte[] bytes = _.random(16);
             Assert.NotEmpty(bytes);
         }
+
+        [Fact]
+        public void range_tests()
+        {
+            Assert.Equal(new int[] { 0, 1, 2, 3 }, _.range(4).ToArray());
+            Assert.Equal(new int[] { 1, 2, 3, 4 }, _.range(1, 4).ToArray());
+            Assert.Equal(new int[] { 0, 5, 10, 15 }, _.range(0, 15, 5).ToArray());
+            Assert.Equal(new int[] { 0, -1, -2, -3 }, _.range(0, -3, -1).ToArray());
+            Assert.Equal(new int[] { }, _.range(0).ToArray());
+        }
     }
 
     public class StringHelperTests : UnderscoreTestBase
@@ -145,5 +157,34 @@ namespace underscore.net.tests
         }
 
 
+        [Fact]
+        public void Gzip_Compress()
+        {
+            var text = "StringStringStringStringStringStringStringStringStringStringStringStringStringString";
+            var compressedData = _.compress(text);
+            var decommpressedData = _.decompress(compressedData);
+
+            double compressionRatio = Convert.ToDouble(Encoding.Unicode.GetByteCount(text)) / Convert.ToDouble(compressedData.LongLength);
+
+            Assert.True(compressionRatio > 1.0d);
+            Assert.Equal(text, decommpressedData);
+        }
+
+    }
+
+    public class StreamHelperTests : UnderscoreTestBase
+    {
+        public StreamHelperTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void Read_stream_as_string()
+        {
+            const string message = "Hello World";
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(message));
+            string s = _.read(stream);
+            Assert.Equal(expected: message, actual: s);
+        }
     }
 }
