@@ -5,8 +5,10 @@ using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace underscore.net
 {
@@ -304,6 +306,23 @@ namespace underscore.net
         /// <returns></returns>
         [Pure]
         public static byte[] utf8bytearray(string s) => Encoding.UTF8.GetBytes(s);
+
+        /// <summary>
+        /// TODO #doc
+        /// https://stackoverflow.com/a/39666660/1766716
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [Pure]
+        public static T clone<T>(T obj)
+        {
+            MethodInfo inst = obj
+                .GetType()
+                .GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            return (T)inst?.Invoke(obj, null);
+        }
         #endregion
 
         #region String Tools
@@ -440,6 +459,26 @@ namespace underscore.net
             {
                 destination.Write(bytes, 0, cnt);
             }
+        }
+        #endregion
+
+        #region Regex
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Func<string, IEnumerable<string>> extractor(string pattern, RegexOptions options = RegexOptions.Multiline | RegexOptions.Compiled)
+        {
+            return new Func<string, IEnumerable<string>>(text =>
+            {
+                // https://stackoverflow.com/a/12730562/1766716
+                Regex regex = new Regex(pattern, options);
+                MatchCollection matchList = regex.Matches(text);
+                return matchList.Cast<Match>().Select(match => match.Value).ToList();
+            });
         }
         #endregion
     }

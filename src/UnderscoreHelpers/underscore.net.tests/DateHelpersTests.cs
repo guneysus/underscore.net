@@ -129,4 +129,59 @@ namespace underscore.net.tests
             Assert.Equal(expectedHash, actualHash);
         }
     }
+
+    public class CoreTests : UnderscoreTestBase
+    {
+        public CoreTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void clone_list()
+        {
+            List<int> list = new List<int>() { 1, 2, 3 };
+            List<int> actualList = _.clone(list);
+            Assert.Equal(list, actualList);
+        }
+
+        [Fact]
+        public void clone_object()
+        {
+            var obj = new object();
+
+            var newObj = _.clone(obj);
+            Assert.NotEqual(obj, newObj);
+        }
+    }
+
+    public class RegexExtractTests : UnderscoreTestBase
+    {
+        public RegexExtractTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void regex_extractor()
+        {
+            Func<string, IEnumerable<string>> wordExtractor = _.extractor(@"\w+");
+
+            Assert.Equal(new string[] { "Lorem", "ipsum", "dolor", "sit", "amet" }, wordExtractor(@"Lorem ipsum dolor sit amet."));
+
+            Func<string, IEnumerable<string>> ipExtractor = _.extractor(@"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
+
+            Assert.Equal(new string[] {
+                "10.1.1.1",
+                "0.0.0.0",
+                "10.0.0.0",
+                "100.0.0.0",
+                "255.0.0.255"
+            },
+
+            ipExtractor(@"10.1.1.1
+0.0.0.0
+10.0.0.0
+100.0.0.0
+255.0.0.255"));
+        }
+    }
 }
