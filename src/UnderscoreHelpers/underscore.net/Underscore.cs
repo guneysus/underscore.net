@@ -481,5 +481,15 @@ namespace underscore.net
             });
         }
         #endregion
+
+        #region Reflection
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static T New<T>() where T : new() => new T();
+        #endregion
     }
 }

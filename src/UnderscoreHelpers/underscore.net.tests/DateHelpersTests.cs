@@ -152,6 +152,12 @@ namespace underscore.net.tests
             var newObj = _.clone(obj);
             Assert.NotEqual(obj, newObj);
         }
+
+        [Fact]
+        public void new_instance()
+        {
+            Assert.Equal(default, Underscore.New<DateTime>());
+        }
     }
 
     public class RegexExtractTests : UnderscoreTestBase

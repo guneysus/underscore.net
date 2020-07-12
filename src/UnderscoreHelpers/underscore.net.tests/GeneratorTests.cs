@@ -156,7 +156,6 @@ namespace underscore.net.tests
             Assert.Equal(expected, actual);
         }
 
-
         [Fact]
         public void Gzip_Compress()
         {
@@ -168,6 +167,17 @@ namespace underscore.net.tests
 
             Assert.True(compressionRatio > 1.0d);
             Assert.Equal(text, decommpressedData);
+        }
+
+        [Fact]
+        public void Strip()
+        {
+            const string source = "0C-C1-75-B9-C0-F1-B6-A8-31-C3-99-E2-69-77-26-61";
+            const string expcected = "0CC175B9C0F1B6A831C399E269772661";
+
+            string actual = _.strip(source, "-");
+
+            Assert.Equal(expcected, actual);
         }
 
     }
