@@ -255,6 +255,21 @@ namespace underscore.net.tests
 
     }
 
+    public class Validators : UnderscoreTestBase
+    {
+        public Validators(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Theory]
+        [InlineData("lorem@example.com", true)]
+        [InlineData("lorem@example.co.uk", true)]
+        public void email(string s, bool expected)
+        {
+            Assert.Equal(expected, _.email(s));
+        }
+    }
+
     public class StreamHelperTests : UnderscoreTestBase
     {
         public StreamHelperTests(ITestOutputHelper output) : base(output)
