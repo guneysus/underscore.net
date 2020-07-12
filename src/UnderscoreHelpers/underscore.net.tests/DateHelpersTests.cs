@@ -107,5 +107,26 @@ namespace underscore.net.tests
 
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void Day_Names()
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo("tr-TR");
+
+            IEnumerable<string> actual = _.days(culture, DayOfWeek.Monday);
+
+            IEnumerable<string> expected = new List<string>()
+            {
+                "Pazartesi",
+                "Salı",
+                "Çarşamba",
+                "Perşembe",
+                "Cuma",
+                "Cumartesi",
+                "Pazar"
+            }.AsEnumerable();
+
+            Assert.Equal(expected, actual);
+        }
     }
 }

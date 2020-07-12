@@ -89,6 +89,23 @@ namespace underscore.net
             for (int i = 1; i <= 12; i++)
                 yield return cultureInfo.DateTimeFormat.GetMonthName(i);
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="cultureInfo"></param>
+        /// <param name="startFrom"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<string> days(CultureInfo cultureInfo, DayOfWeek startFrom = DayOfWeek.Monday)
+        {
+            int start = (int)startFrom;
+
+            for (int i = start; i < start + 7; i++)
+            {
+                yield return cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)(i % 7));
+            }
+        }
         #endregion
     }
 }
