@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace underscore.net
 {
@@ -155,6 +157,119 @@ namespace underscore.net
                 yield return cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)(i % 7));
             }
         }
+        #endregion
+
+        #region Hash tools
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string sha512(string source)
+        {
+            using (SHA512 hasher = SHA512.Create())
+            {
+                byte[] sourceBytes = utf8bytearray(source);
+                byte[] hashBytes = hasher.ComputeHash(sourceBytes);
+                string hash = BitConverter.ToString(hashBytes);
+                return strip(hash, "-");
+            }
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string sha256(string source)
+        {
+            using (SHA256 hasher = SHA256.Create())
+            {
+                byte[] sourceBytes = utf8bytearray(source);
+                byte[] hashBytes = hasher.ComputeHash(sourceBytes);
+                string hash = BitConverter.ToString(hashBytes);
+                return strip(hash, "-");
+            }
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string sha1(string source)
+        {
+#pragma warning disable SG0006 // Weak hashing function
+            using (SHA1 hasher = SHA1.Create())
+#pragma warning restore SG0006 // Weak hashing function
+            {
+                byte[] sourceBytes = utf8bytearray(source);
+                byte[] hashBytes = hasher.ComputeHash(sourceBytes);
+                string hash = BitConverter.ToString(hashBytes);
+                return strip(hash, "-");
+            }
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string sha384(string source)
+        {
+            using (SHA384 hasher = SHA384.Create())
+            {
+                byte[] sourceBytes = utf8bytearray(source);
+                byte[] hashBytes = hasher.ComputeHash(sourceBytes);
+                string hash = BitConverter.ToString(hashBytes);
+                return strip(hash, "-");
+            }
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string md5(string source)
+        {
+#pragma warning disable SG0006 // Weak hashing function
+            using (MD5 hasher = MD5.Create())
+            {
+#pragma warning restore SG0006 // Weak hashing function
+                return strip(BitConverter.ToString(hasher.ComputeHash(utf8bytearray(source))), "-");
+            }
+        }
+        #endregion
+
+        #region Core
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte[] utf8bytearray(string s)
+        {
+            return Encoding.UTF8.GetBytes(s);
+        }
+        #endregion
+
+        #region String Tools
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string strip(string source, string s) => source.Replace(s, string.Empty);
         #endregion
     }
 }

@@ -68,99 +68,65 @@ namespace underscore.net.tests
         }
     }
 
-    /// <summary>
-    /// Python-like generators (functions that returns IEnumerables) helpers tests. 
-    /// </summary>
-    public class GeneratorTests : UnderscoreTestBase
+    public class HashToolsTests : UnderscoreTestBase
     {
-        public GeneratorTests(ITestOutputHelper output) : base(output)
+        public HashToolsTests(ITestOutputHelper output) : base(output)
         {
         }
 
         [Fact]
-        public void Month_Names()
+        public void sha512_hash()
         {
-            CultureInfo culture = CultureInfo.GetCultureInfo("tr-TR");
+            const string source = "a";
+            const string expectedHash = "1F40FC92DA241694750979EE6CF582F2D5D7D28E18335DE05ABC54D0560E0F5302860C652BF08D560252AA5E74210546F369FBBBCE8C12CFC7957B2652FE9A75";
 
-            IEnumerable<string> actual = _.months(culture);
-
-            IEnumerable<string> expected = new List<string>()
-            {
-                "Ocak",
-                "Şubat",
-                "Mart",
-                "Nisan",
-                "Mayıs",
-                "Haziran",
-                "Temmuz",
-                "Ağustos",
-                "Eylül",
-                "Ekim",
-                "Kasım",
-                "Aralık",
-            }.AsEnumerable();
-
-            foreach (string month in actual)
-            {
-                WriteLine(month);
-            }
-
-            Assert.Equal(expected, actual);
+            string actualHash = _.sha512(source);
+            output.WriteLine(actualHash);
+            Assert.Equal(expectedHash, actualHash);
         }
 
         [Fact]
-        public void Day_Names()
+        public void sha256_hash()
         {
-            CultureInfo culture = CultureInfo.GetCultureInfo("tr-TR");
+            const string source = "a";
+            const string expectedHash = "CA978112CA1BBDCAFAC231B39A23DC4DA786EFF8147C4E72B9807785AFEE48BB";
 
-            IEnumerable<string> actual = _.days(culture, DayOfWeek.Monday);
-
-            IEnumerable<string> expected = new List<string>()
-            {
-                "Pazartesi",
-                "Salı",
-                "Çarşamba",
-                "Perşembe",
-                "Cuma",
-                "Cumartesi",
-                "Pazar"
-            }.AsEnumerable();
-
-            Assert.Equal(expected, actual);
+            string actualHash = _.sha256(source);
+            output.WriteLine(actualHash);
+            Assert.Equal(expectedHash, actualHash);
         }
 
         [Fact]
-        public void Last_day_of_month()
+        public void sha1_hash()
         {
-            DateTime date = new DateTime(2016, 12, 3);
-            DateTime expected = new DateTime(2016, 12, 31);
+            const string source = "a";
+            const string expectedHash = "86F7E437FAA5A7FCE15D1DDCB9EAEAEA377667B8";
 
-            Assert.Equal(expected, _.lastday(date));
+            string actualHash = _.sha1(source);
+            output.WriteLine(actualHash);
+            Assert.Equal(expectedHash, actualHash);
         }
 
         [Fact]
-        public void Last_day_of_year()
+        public void sha384_hash()
         {
-            DateTime expected = new DateTime(2016, 12, 31);
+            const string source = "a";
+            const string expectedHash = "54A59B9F22B0B80880D8427E548B7C23ABD873486E1F035DCE9CD697E85175033CAA88E6D57BC35EFAE0B5AFD3145F31";
 
-            Assert.Equal(expected, _.lastday(2016));
+            string actualHash = _.sha384(source);
+            output.WriteLine(actualHash);
+            Assert.Equal(expectedHash, actualHash);
         }
 
         [Fact]
-        public void First_day_of_month()
+        public void md5_hash()
         {
-            DateTime date = new DateTime(2016, 2, 29);
-            DateTime expected = new DateTime(2016, 2, 1);
+            const string source = "a";
+            const string expectedHash = "0CC175B9C0F1B6A831C399E269772661";
 
-            Assert.Equal(expected, _.firstday(date));
-        }
-
-        [Fact]
-        public void First_day_of_year()
-        {
-            DateTime expected = new DateTime(2016, 1, 1);
-
-            Assert.Equal(expected, _.firstday(2016));
+            string actualHash = _.md5(source);
+            output.WriteLine(actualHash);
+            Assert.Equal(expectedHash, actualHash);
         }
     }
 }
