@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace underscore.net
 {
@@ -335,6 +336,70 @@ namespace underscore.net
         /// <returns></returns>
         [Pure]
         public static string strip(string source, string s) => source.Replace(s, string.Empty);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string capitalize(string v)
+        {
+            var sb = new StringBuilder();
+
+            if (v is null)
+                throw new ArgumentNullException(nameof(v));
+
+            if (v == string.Empty)
+                return v;
+
+            var chars = v.ToCharArray();
+
+            sb.Append(Char.ToUpper(chars[0]));
+
+            foreach (var item in chars.Skip(1))
+                sb.Append(Char.ToLower(item));
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string deburr(string v)
+        {
+            // https://stackoverflow.com/a/3288164/1766716
+            return new string(v
+                .Normalize(NormalizationForm.FormD)
+                .ToCharArray()
+                .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                .ToArray());
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string escape(string v)
+        {
+            return HttpUtility.HtmlEncode(v);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string unescape(string v)
+        {
+            return HttpUtility.HtmlDecode(v);
+        }
 
         /// <summary>
         /// https://stackoverflow.com/a/311179/1766716

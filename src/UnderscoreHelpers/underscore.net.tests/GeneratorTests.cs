@@ -180,6 +180,48 @@ namespace underscore.net.tests
             Assert.Equal(expcected, actual);
         }
 
+
+
+        [Fact]
+        public void capitalize()
+        {
+            const string Expected = "Fred";
+            Assert.Equal(Expected, _.capitalize("FRED"));
+            Assert.Equal(Expected, _.capitalize("fred"));
+            Assert.Equal(Expected, _.capitalize("frEd"));
+            Assert.Equal(Expected, _.capitalize("frED"));
+            Assert.Equal(string.Empty, _.capitalize(string.Empty));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                _.capitalize(null);
+            });
+        }
+
+        [Fact]
+        public void deburr()
+        {
+            const string Expected = "deja vu";
+
+            Assert.Equal(Expected, _.deburr("déjà vu"));
+        }
+
+        [Fact]
+        public void escape()
+        {
+            const string Expected = "fred, barney, &amp; pebbles";
+
+            Assert.Equal(Expected, _.escape("fred, barney, & pebbles"));
+        }
+
+        [Fact]
+        public void unescape()
+        {
+            const string Expected = "fred, barney, & pebbles";
+
+            Assert.Equal(Expected, _.unescape("fred, barney, &amp; pebbles"));
+        }
+
+
     }
 
     public class StreamHelperTests : UnderscoreTestBase
