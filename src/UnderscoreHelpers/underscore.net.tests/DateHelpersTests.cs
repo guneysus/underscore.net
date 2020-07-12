@@ -2,6 +2,7 @@
 using Xunit;
 using Xunit.Abstractions;
 using _ = underscore.net.Underscore;
+
 namespace underscore.net.tests
 {
     public class DateHelpersTests : UnderscoreTestBase
@@ -11,7 +12,7 @@ namespace underscore.net.tests
         }
 
         [Fact]
-        public void Get_Date_From_Datetime()
+        public void Get_date_from_datetime()
         {
             var datetime = DateTime.Now;
             var actual = _.date(datetime);
@@ -31,7 +32,17 @@ namespace underscore.net.tests
         public void String_to_datetime_Theory(int year, int month, int day, int hour, int minute, int second, string s, string format, string cultureString)
         {
             DateTime expected = new DateTime(year, month, day, hour, minute, second);
-            DateTime actual = _.Datetime(s, format: format, cultureString: cultureString);
+            DateTime actual = _.datetime(s, format: format, cultureString: cultureString);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(2000, 1, 1, 0, 0,0, 946684800, DateTimeKind.Unspecified)]
+        [InlineData(2000, 1, 1, 0, 0,0, 946684800, DateTimeKind.Utc)]
+        public void From_unix_timestamp(int year, int month, int day, int hour, int minute, int second, long seconds, DateTimeKind kind)
+        {
+            DateTime expected = new DateTime(year, month, day, hour, minute, second, kind);
+            DateTime actual = _.datetime(seconds, kind);
             Assert.Equal(expected, actual);
         }
     }
