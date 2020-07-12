@@ -75,6 +75,33 @@ namespace underscore.net
         [Pure]
         public static long miliseconds(DateTime datetime) => ((DateTimeOffset)datetime).ToUnixTimeMilliseconds();
 
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [Pure]
+        public static DateTime lastday(DateTime date)
+        {
+            return new DateTime(date.Year,
+                date.Month,
+                DateTime.DaysInMonth(date.Year, date.Month)
+                , 0, 0, 0, date.Kind);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [Pure]
+        public static DateTime lastday(int year, DateTimeKind kind = DateTimeKind.Unspecified)
+        {
+            return new DateTime(year, 12, DateTime.DaysInMonth(year, 12), 0, 0, 0, kind);
+        }
+
+
         #endregion
 
         #region Generators

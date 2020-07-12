@@ -128,5 +128,22 @@ namespace underscore.net.tests
 
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void Last_day_of_month()
+        {
+            DateTime date = new DateTime(2016, 12, 3);
+            DateTime expected = new DateTime(2016, 12, 31);
+
+            Assert.Equal(expected, _.lastday(date));
+        }
+
+        [Fact]
+        public void Last_day_of_year()
+        {
+            DateTime expected = new DateTime(2016, 12, 31);
+
+            Assert.Equal(expected, _.lastday(2016));
+        }
     }
 }
