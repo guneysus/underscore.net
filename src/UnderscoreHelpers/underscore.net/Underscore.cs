@@ -635,6 +635,32 @@ namespace underscore.net
         /// </summary>
         const string _phoneNumberRegex = @"^[+]?(\d{1,3})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}$";
 
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        private static string[] BOOLEAN_VALUES => new string[] { "1", "yes", "true", "on", "checked" };
+
+        #endregion
+
+        #region Type Convert
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool boolean(string value) => boolean(value, BOOLEAN_VALUES);
+
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="trueValues"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool boolean(string value, IEnumerable<string> trueValues) => trueValues.Contains(value.ToLowerInvariant());
         #endregion
     }
 }

@@ -306,6 +306,27 @@ namespace underscore.net.tests
         }
     }
 
+    public class TypeConvertTests : UnderscoreTestBase
+    {
+        public TypeConvertTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+
+        [Theory]
+        [InlineData("1", true)]
+        [InlineData("True", true)]
+        [InlineData("False", false)]
+        [InlineData("no", false)]
+        [InlineData("yes", true)]
+        [InlineData("on", true)]
+        [InlineData("checked", true)]
+        public void to_bool(string v, bool expected)
+        {
+            Assert.Equal(expected, _.boolean(v));
+        }
+    }
+
     public class StreamHelperTests : UnderscoreTestBase
     {
         public StreamHelperTests(ITestOutputHelper output) : base(output)
