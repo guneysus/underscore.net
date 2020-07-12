@@ -254,10 +254,7 @@ namespace underscore.net
         /// <param name="s"></param>
         /// <returns></returns>
         [Pure]
-        public static byte[] utf8bytearray(string s)
-        {
-            return Encoding.UTF8.GetBytes(s);
-        }
+        public static byte[] utf8bytearray(string s) => Encoding.UTF8.GetBytes(s);
         #endregion
 
         #region String Tools
@@ -272,17 +269,6 @@ namespace underscore.net
         public static string strip(string source, string s) => source.Replace(s, string.Empty);
 
         /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        [Pure]
-        public static IEnumerable<char> hex(string text)
-        {
-            return hex(utf8bytearray(text));
-        }
-
-        /// <summary>
         /// https://stackoverflow.com/a/311179/1766716
         /// </summary>
         /// <param name="byteArray"></param>
@@ -295,6 +281,28 @@ namespace underscore.net
                 _ = hex.AppendFormat("{0:x2}", b);
 
             return hex.ToString();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string base64decode(string s)
+        {
+            return Encoding.UTF8.GetString(Convert.FromBase64String(s));
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string base64encode(string message)
+        {
+            return Convert.ToBase64String(utf8bytearray(message));
         }
 
         #endregion

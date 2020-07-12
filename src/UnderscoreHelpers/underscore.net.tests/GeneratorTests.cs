@@ -121,9 +121,29 @@ namespace underscore.net.tests
         [Fact]
         public void String_to_hex()
         {
-            var actual = _.hex("hello world");
+            var actual = _.hex(_.utf8bytearray("hello world")); // TODO convert to compose
             const string expected = "68656c6c6f20776f726c64";
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void From_base64_to_string()
+        {
+            const string base64 = "aGVsbG8gd29ybGQ="; ;
+            const string expected = "hello world";
+            string actual = _.base64decode(base64);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void To_base64_to_string()
+        {
+            const string message = "hello world"; ;
+            const string expected = "aGVsbG8gd29ybGQ=";
+            string actual = _.base64encode(message);
+            Assert.Equal(expected, actual);
+        }
+
+
     }
 }
