@@ -402,6 +402,30 @@ namespace underscore.net
         }
 
         /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="repeat"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string repeat(char c, int repeat)
+        {
+            return new string(c, repeat);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="repeat"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string repeat(string v, int repeat)
+        {
+            return string.Concat(Enumerable.Repeat(v, repeat));
+        }
+
+        /// <summary>
         /// https://stackoverflow.com/a/311179/1766716
         /// </summary>
         /// <param name="byteArray"></param>

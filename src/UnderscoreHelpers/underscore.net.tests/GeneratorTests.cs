@@ -221,6 +221,22 @@ namespace underscore.net.tests
             Assert.Equal(Expected, _.unescape("fred, barney, &amp; pebbles"));
         }
 
+        [Theory]
+        [InlineData("***", '*', 3)]
+
+        public void repeat(string expected, char c, int count)
+        {
+            Assert.Equal(expected, _.repeat(c, count));
+            Assert.Throws<ArgumentOutOfRangeException>(() => _.repeat('-', int.MinValue));
+        }
+
+        [Theory]
+        [InlineData("ffffff", "ff", 3)]
+
+        public void repeat_str(string expected, string s, int count)
+        {
+            Assert.Equal(expected, _.repeat(s, count));
+        }
 
     }
 
