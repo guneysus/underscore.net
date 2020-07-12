@@ -103,5 +103,12 @@ namespace underscore.net.tests
 
             Assert.Equal(expected, _.firstday(2016));
         }
+
+        [Fact]
+        public void Random_bytes()
+        {
+            byte[] bytes = _.random(16);
+            Assert.NotEmpty(bytes);
+        }
     }
 }

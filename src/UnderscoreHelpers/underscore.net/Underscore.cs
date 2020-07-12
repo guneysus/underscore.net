@@ -271,5 +271,22 @@ namespace underscore.net
         [Pure]
         public static string strip(string source, string s) => source.Replace(s, string.Empty);
         #endregion
+
+        #region Random Value Generators
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte[] random(int count)
+        {
+            Random rnd = new Random();
+            byte[] buff = new byte[count];
+            rnd.NextBytes(buff);
+            return buff;
+        }
+        #endregion
     }
 }
