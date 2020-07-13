@@ -91,5 +91,15 @@ namespace std.net.tests
         {
             Assert.Equal("hi-diddly-ho there, neighbori…", truncate("hi-diddly-ho there, neighborino", 30));
         }
+
+        [Fact]
+        public void matchor_tests()
+        {
+            var matcher = matchor(@"\w+"); // extracts words
+
+            string[] expected = new string[] { "fred", "barney", "pebbles" };
+            var actual = matcher("fred, barney, & pebbles");
+            Assert.Equal(expected, actual);
+        }
     }
 }

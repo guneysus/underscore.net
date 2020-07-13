@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace std.net
 {
@@ -337,6 +338,23 @@ namespace std.net
         public static IEnumerable<char> truncate(string s, int length, string suffix = "…")
         {
             return concat(s.Take(length - 1)) + suffix;
+        }
+
+        /// <summary>
+        /// TODO Test
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Func<string, IEnumerable<string>> matchor(string pattern)
+        {
+            return new Func<string, IEnumerable<string>>(input =>
+            {
+                var rgx = new Regex(pattern);
+                // https://stackoverflow.com/a/12730562/1766716
+                MatchCollection matchList = rgx.Matches(input);
+                return matchList.Cast<Match>().Select(match => match.Value);
+            });
         }
     }
 }
