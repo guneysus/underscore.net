@@ -41,6 +41,32 @@ namespace iter.net
         }
 
         /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<K> keys<K, V>(Dictionary<K, V> data)
+        {
+            return data.Keys;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<V> values<K, V>(Dictionary<K, V> data)
+        {
+            return data.Values;
+        }
+
+        /// <summary>
         /// TODO #doc
         /// TODO move to functional.net
         /// </summary>
@@ -170,6 +196,31 @@ namespace iter.net
             List<KeyValuePair<TKey, TValue>> firstNotSecond = first.Except(second).ToList();
             List<KeyValuePair<TKey, TValue>> secondNotFirst = second.Except(first).ToList();
             return !firstNotSecond.Any() && !secondNotFirst.Any();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="dict1"></param>
+        /// <param name="dict2"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Dictionary<K, V> merge<K, V>(Dictionary<K, V> dict1, Dictionary<K, V> dict2)
+        {
+            Dictionary<K, V> result = new Dictionary<K, V>();
+            foreach (KeyValuePair<K, V> item in dict1)
+            {
+                result.Add(item.Key, item.Value);
+            }
+
+            foreach (KeyValuePair<K, V> item in dict2)
+            {
+                result.Add(item.Key, item.Value);
+            }
+
+            return dict2;
         }
 
         [Pure]

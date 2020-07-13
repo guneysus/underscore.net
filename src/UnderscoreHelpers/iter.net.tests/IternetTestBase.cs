@@ -141,6 +141,75 @@ namespace iter.net.tests
         {
             Assert.Equal(asciiletters(), merge(AsciiLowercase(), AsciiUppercase()));
         }
+
+
+        [Fact]
+        public void dict_keys()
+        {
+            var data = new Dictionary<string, int>
+            {
+                {"foo", 1 },
+                {"bar", 2 },
+                {"baz", 3 }
+            };
+
+            IEnumerable<string> actualKeys = keys(data);
+
+            string actual = string.Join(';', actualKeys);
+            const string expected = "foo;bar;baz";
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void dict_values()
+        {
+            var data = new Dictionary<string, int>
+            {
+                {"foo", 1 },
+                {"bar", 2 },
+                {"baz", 3 }
+            };
+
+            const string expected = "1;2;3";
+            IEnumerable<int> actualValues = values(data);
+            string actual = string.Join(';', actualValues);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void dict_from_keys()
+        {
+            IEnumerable<string> keys = new string[] { "foo", "bar", "baz" };
+
+            Dictionary<string, int> actual = dict<string, int>(keys);
+
+            IEnumerable<string> result = keys.Except(actual.Keys);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void dict_merge()
+        {
+            var data = new Dictionary<string, int>
+            {
+                {"foo", 1 },
+                {"bar", 2 },
+                {"baz", 3 }
+            };
+
+            Dictionary<string, int> dict2 = new Dictionary<string, int>
+            {
+                {"lorem", 10}
+            };
+
+            Dictionary<string, int> merged = merge(data, dict2);
+
+            IEnumerable<string> keys = merged.Keys.Except(data.Keys).Except(dict2.Keys);
+
+            Assert.Empty(keys);
+        }
     }
 
     public class FunctionalTools : IternetTestBase
