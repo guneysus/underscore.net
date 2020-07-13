@@ -91,6 +91,17 @@ namespace iter.net.tests
         }
 
         [Fact]
+        public void Is_same()
+        {
+            List<int> a = new List<int>() { 1, 2, 3 };
+            List<int> b = new List<int>() { 2, 3, 1 };
+            List<int> c = new List<int>() { 3, 2 };
+
+            Assert.True(same(a, b));
+            Assert.False(same(a, c));
+        }
+
+        [Fact]
         public void Hashset_factory()
         {
             Assert.True(same(list(1, 2), hashset(1, 1, 2)));
