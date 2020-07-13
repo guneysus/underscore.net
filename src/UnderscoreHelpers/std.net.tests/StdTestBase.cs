@@ -142,5 +142,88 @@ namespace std.net.tests
         {
             Assert.Equal(expected, floor(number));
         }
+
+        #region Bin
+
+        [Fact]
+        public void Bin_sbyte()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_byte()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_short()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_ushort()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_int()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_uint()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_long()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_ulong()
+        {
+            const string Expected = "1111111111111111111111111111111111111111111111111111111111111111";
+            Assert.Equal(Expected, bin(-1L));
+            Assert.Equal(Expected, bin(ulong.MaxValue));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_float()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_double()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        [Fact]
+        public void Bin_decimal()
+        {
+            Assert.Equal("11111111111111111111111111111111", bin(-1));
+            Assert.Equal("1111101000", bin(1000));
+        }
+
+        #endregion
     }
 }

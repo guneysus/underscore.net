@@ -568,6 +568,98 @@ namespace std.net
 
             return pmt;
         }
+
+        public static Guid guid() => Guid.NewGuid();
+        #endregion
+
+        #region Bin
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(sbyte value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(byte value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(short value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(ushort value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(int value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(uint value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(long value)
+        {
+            return Convert.ToString(value, 2);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string bin(ulong value)
+        {
+            return Convert.ToString((long)value, 2);
+        }
         #endregion
 
     }
