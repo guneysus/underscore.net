@@ -675,5 +675,48 @@ namespace std.net
         }
         #endregion
 
+        [Pure]
+        public static string RegexReplace(this string v, string pattern, string replacement)
+        {
+            string result = Regex.Replace(input: v, pattern: pattern, replacement: replacement, options: RegexOptions.CultureInvariant);
+            return result;
+        }
+
+        [Pure]
+        public static string CompactSpaces(string v)
+        {
+            return RegexReplace(v, @"\s+", " ");
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string LowerCase(string v)
+        {
+            Regex regexFindWords = new Regex("([A-Z][a-z0-9]+)+");
+            Regex regexStrip = new Regex(@"\s+");
+            string s = regexStrip.Replace(regexFindWords.Replace(v, m => " " + m.Groups[0].Value), " ").ToLower();
+            return trim(s);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string UpperCase(string v)
+        {
+            return v.ToUpper();
+        }
+
+        [Pure]
+        public static string ChangeSpacesToHypens(string v)
+        {
+            return RegexReplace(v, @"\s", "-");
+        }
     }
 }

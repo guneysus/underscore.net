@@ -231,5 +231,15 @@ namespace std.net.tests
         }
 
         #endregion
+
+        [Fact]
+        public void lower_case_Tests()
+        {
+            const string Expected = "foo bar";
+
+            Assert.Equal(Expected, LowerCase("Foo Bar"));
+            Assert.Equal(Expected, LowerCase("fooBar"));
+            Assert.Equal(Expected, LowerCase("FOO BAR"));
+        }
     }
 }

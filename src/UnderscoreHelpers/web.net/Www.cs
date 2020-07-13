@@ -1,11 +1,15 @@
 ﻿using Microsoft.Toolkit.Parsers.Markdown;
 using Microsoft.Toolkit.Parsers.Rss;
+using std.net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using static std.net.Std;
 
 namespace www.net
 {
@@ -197,5 +201,36 @@ namespace www.net
             return new HttpClient(handler, disposeHandler);
         }
         #endregion
+
+
+        /// <summary>
+        /// https://stackoverflow.com/a/2921135/1766716
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string RemoveAccents(this string v)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            byte[] bytes = Encoding.GetEncoding("Cyrillic").GetBytes(v);
+            string result = Encoding.ASCII.GetString(bytes);
+            return result;
+        }
+
+        [Pure]
+        public static string slug(string text, int maxlength = 50)
+        {
+            var fns = new List<Func<string, string>>();
+            fns.Add(s => s);
+            fns.Add(RemoveAccents);
+            fns.Add(CompactSpaces);
+            fns.Add(s => new string(truncate(s, maxlength).ToArray()));
+            fns.Add(LowerCase);
+            fns.Add(ChangeSpacesToHypens);
+
+            var result = fns.Aggregate(text, (s, f) => f(s));
+
+            return result;
+        }
     }
 }

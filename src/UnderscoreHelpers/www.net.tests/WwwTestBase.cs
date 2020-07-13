@@ -71,4 +71,21 @@ namespace www.net.tests
             }
         }
     }
+
+    public class SlugTests : WwwTestBase
+    {
+        public SlugTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+
+        [Fact]
+        public void slug_tests()
+        {
+            var product = " Kablosuz Bluetooth Kulaklýk - Siyah";
+            var actual = slug(product, 50);
+            var expected = "kablosuz-bluetooth-kulaklik---siyah…";
+            Assert.Equal(expected, actual);
+        }
+    }
 }
