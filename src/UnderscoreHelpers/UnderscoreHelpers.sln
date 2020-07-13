@@ -5,9 +5,15 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "underscore-net", "underscore-net", "{FC2BE9F3-505A-47DD-8307-B29DEB465671}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "underscore.net.tests", "underscore.net.tests\underscore.net.tests.csproj", "{79C16B6D-37BF-4541-AD3B-C43F9FB7E7DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "underscore.net.tests", "underscore.net.tests\underscore.net.tests.csproj", "{79C16B6D-37BF-4541-AD3B-C43F9FB7E7DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "underscore.net", "underscore.net\underscore.net.csproj", "{A1DAD0F8-E0B6-4155-BA95-5B3B09F8D203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "underscore.net", "underscore.net\underscore.net.csproj", "{A1DAD0F8-E0B6-4155-BA95-5B3B09F8D203}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iter.net", "iter.net\iter.net.csproj", "{861D7664-9446-40BB-83E2-89D4CBAA9B32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iter-net", "iter-net", "{323E9B49-8B0C-4822-A218-43AD19A37286}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iter.net.tests", "iter.net.tests\iter.net.tests.csproj", "{CDA81287-A919-4FAC-BE77-B7DB668D5AF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +29,14 @@ Global
 		{A1DAD0F8-E0B6-4155-BA95-5B3B09F8D203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1DAD0F8-E0B6-4155-BA95-5B3B09F8D203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1DAD0F8-E0B6-4155-BA95-5B3B09F8D203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{861D7664-9446-40BB-83E2-89D4CBAA9B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861D7664-9446-40BB-83E2-89D4CBAA9B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861D7664-9446-40BB-83E2-89D4CBAA9B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861D7664-9446-40BB-83E2-89D4CBAA9B32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA81287-A919-4FAC-BE77-B7DB668D5AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA81287-A919-4FAC-BE77-B7DB668D5AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA81287-A919-4FAC-BE77-B7DB668D5AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA81287-A919-4FAC-BE77-B7DB668D5AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +44,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{79C16B6D-37BF-4541-AD3B-C43F9FB7E7DF} = {FC2BE9F3-505A-47DD-8307-B29DEB465671}
 		{A1DAD0F8-E0B6-4155-BA95-5B3B09F8D203} = {FC2BE9F3-505A-47DD-8307-B29DEB465671}
+		{861D7664-9446-40BB-83E2-89D4CBAA9B32} = {323E9B49-8B0C-4822-A218-43AD19A37286}
+		{CDA81287-A919-4FAC-BE77-B7DB668D5AF7} = {323E9B49-8B0C-4822-A218-43AD19A37286}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA568839-4176-453F-A69B-F87F8C2323B7}
