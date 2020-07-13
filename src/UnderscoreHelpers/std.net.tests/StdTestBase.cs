@@ -60,5 +60,30 @@ namespace std.net.tests
             Assert.Throws<ArgumentOutOfRangeException>(() => padleft("30690168", 6, '0'));
             Assert.Equal("030690168", padleft("30690168", 9, '0'));
         }
+
+        [Fact]
+        public void trim_tests()
+        {
+            Assert.Equal("abc", trim("    abc "));
+            Assert.Equal("abc", trim("-_-abc-_-", "_-"));
+            Assert.Throws<ArgumentNullException>(() => trim(null));
+        }
+
+        [Fact]
+        public void trim_end()
+        {
+            Assert.Equal("    abc", trimright("    abc "));
+            Assert.Equal("-_-abc", trimright("-_-abc-_-", "_-"));
+            Assert.Throws<ArgumentNullException>(() => trimright(null));
+        }
+
+        [Fact]
+        public void trim_start()
+        {
+            Assert.Equal("abc ", trimleft("    abc "));
+            Assert.Equal("abc-_-", trimleft("-_-abc-_-", "_-"));
+            Assert.Throws<ArgumentNullException>(() => trimleft(null));
+        }
+
     }
 }

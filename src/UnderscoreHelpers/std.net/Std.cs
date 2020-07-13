@@ -141,5 +141,189 @@ namespace std.net
             return string.Concat(vs);
         }
 
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="trim"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string trim(string v, string trim)
+        {
+            if (isnull(v))
+            {
+                throw new ArgumentNullException(nameof(v));
+            }
+
+            return v.Trim(trim.ToCharArray());
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string trim(string v)
+        {
+            if (isnull(v))
+            {
+                throw new ArgumentNullException(nameof(v));
+            }
+
+            return v.Trim();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="trim"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string trimleft(string v, string trim)
+        {
+            if (isnull(v))
+            {
+                throw new ArgumentNullException(nameof(v));
+            }
+
+            return v.TrimStart(trim.ToCharArray());
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string trimleft(string v)
+        {
+            if (isnull(v))
+            {
+                throw new ArgumentNullException(nameof(v));
+            }
+
+            return v.TrimStart();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string trimright(string v)
+        {
+            if (isnull(v))
+            {
+                throw new ArgumentNullException(nameof(v));
+            }
+
+            return v.TrimEnd();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="trim"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string trimright(string v, string trim)
+        {
+            return v.TrimEnd(trim.ToCharArray());
+        }
+
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(decimal? v)
+        {
+            return !v.HasValue;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(double? v)
+        {
+            return !v.HasValue;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(float? v)
+        {
+            return !v.HasValue;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(string v)
+        {
+            return v == default(string);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(DateTime? v)
+        {
+            return !v.HasValue;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(bool? v)
+        {
+            return !v.HasValue;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(int? v)
+        {
+            return !v.HasValue;
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool isnull(Guid? v)
+        {
+            return !v.HasValue;
+        }
+
     }
 }
