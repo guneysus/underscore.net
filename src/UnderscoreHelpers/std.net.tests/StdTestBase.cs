@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 using static std.net.Std;
@@ -241,5 +242,6 @@ namespace std.net.tests
             Assert.Equal(Expected, LowerCase("fooBar"));
             Assert.Equal(Expected, LowerCase("FOO BAR"));
         }
+
     }
 }

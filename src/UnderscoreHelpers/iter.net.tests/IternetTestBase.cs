@@ -130,6 +130,24 @@ namespace iter.net.tests
         }
 
         [Fact]
+        public void Dict_factory()
+        {
+            Dictionary<string, int> expected = new Dictionary<string, int> {
+                { "TR", 90 },
+                { "MY", 60 },
+                { "CY", 357 }
+            };
+
+            Dictionary<string, int> actual = dict(
+                ("TR", 90),
+                ("MY", 60),
+                ("CY", 357)
+            );
+
+            Assert.True(same(expected, actual));
+        }
+
+        [Fact]
         public void Flatten()
         {
             Dictionary<string, List<string>> data = dict(
@@ -220,6 +238,13 @@ namespace iter.net.tests
             IEnumerable<string> keys = merged.Keys.Except(data.Keys).Except(dict2.Keys);
 
             Assert.Empty(keys);
+        }
+
+
+        [Fact]
+        public void List_factory()
+        {
+            Assert.True(same(new List<string> { "c", "a", "b" }, list("a", "b", "c")));
         }
     }
 
