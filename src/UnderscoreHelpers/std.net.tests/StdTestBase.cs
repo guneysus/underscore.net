@@ -112,5 +112,21 @@ namespace std.net.tests
 
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void String_Length()
+        {
+            Assert.Equal(0, len(string.Empty));
+            Assert.Throws<NullReferenceException>(() => len(null));
+            Assert.Equal(3, len("foo"));
+        }
+
+        [Fact]
+        public void List_Lenght()
+        {
+            Assert.Equal(0, len(list<string>()));
+            Assert.Equal(3, len(list(1, 3, 5)));
+        }
+
     }
 }

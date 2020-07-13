@@ -370,5 +370,76 @@ namespace std.net
         {
             return new Regex(pattern).Replace(input, replacement);
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int len(string s)
+        {
+            try
+            {
+                return s.Length;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int len<T>(IEnumerable<T> s)
+        {
+            return s.Count();
+        }
+
+        /// <summary>
+        /// TODO #fn
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        [Pure]
+        public static List<T> list<T>(params T[] args)
+        {
+            return args.ToList();
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Dictionary<K, V> dict<K, V>(IEnumerable<K> keys)
+        {
+            return keys.ToDictionary(x => x, __ => default(V));
+        }
+
+
+        /// <summary>
+        /// TODO #Doc #FN
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Dictionary<TKey, TValue> dict<TKey, TValue>(params ValueTuple<TKey, TValue>[] items)
+        {
+            return items.ToDictionary(x => x.Item1, x => x.Item2);
+        }
+
     }
 }
