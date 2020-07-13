@@ -283,6 +283,24 @@ namespace iter.net.tests
             Assert.Equal(expected, actual);
         }
 
+        [Fact]
+        public void dict_omit_by()
+        {
+            var data = new Dictionary<string, int>
+            {
+                {"foo", 1 },
+                {"bar", 2 },
+                {"baz", 3 }
+            };
+
+            string expected = string.Empty;
+            Dictionary<string, int> actualResult = omitBy(data, x => true);
+
+            string actual = string.Join(';', actualResult.Select(kv => $"{kv.Key}:{kv.Value}"));
+
+            Assert.Equal(expected, actual);
+        }
+
 
         [Fact]
         public void List_factory()

@@ -254,6 +254,20 @@ namespace iter.net
             return result;
         }
 
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Dictionary<K, V> omitBy<K, V>(Dictionary<K, V> data, Func<KeyValuePair<K, V>, bool> predicate)
+        {
+            return data.Where(x => !predicate(x)).ToDictionary(kv => kv.Key, kv => kv.Value);
+        }
+
         [Pure]
         public static IEnumerable<char> merge(params IEnumerable<char>[] args)
         {
