@@ -441,5 +441,48 @@ namespace std.net
             return items.ToDictionary(x => x.Item1, x => x.Item2);
         }
 
+
+        /// <summary>
+        /// TODO #fn
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        [Pure]
+        public static HashSet<T> hashset<T>(params T[] args)
+        {
+            return new HashSet<T>(args);
+        }
+
+        /// <summary>
+        /// TODO #Doc #FN
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        [Pure]
+        public static SortedDictionary<TKey, TValue> sortedDict<TKey, TValue>(params ValueTuple<TKey, TValue>[] items)
+        {
+            return new SortedDictionary<TKey, TValue>(items.ToDictionary(x => x.Item1, x => x.Item2));
+        }
+
+        /// <summary>
+        /// TODO #fn
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="comparer"></param>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        [Pure]
+        public static SortedDictionary<TKey, TValue> sortedDict<TKey, TValue>(IComparer<TKey> comparer, params ValueTuple<TKey, TValue>[] items)
+        {
+            return new SortedDictionary<TKey, TValue>(items.ToDictionary(x => x.Item1, x => x.Item2), comparer);
+        }
+
+
+
     }
 }

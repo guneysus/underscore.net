@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using static iter.net.Iter;
+using static std.net.Std;
 
 namespace iter.net.tests
 {
@@ -60,6 +62,78 @@ namespace iter.net.tests
             Assert.False(comparer.Equals(new Point(0, 1), new Point(0, 0)));
             Assert.False(comparer.Equals(new Point(0, 0), new Point(1, 0)));
             Assert.False(comparer.Equals(new Point(0, 0), new Point(0, 1)));
+        }
+
+        [Fact]
+        public void comparer()
+        {
+            IComparer<Point> comparer = comparator<Point>((a, b) => (a.X + a.Y) - (b.X + b.Y));
+
+            Assert.Equal(0, comparer.Compare(new Point(0, 0), new Point(0, 0)));
+
+            Assert.True(comparer.Compare(new Point(100, 0), new Point(0, 0)) > 0);
+            Assert.True(comparer.Compare(new Point(0, 0), new Point(100, 0)) < 0);
+        }
+
+        [Fact]
+        public void Zip_Test()
+        {
+            var names = list("one", "two");
+            var ids = list(1, 2);
+            var actual = zip(names, ids);
+            var expected = list(("one", 1), ("two", 2));
+
+            Assert.True(same(expected, actual));
+
+            var result = zip(names.AsQueryable(), ids, (name, id) => $"{id}.{name}");
+
+            Assert.True(same(list("1.one", "2.two"), result));
+        }
+
+        [Fact]
+        public void Hashset_factory()
+        {
+            Assert.True(same(list(1, 2), hashset(1, 1, 2)));
+        }
+
+        [Fact]
+        public void Sorted_dict_factory()
+        {
+            IComparer<string> comparer = comparator((string a, string b) => a == b ? 0 : -1);
+
+            SortedDictionary<string, int> actual1 = sortedDict(comparer, ("TR", 90), ("MY", 60), ("CY", 357));
+            SortedDictionary<string, int> actual2 = sortedDict(comparer, ("CY", 357), ("TR", 90), ("MY", 60));
+            SortedDictionary<string, int> actual3 = sortedDict(("CY", 357), ("TR", 90), ("MY", 60));
+            SortedDictionary<string, int> actual4 = sortedDict(("TR", 90), ("MY", 60), ("CY", 357));
+
+            SortedDictionary<string, int> expected = new SortedDictionary<string, int> {
+                { "TR", 90 },
+                { "MY", 60 },
+                { "CY", 357 }
+            };
+
+            Assert.True(same(expected, actual1));
+            Assert.True(same(expected, actual2));
+            Assert.True(same(expected, actual3));
+            Assert.True(same(expected, actual4));
+        }
+
+        [Fact]
+        public void Flatten()
+        {
+            Dictionary<string, List<string>> data = dict(
+                ("TR#1", list("Ýstanbul", "Ýzmir", "Bursa")),
+                ("TR#2", list("Konya", "Ankara", "Eskiþehir"))
+            );
+
+            IEnumerable<string> expected = list(
+                "Ýstanbul", "Ýzmir", "Bursa",
+                "Konya", "Ankara", "Eskiþehir"
+             );
+
+            IEnumerable<string> actual = flatten(data.Select(c => c.Value));
+
+            Assert.True(same(expected, actual));
         }
     }
 
