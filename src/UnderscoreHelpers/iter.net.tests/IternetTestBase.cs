@@ -166,6 +166,31 @@ namespace iter.net.tests
         }
 
         [Fact]
+        public void Sort_tests()
+        {
+            IComparer<Point> comparer = comparator<Point>((a, b) => (a.X + a.Y) - (b.X + b.Y));
+
+            IEqualityComparer<Point> equalityComparer = comparator<Point>((a, b) => a.X == b.X && a.Y == b.Y);
+
+            List<Point> data = list(
+                new Point(0, 2),
+                new Point(0, 0),
+                new Point(0, 1)
+            );
+
+            List<Point> expected = list(
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(0, 2)
+            );
+
+            IEnumerable<Point> actual = sort(data, comparer);
+
+            Assert.True(same(actual, expected, equalityComparer));
+            Assert.True(equalityComparer.Equals(data.First(), new Point(0, 2)));
+        }
+
+        [Fact]
         public void merge_tests()
         {
             Assert.Equal(asciiletters(), merge(AsciiLowercase(), AsciiUppercase()));

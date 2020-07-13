@@ -103,6 +103,15 @@ namespace iter.net
             return enumerable.Select(x => x).SelectMany(c => c);
         }
 
+
+        [Pure]
+        public static IEnumerable<T> sort<T>(IEnumerable<T> enumerable, IComparer<T> comparer)
+        {
+            List<T> sorted = enumerable.ToList();
+            sorted.Sort(comparer);
+            return sorted;
+        }
+
         #region Functional Tools
         [Pure]
         public static Converter<Tin, Tout> convertor<Tin, Tout>(Func<Tin, Tout> fn)
