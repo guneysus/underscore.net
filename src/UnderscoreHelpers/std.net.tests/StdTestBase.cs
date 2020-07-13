@@ -135,6 +135,12 @@ namespace std.net.tests
             Assert.Equal(expected, round(pmt(rate, term, amount), 2));
         }
 
+        [Fact]
+        public void Factorial_Tests()
+        {
+            Assert.Equal(6, Factorial(3));
+        }
+
         [Theory]
         [InlineData(4.006, 4.0)]
         [InlineData(0.046, 0)]

@@ -569,8 +569,21 @@ namespace std.net
             return pmt;
         }
 
-        public static Guid guid() => Guid.NewGuid();
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int Factorial(int number)
+        {
+            IEnumerable<int> source = Enumerable.Range(1, number);
+            return source.Aggregate((a, b) => a * b);
+        }
+
         #endregion
+
+        public static Guid guid() => Guid.NewGuid();
 
         #region Bin
         /// <summary>
