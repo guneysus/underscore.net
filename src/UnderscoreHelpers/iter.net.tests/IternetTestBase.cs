@@ -301,6 +301,42 @@ namespace iter.net.tests
             Assert.Equal(expected, actual);
         }
 
+        [Fact]
+        public void dict_pick_by()
+        {
+            var data = new Dictionary<string, int>
+            {
+                {"foo", 1 },
+                {"bar", 2 },
+                {"baz", 3 }
+            };
+
+            const string expected = "foo:1";
+            Dictionary<string, int> actualResult = pickBy(data, kv => kv.Key == "foo");
+
+            string actual = string.Join(';', actualResult.Select(kv => $"{kv.Key}:{kv.Value}"));
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void dict_pick_keys()
+        {
+            var data = new Dictionary<string, int>
+            {
+                {"foo", 1 },
+                {"bar", 2 },
+                {"baz", 3 }
+            };
+
+            const string expected = "foo:1;bar:2";
+            Dictionary<string, int> actualResult = pickKeys(data, "foo", "bar");
+
+            string actual = string.Join(';', actualResult.Select(kv => $"{kv.Key}:{kv.Value}"));
+
+            Assert.Equal(expected, actual);
+        }
+
 
         [Fact]
         public void List_factory()
