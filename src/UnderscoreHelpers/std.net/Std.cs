@@ -483,6 +483,92 @@ namespace std.net
         }
 
 
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Round(decimal number, int precision)
+        {
+            return Math.Round(number, precision);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Round(double number, int precision)
+        {
+            return Math.Round(number, precision);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Floor(decimal number)
+        {
+            return Math.Floor(number);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Floor(double number)
+        {
+            return Math.Floor(number);
+        }
+
+
+        #region math
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="ir"></param>
+        /// <param name="np"></param>
+        /// <param name="pv"></param>
+        /// <param name="fv"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal PMT(double ir, int np, decimal pv, decimal fv = 0, int type = 0)
+        {
+            /*
+              from: https://stackoverflow.com/a/22385930/1766716
+               * ir   - interest rate per month
+               * np   - number of periods (months)
+               * pv   - present value
+               * fv   - future value
+               * type - when the payments are due:
+               *        0: end of the period, e.g. end of month (default)
+               *        1: beginning of period
+               */
+            if (ir == 0)
+            {
+                return -(pv + fv) / np;
+            }
+
+            decimal pvif = (decimal)Math.Pow(1 + ir, np);
+            decimal pmt = (-(decimal)ir * pv * (pvif + fv)) / (pvif - 1);
+
+            if (type == 1)
+            {
+                pmt /= 1 + (decimal)ir;
+            }
+
+            return pmt;
+        }
+        #endregion
 
     }
 }

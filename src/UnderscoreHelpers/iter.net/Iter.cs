@@ -171,5 +171,63 @@ namespace iter.net
             List<KeyValuePair<TKey, TValue>> secondNotFirst = second.Except(first).ToList();
             return !firstNotSecond.Any() && !secondNotFirst.Any();
         }
+
+        [Pure]
+        public static IEnumerable<char> merge(params IEnumerable<char>[] args)
+        {
+            return args.Aggregate((a, b) => a.Union(b));
+        }
+
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<char> asciiall()
+        {
+            return merge(asciiletters(), asciipunc(), digits());
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> asciiletters() => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> asciipunc() => "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{\\¦}~";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> AsciiLowercase() => "abcdefghijklmnopqrstuvwxyz";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> AsciiUppercase() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> TurkishAndEnglishAlphabets() => "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> TurkishAlphabet() => "abcçdefgğhıijklmnoöprsştuüvyzABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> digits() => "0123456789";
     }
 }

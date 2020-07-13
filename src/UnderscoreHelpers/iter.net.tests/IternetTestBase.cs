@@ -135,6 +135,12 @@ namespace iter.net.tests
 
             Assert.True(same(expected, actual));
         }
+
+        [Fact]
+        public void merge_tests()
+        {
+            Assert.Equal(asciiletters(), merge(AsciiLowercase(), AsciiUppercase()));
+        }
     }
 
     public class FunctionalTools : IternetTestBase

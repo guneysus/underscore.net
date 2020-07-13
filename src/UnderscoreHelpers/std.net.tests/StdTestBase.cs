@@ -128,5 +128,12 @@ namespace std.net.tests
             Assert.Equal(3, len(list(1, 3, 5)));
         }
 
+        [Theory]
+        [InlineData(0.0175d, 6, 1799.00, -318.46d)]
+        public void pmt_tests(double rate, int term, decimal amount, decimal expected)
+        {
+            Assert.Equal(expected, Round(PMT(rate, term, amount), 2));
+        }
+
     }
 }
