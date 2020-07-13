@@ -47,10 +47,19 @@ namespace iter.net
         /// <param name="comparer"></param>
         /// <returns></returns>
         [Pure]
-        public static IEqualityComparer<T> comparer<T>(Func<T, T, bool> comparer)
+        public static IEqualityComparer<T> comparator<T>(Func<T, T, bool> comparer)
         {
             return new GenericEqualityComparer<T>(comparer);
         }
+
+        #region Functional Tools
+        [Pure]
+        public static Converter<Tin, Tout> convertor<Tin, Tout>(Func<Tin, Tout> fn)
+        {
+            return (Tin s) => fn(s);
+        }
+
+        #endregion
     }
 
     /// <summary>
