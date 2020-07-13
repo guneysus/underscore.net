@@ -101,5 +101,16 @@ namespace std.net.tests
             var actual = matcher("fred, barney, & pebbles");
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void mask_tests()
+        {
+            const string creditCard = "1234123412341234";
+            const string expected = "1234-XXXX-XXXX-1234";
+
+            string actual = mask(creditCard, @"(\d{4})(\d{4})(\d{4})(\d{4})", "$1-XXXX-XXXX-$4");
+
+            Assert.Equal(expected, actual);
+        }
     }
 }

@@ -341,7 +341,7 @@ namespace std.net
         }
 
         /// <summary>
-        /// TODO Test
+        /// TODO Regex overloads
         /// </summary>
         /// <param name="pattern"></param>
         /// <returns></returns>
@@ -355,6 +355,20 @@ namespace std.net
                 MatchCollection matchList = rgx.Matches(input);
                 return matchList.Cast<Match>().Select(match => match.Value);
             });
+        }
+
+        /// <summary>
+        /// Masks string with regex. 
+        /// TODO: Regex overloads
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="pattern"></param>
+        /// <param name="replacement"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string mask(string input, string pattern, string replacement)
+        {
+            return new Regex(pattern).Replace(input, replacement);
         }
     }
 }
