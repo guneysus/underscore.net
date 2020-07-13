@@ -232,6 +232,28 @@ namespace iter.net
             return dict2;
         }
 
+        /// <summary>
+        /// TODO #Doc REVIEW
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="data"></param>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Dictionary<K, V> omitKeys<K, V>(Dictionary<K, V> data, params K[] keys)
+        {
+            IEnumerable<K> keyList = Iter.keys(data).Except(keys);
+            Dictionary<K, V> result = new Dictionary<K, V>();
+
+            foreach (K k in keyList)
+            {
+                result[k] = data[k];
+            }
+
+            return result;
+        }
+
         [Pure]
         public static IEnumerable<char> merge(params IEnumerable<char>[] args)
         {
