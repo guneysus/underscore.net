@@ -490,7 +490,7 @@ namespace std.net
         /// <param name="precision"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Round(decimal number, int precision)
+        public static decimal round(decimal number, int precision)
         {
             return Math.Round(number, precision);
         }
@@ -502,7 +502,7 @@ namespace std.net
         /// <param name="precision"></param>
         /// <returns></returns>
         [Pure]
-        public static double Round(double number, int precision)
+        public static double round(double number, int precision)
         {
             return Math.Round(number, precision);
         }
@@ -513,7 +513,7 @@ namespace std.net
         /// <param name="number"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Floor(decimal number)
+        public static decimal floor(decimal number)
         {
             return Math.Floor(number);
         }
@@ -524,7 +524,7 @@ namespace std.net
         /// <param name="number"></param>
         /// <returns></returns>
         [Pure]
-        public static double Floor(double number)
+        public static double floor(double number)
         {
             return Math.Floor(number);
         }
@@ -541,7 +541,7 @@ namespace std.net
         /// <param name="type"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal PMT(double ir, int np, decimal pv, decimal fv = 0, int type = 0)
+        public static decimal pmt(double ir, int np, decimal pv, decimal fv = 0, int type = 0)
         {
             /*
               from: https://stackoverflow.com/a/22385930/1766716

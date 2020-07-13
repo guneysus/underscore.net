@@ -132,8 +132,15 @@ namespace std.net.tests
         [InlineData(0.0175d, 6, 1799.00, -318.46d)]
         public void pmt_tests(double rate, int term, decimal amount, decimal expected)
         {
-            Assert.Equal(expected, Round(PMT(rate, term, amount), 2));
+            Assert.Equal(expected, round(pmt(rate, term, amount), 2));
         }
 
+        [Theory]
+        [InlineData(4.006, 4.0)]
+        [InlineData(0.046, 0)]
+        public void floor_tests(decimal number, decimal expected)
+        {
+            Assert.Equal(expected, floor(number));
+        }
     }
 }
