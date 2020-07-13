@@ -325,5 +325,18 @@ namespace std.net
             return !v.HasValue;
         }
 
+
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<char> truncate(string s, int length, string suffix = "…")
+        {
+            return concat(s.Take(length - 1)) + suffix;
+        }
     }
 }

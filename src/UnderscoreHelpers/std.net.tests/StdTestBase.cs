@@ -85,5 +85,11 @@ namespace std.net.tests
             Assert.Throws<ArgumentNullException>(() => trimleft(null));
         }
 
+
+        [Fact]
+        public void truncate_tests()
+        {
+            Assert.Equal("hi-diddly-ho there, neighbori…", truncate("hi-diddly-ho there, neighborino", 30));
+        }
     }
 }
