@@ -68,10 +68,10 @@ namespace underscore.net
         /// <summary>
         /// TODO #Doc 
         /// </summary>
-        /// <param name="utcDateTime"></param>
+        /// <param name="date"></param>
         /// <returns></returns>
         [Pure]
-        public static int timestamp(DateTime utcDateTime) => (int)((DateTimeOffset)utcDateTime).ToUnixTimeSeconds();
+        public static int timestamp(DateTime date) => (int)((DateTimeOffset)date).ToUnixTimeSeconds();
 
         /// <summary>
         /// from: https://stackoverflow.com/a/26225951/1766716
@@ -148,20 +148,43 @@ namespace underscore.net
         }
 
         /// <summary>
+        /// Get list of month names
+        /// </summary>
+        /// <param name="cultureInfo"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<string> months(string cultureName)
+        {
+            return months(CultureInfo.GetCultureInfo(cultureName));
+        }
+
+        /// <summary>
         /// TODO #doc
         /// </summary>
         /// <param name="cultureInfo"></param>
-        /// <param name="startFrom"></param>
+        /// <param name="firstDayOfWeek"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<string> days(CultureInfo cultureInfo, DayOfWeek startFrom = DayOfWeek.Monday)
+        public static IEnumerable<string> days(CultureInfo cultureInfo, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)
         {
-            int start = (int)startFrom;
+            int start = (int)firstDayOfWeek;
 
             for (int i = start; i < start + 7; i++)
             {
                 yield return cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)(i % 7));
             }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="cultureInfo"></param>
+        /// <param name="firstDayOfWeek"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<string> days(string cultureName, DayOfWeek firstDayOfWeek = DayOfWeek.Monday)
+        {
+            return days(CultureInfo.GetCultureInfo(cultureName), firstDayOfWeek);
         }
 
         /// <summary>
@@ -431,7 +454,7 @@ namespace underscore.net
         /// <param name="vs"></param>
         /// <returns></returns>
         [Pure]
-        public static string concat(IEnumerable<char> vs)
+        public static string concat(params char[] vs)
         {
             return string.Concat(vs);
         }
@@ -442,7 +465,7 @@ namespace underscore.net
         /// <param name="vs"></param>
         /// <returns></returns>
         [Pure]
-        public static string concat(IEnumerable<string> vs)
+        public static string concat(params string[] vs)
         {
             var sb = new StringBuilder();
             foreach (var item in vs)
@@ -493,7 +516,7 @@ namespace underscore.net
         #region Random Value Generators
 
         /// <summary>
-        /// TODO #doc
+        /// DO NOT USE FOR CRYPTOGRAPHIC SCENARIOS
         /// </summary>
         /// <param name="count"></param>
         /// <returns></returns>
@@ -580,6 +603,7 @@ namespace underscore.net
         #region Regex
         /// <summary>
         /// TODO #doc
+        /// TODO Implement timeout to avoid DDOS
         /// </summary>
         /// <param name="pattern"></param>
         /// <param name="options"></param>
@@ -604,7 +628,7 @@ namespace underscore.net
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         [Pure]
-        public static T New<T>() where T : new() => new T();
+        public static T create<T>() where T : new() => new T();
         #endregion
 
         #region Validators
@@ -624,6 +648,9 @@ namespace underscore.net
         [Pure]
         public static bool phone(string str) => Regex.IsMatch(str, _phoneNumberRegex);
 
+        [Pure]
+        public static bool ip(string str) => Regex.IsMatch(str, _ipRegex);
+
         /// <summary>
         /// Regular expression for matching an email address.
         /// </summary>
@@ -634,6 +661,8 @@ namespace underscore.net
         /// Regular expression for matching a phone number.
         /// </summary>
         const string _phoneNumberRegex = @"^[+]?(\d{1,3})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{2}[\s.-]?\d{2}$";
+
+        const string _ipRegex = @"^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 
         /// <summary>
         /// TODO #doc
@@ -660,7 +689,7 @@ namespace underscore.net
         /// <param name="trueValues"></param>
         /// <returns></returns>
         [Pure]
-        public static bool boolean(string value, IEnumerable<string> trueValues) => trueValues.Contains(value.ToLowerInvariant());
+        public static bool boolean(string value, params string[] trueValues) => trueValues.Contains(value.ToLowerInvariant());
         #endregion
     }
 }
