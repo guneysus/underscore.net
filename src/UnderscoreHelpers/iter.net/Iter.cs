@@ -368,8 +368,8 @@ namespace iter.net
 
             if (children.Any())
                 foreach (var child in children)
-                    foreach (var subchild in visit(child, func, depth))
-                        yield return subchild;
+                    foreach (var (childDepth, subchildparent, subchild) in visit(child, func, depth))
+                        yield return (childDepth, subchildparent, subchild);
             else
                 depth--;
 
