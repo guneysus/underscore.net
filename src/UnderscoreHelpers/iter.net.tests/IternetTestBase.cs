@@ -441,9 +441,9 @@ namespace iter.net.tests
 
             var branches = _.climber(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
 
-            foreach (var (depth, leaf) in branches)
+            foreach (var (depth, parent, leaf) in branches)
             {
-                string message = $"{string.Concat(Enumerable.Range(1, depth).Select(x => "–"))} {leaf} \t\t [{depth}]";
+                string message = $"{string.Concat(Enumerable.Range(1, depth).Select(x => "–"))} {leaf} of {parent} \t\t [{depth}]";
                 WriteLine(message);
             }
 
