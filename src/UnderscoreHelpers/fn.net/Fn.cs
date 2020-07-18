@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Reflection;
 
 namespace fn.net
 {
@@ -265,5 +266,73 @@ namespace fn.net
         public static Action<T2> curry<T1, T2>(Action<T1, T2> act, T1 t1) => t2 => act(t1, t2);
 
 
+        /// <summary>
+        /// Returns the default constructor as delegate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static Func<T> ctor<T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { });
+
+            return new Func<T>(() =>
+            {
+
+                return ctor != null ? (T)ctor.Invoke(new object[] { }) : default;
+            });
+        }
+
+        /// <summary>
+        /// Returns the constructor with single argument
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static Func<T1, T> ctor<T, T1>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1) });
+
+            return new Func<T1, T>(t1 =>
+            {
+                return ctor != null ? (T)ctor.Invoke(new object[] { t1 }) : default;
+            });
+        }
+
+        /// <summary>
+        /// Returns the constructor with two arguments
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
+        public static Func<T1, T2, T> ctor<T, T1, T2>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2) });
+
+            return new Func<T1, T2, T>((t1, t2) =>
+            {
+                return ctor != null ? (T)ctor.Invoke(new object[] { t1, t2 }) : default;
+            });
+        }
+
+        /// <summary>
+        /// Returns the constructor with three arguments
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
+        public static Func<T1, T2, T3, T> ctor<T, T1, T2, T3>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3) });
+
+            return new Func<T1, T2, T3, T>((t1, t2, t3) =>
+            {
+                return ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3 }) : default;
+            });
+        }
     }
 }

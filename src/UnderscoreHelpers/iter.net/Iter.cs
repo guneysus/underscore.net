@@ -364,7 +364,7 @@ namespace iter.net
         /// <param name="startDepth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth = 1, int maxDepth = 100)
+        public static IEnumerable<Tuple<int, T, T>> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth = 1, int maxDepth = 100)
         {
             return visit(current: root, parent: default, leafs: leafs, depth: startDepth, maxDepth: maxDepth);
         }
@@ -381,7 +381,7 @@ namespace iter.net
         [Pure]
         public static IEnumerable<TResult> climber<T, TResult>(T root,
             Func<T, IEnumerable<T>> leafs,
-            Func<(int, T, T), TResult> gen,
+            Func<Tuple<int, T, T>, TResult> gen,
             int startDepth = 1, int maxDepth = 100)
         {
             foreach (var item in visit(current: root, parent: default, leafs: leafs, depth: startDepth = 1, maxDepth: maxDepth))
@@ -400,9 +400,9 @@ namespace iter.net
         /// <param name="depth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<(int, T, T)> visit<T>(T current, T parent, Func<T, IEnumerable<T>> leafs, int depth, int maxDepth)
+        public static IEnumerable<Tuple<int, T, T>> visit<T>(T current, T parent, Func<T, IEnumerable<T>> leafs, int depth, int maxDepth)
         {
-            yield return (depth, current, parent);
+            yield return Tuple.Create(depth, current, parent);
 
             if (depth >= maxDepth)
                 yield break;
@@ -416,7 +416,7 @@ namespace iter.net
             if (children.Any())
                 foreach (var child in children)
                     foreach (var (childDepth, subchild, subchildparent) in visit(current: child, parent: current, leafs: leafs, depth: depth, maxDepth: maxDepth))
-                        yield return (childDepth, subchild, subchildparent);
+                        yield return Tuple.Create(childDepth, subchild, subchildparent);
             else
                 depth--;
 

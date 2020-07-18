@@ -59,11 +59,56 @@ namespace underscore.net
         /// <param name="seconds"></param>
         /// <returns></returns>
         [Pure]
-        public static DateTime datetime(long seconds, DateTimeKind dateTimeKind)
+        public static DateTime datetimeunix(long seconds, DateTimeKind dateTimeKind)
         {
             return DateTimeOffset.FromUnixTimeSeconds(seconds).DateTime;
             // TODO REVIEW return new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind).AddSeconds(unixTimeStamp);
         }
+
+        #region TODO datetime and timespan factory methods
+        public static DateTime datetime() => default;
+        public static DateTime datetime(long ticks) => new DateTime(ticks);
+        public static DateTime datetime(long ticks, DateTimeKind kind) => new DateTime(ticks, kind);
+        public static DateTime datetime(int year, int month, int day) => new DateTime(year, month, day);
+        public static DateTime datetime(int year, int month, int day, Calendar calendar) => new DateTime(year, month, day, calendar);
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second) => new DateTime(year, month, day, hour, minute, second);
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second, Calendar calendar)
+        {
+            return new DateTime(year, month, day, hour, minute, second, calendar);
+        }
+
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second, DateTimeKind kind)
+        {
+            return new DateTime(year, month, day, hour, minute, second, kind);
+        }
+
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second, int milisecond)
+        {
+            return new DateTime(year, month, day, hour, minute, second, milisecond);
+        }
+
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second, int milisecond, Calendar calendar)
+        {
+            return new DateTime(year, month, day, hour, minute, second, milisecond, calendar);
+        }
+
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second, int milisecond, DateTimeKind kind)
+        {
+            return new DateTime(year, month, day, hour, minute, second, milisecond, kind);
+        }
+
+        public static DateTime datetime(int year, int month, int day, int hour, int minute, int second, int milisecond, Calendar calendar, DateTimeKind kind)
+        {
+            return new DateTime(year, month, day, hour, minute, milisecond, second, calendar, kind);
+        }
+
+        public static TimeSpan days(double day) => TimeSpan.FromDays(day);
+        public static TimeSpan hours(double hour) => TimeSpan.FromHours(hour);
+        public static TimeSpan minutes(double minute) => TimeSpan.FromMinutes(minute);
+        public static TimeSpan seconds(double second) => TimeSpan.FromSeconds(second);
+        public static TimeSpan miliseconds(double milisecond) => TimeSpan.FromMilliseconds(milisecond);
+        public static TimeSpan ticks(long tick) => TimeSpan.FromTicks(tick); 
+        #endregion
 
         /// <summary>
         /// TODO #Doc 

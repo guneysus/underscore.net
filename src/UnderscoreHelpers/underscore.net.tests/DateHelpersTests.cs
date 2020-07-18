@@ -45,7 +45,7 @@ namespace underscore.net.tests
         public void From_unix_timestamp(int year, int month, int day, int hour, int minute, int second, long seconds, DateTimeKind kind)
         {
             DateTime expected = new DateTime(year, month, day, hour, minute, second, kind);
-            DateTime actual = _.datetime(seconds, kind);
+            DateTime actual = _.datetimeunix(seconds, kind);
             Assert.Equal(expected, actual);
         }
 

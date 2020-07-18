@@ -441,6 +441,7 @@ namespace iter.net.tests
 
             var leafs = _.climber(root: tree, leafs: t => t.Leafs);
 
+            
             foreach (var (depth, leaf, parent) in leafs)
             {
                 var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "·")), "└");
