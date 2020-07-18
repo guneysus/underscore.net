@@ -364,9 +364,10 @@ namespace iter.net
         /// <param name="startDepth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<Tuple<int, T, T>> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth = 1, int maxDepth = 100)
+        public static IEnumerable<Tuple<int, T, T>> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth = 1, int maxDepth = 10)
         {
-            return visit(current: root, parent: default, leafs: leafs, depth: startDepth, maxDepth: maxDepth);
+            return climber<T, Tuple<int, T, T>>(root: root, leafs: leafs, factory: (item) => item, startDepth: startDepth, maxDepth: maxDepth);
+            return visit(root, default, leafs, startDepth, maxDepth);
         }
 
         /// <summary>
@@ -381,12 +382,12 @@ namespace iter.net
         [Pure]
         public static IEnumerable<TResult> climber<T, TResult>(T root,
             Func<T, IEnumerable<T>> leafs,
-            Func<Tuple<int, T, T>, TResult> gen,
-            int startDepth = 1, int maxDepth = 100)
+            Func<Tuple<int, T, T>, TResult> factory,
+            int startDepth = 1, int maxDepth = 10)
         {
             foreach (var item in visit(current: root, parent: default, leafs: leafs, depth: startDepth = 1, maxDepth: maxDepth))
             {
-                yield return gen(item);
+                yield return factory(item);
             }
         }
 

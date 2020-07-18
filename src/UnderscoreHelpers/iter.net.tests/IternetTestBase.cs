@@ -439,9 +439,9 @@ namespace iter.net.tests
                 }
             };
 
-            var leafs = _.climber(root: tree, leafs: t => t.Leafs);
+            var leafs = _.climber(tree, t => t.Leafs);
 
-            
+
             foreach (var (depth, leaf, parent) in leafs)
             {
                 var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "·")), "└");
@@ -508,7 +508,7 @@ namespace iter.net.tests
             var leafs = _.climber<Tree, FlatTree>(
                 root: tree,
                 leafs: t => t.Leafs,
-                (item) =>
+                factory: (item) =>
                 {
                     var (depth, current, parent) = item;
 
@@ -518,7 +518,7 @@ namespace iter.net.tests
                         Current = current,
                         Parent = parent
                     };
-                }, maxDepth: 3);
+                });
 
             foreach (FlatTree item in leafs)
             {
@@ -544,8 +544,8 @@ namespace iter.net.tests
                 root: tree,
                 leafs: t => new List<Tree>()
                 {
-                    new Tree() { Id = "x.1" },
-                    new Tree() { Id = "x.2" }
+                    new Tree() { Id = "a" },
+                    new Tree() { Id = "b" }
                 }, maxDepth: 10);
 
             foreach (var (depth, leaf, parent) in leafs)
