@@ -355,11 +355,30 @@ namespace iter.net
         [Pure]
         public static IEnumerable<char> TurkishAndEnglishAlphabets() => "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ";
 
+        /// <summary>
+        /// Recursively visits a tree-like data structure.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="root"></param>
+        /// <param name="func"></param>
+        /// <param name="depth"></param>
+        /// <returns></returns>
+        [Pure]
         public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> func, int depth)
         {
             return visit(root, default, func, depth);
         }
 
+        /// <summary>
+        /// Recursive visitor pattern generator
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="current"></param>
+        /// <param name="parent"></param>
+        /// <param name="func"></param>
+        /// <param name="depth"></param>
+        /// <returns></returns>
+        [Pure]
         public static IEnumerable<(int, T, T)> visit<T>(T current, T parent, Func<T, IEnumerable<T>> func, int depth)
         {
             yield return (depth, parent, current);
