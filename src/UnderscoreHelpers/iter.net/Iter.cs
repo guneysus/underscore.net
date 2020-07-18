@@ -357,18 +357,18 @@ namespace iter.net
 
         public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> func, int depth)
         {
-            return visit(root, func, depth);
+            return visit(root, default, func, depth);
         }
 
-        public static IEnumerable<(int, T, T)> visit<T>(T parent, Func<T, IEnumerable<T>> func, int depth)
+        public static IEnumerable<(int, T, T)> visit<T>(T current, T parent, Func<T, IEnumerable<T>> func, int depth)
         {
-            yield return (depth, default, parent);
+            yield return (depth, parent, current);
             depth++;
-            IEnumerable<T> children = func(parent);
+            IEnumerable<T> children = func(current);
 
             if (children.Any())
                 foreach (var child in children)
-                    foreach (var (childDepth, subchildparent, subchild) in visit(child, func, depth))
+                    foreach (var (childDepth, subchildparent, subchild) in visit(child, current, func, depth))
                         yield return (childDepth, subchildparent, subchild);
             else
                 depth--;
