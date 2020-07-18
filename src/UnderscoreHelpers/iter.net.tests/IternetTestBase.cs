@@ -4,6 +4,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using static iter.net.Iter;
+using _ = iter.net.Iter;
 using static std.net.Std;
 
 namespace iter.net.tests
@@ -18,6 +19,7 @@ namespace iter.net.tests
         }
 
         public void WriteLine(string message) => output.WriteLine(message);
+        public void WriteLine(object obj) => output.WriteLine(obj.ToString());
 
         public void WriteLine(string format, params object[] args) => output.WriteLine(format, args);
     }
@@ -360,6 +362,95 @@ namespace iter.net.tests
             Converter<string, int> converter = convertor(fn);
 
             Assert.Equal(1, converter("1"));
+        }
+    }
+
+    public class ArrayTests : IternetTestBase
+    {
+        public ArrayTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void compact_tests()
+        {
+            var numbers = new List<int?>(new int?[] { 1, 2, null });
+            Assert.Equal(new int[] { 1, 2 }, Iter.compact(numbers));
+        }
+    }
+
+    public class VisitorGeneratorTests : IternetTestBase
+    {
+        public VisitorGeneratorTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void Simple_tests()
+        {
+            var flat = _.visitor<ExampleTree>(new ExampleTree()
+            {
+                Id = "1",
+                Children = new List<ExampleTree>()
+                {
+                    new ExampleTree() {
+                        Id = "1.1",
+                        Children = new List<ExampleTree>
+                        {
+                            new ExampleTree() {
+                                Id = "1.1.1"
+                            },
+                            new ExampleTree() {
+                                Id = "1.1.2"
+                            }
+                        }
+                    },
+                    new ExampleTree() {
+                        Id = "1.2",
+                        Children = new List<ExampleTree>
+                        {
+                            new ExampleTree() {
+                                Id = "1.2.1",
+                                Children = new List<ExampleTree>() {
+                                    new ExampleTree() {
+                                        Id = "1.2.1.1",
+                                        Children = new List<ExampleTree> () {
+                                            new ExampleTree {
+                                                Id = "1.2.1.1.1"
+                                            }
+                                        }
+                                    },
+                                    new ExampleTree() {
+                                        Id = "1.2.1.2",
+                                        Children = new List<ExampleTree> () {
+                                            new ExampleTree {
+                                                Id = "1.2.1.2.1"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            new ExampleTree() {
+                                Id = "1.2.2"
+                            }
+
+                        }
+                    },
+                }
+            }, t => t?.Children ?? new List<ExampleTree>());
+
+            foreach (var item in flat)
+            {
+                WriteLine(item);
+            }
+        }
+
+        class ExampleTree
+        {
+            public string Id { get; set; }
+            public List<ExampleTree> Children { get; set; }
+
+            public override string ToString() => $"#{Id}";
         }
     }
 }

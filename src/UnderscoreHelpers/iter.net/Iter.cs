@@ -66,6 +66,20 @@ namespace iter.net
             return data.Values;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> compact<T>(IEnumerable<Nullable<T>> items) where T : struct
+        {
+            return items
+                .Where(x => x.HasValue)
+                .Select(x => x.Value);
+        }
+
         /// <summary>
         /// TODO #doc
         /// TODO move to functional.net
@@ -340,6 +354,35 @@ namespace iter.net
         /// </summary>
         [Pure]
         public static IEnumerable<char> TurkishAndEnglishAlphabets() => "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ";
+
+        public static IEnumerable<(int, T)> visitor<T>(T root, Func<T, IEnumerable<T>> func, int depth = 1)
+        {
+            return visit(root, func, depth);
+        }
+
+        public static IEnumerable<(int, T)> visit<T>(T parent, Func<T, IEnumerable<T>> func, int depth = 1)
+        {
+            yield return (depth, parent);
+            depth++;
+            IEnumerable<T> children = func(parent);
+
+            if (children.Any())
+            {
+                foreach (var child in children)
+                {
+                    foreach (var subchild in visit(child, func, depth))
+                    {
+                        yield return subchild;
+                    }
+                }
+            }
+            else
+            {
+                depth--;
+            }
+            yield break;
+
+        }
 
         /// <summary>
         /// TODO #doc
