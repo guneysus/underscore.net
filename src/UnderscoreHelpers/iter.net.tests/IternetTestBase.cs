@@ -439,7 +439,7 @@ namespace iter.net.tests
                 }
             };
 
-            var branches = _.climber<ExampleTree>(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
+            var branches = _.climber(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
 
             foreach (var (depth, leaf) in branches)
             {
