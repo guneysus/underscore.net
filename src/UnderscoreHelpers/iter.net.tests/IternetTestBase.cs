@@ -386,7 +386,7 @@ namespace iter.net.tests
         }
 
         [Fact]
-        public void Simple_tests()
+        public void Simple_usage()
         {
             var tree = new Tree()
             {
@@ -439,29 +439,15 @@ namespace iter.net.tests
                 }
             };
 
-            var leafs = _.climber(root: tree, leafs: t => t.Leafs, startDepth: 1);
+            var leafs = _.climber(root: tree, leafs: t => t.Leafs);
 
             foreach (var (depth, leaf, parent) in leafs)
             {
                 var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "·")), "└");
-                //string message = $"{dash} ({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
-                string message = $"{dash} {leaf}";
+                string message = $"{dash} ({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
+                //string message = $"{dash} {leaf}";
                 WriteLine(message);
             }
-
-            /*
-– #1
-–– #1.1
-––– #1.1.1
-––– #1.1.2
-–– #1.2
-––– #1.2.1
-–––– #1.2.1.1
-––––– #1.2.1.1.1
-–––– #1.2.1.2
-––––– #1.2.1.2.1
-––– #1.2.2
-             */
         }
 
         [Fact]
@@ -531,7 +517,7 @@ namespace iter.net.tests
                         Current = current,
                         Parent = parent
                     };
-                }, startDepth: 1);
+                }, maxDepth: 3);
 
             foreach (FlatTree item in leafs)
             {
@@ -540,6 +526,32 @@ namespace iter.net.tests
                 var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "·")), "└");
                 string message = $"{dash} ({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
                 //string message = $"{dash} {item.Current}";
+                WriteLine(message);
+            }
+        }
+
+
+        [Fact]
+        public void Faking_climber()
+        {
+            var tree = new Tree()
+            {
+                Id = "1"
+            };
+
+            var leafs = _.climber(
+                root: tree,
+                leafs: t => new List<Tree>()
+                {
+                    new Tree() { Id = "x.1" },
+                    new Tree() { Id = "x.2" }
+                }, maxDepth: 10);
+
+            foreach (var (depth, leaf, parent) in leafs)
+            {
+                var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "·")), "└");
+                string message = $"{dash} ({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
+                //string message = $"{dash} {leaf}";
                 WriteLine(message);
             }
         }

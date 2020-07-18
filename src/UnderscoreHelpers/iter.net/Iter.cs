@@ -364,9 +364,9 @@ namespace iter.net
         /// <param name="startDepth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth)
+        public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth = 1, int maxDepth = 100)
         {
-            return visit(root, default, leafs, startDepth);
+            return visit(current: root, parent: default, leafs: leafs, depth: startDepth, maxDepth: maxDepth);
         }
 
         /// <summary>
@@ -382,9 +382,9 @@ namespace iter.net
         public static IEnumerable<TResult> climber<T, TResult>(T root,
             Func<T, IEnumerable<T>> leafs,
             Func<(int, T, T), TResult> gen,
-            int startDepth)
+            int startDepth = 1, int maxDepth = 100)
         {
-            foreach (var item in visit(root, default, leafs, startDepth))
+            foreach (var item in visit(current: root, parent: default, leafs: leafs, depth: startDepth = 1, maxDepth: maxDepth))
             {
                 yield return gen(item);
             }
@@ -396,22 +396,26 @@ namespace iter.net
         /// <typeparam name="T"></typeparam>
         /// <param name="current"></param>
         /// <param name="parent"></param>
-        /// <param name="func"></param>
+        /// <param name="leafs"></param>
         /// <param name="depth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<(int, T, T)> visit<T>(T current, T parent, Func<T, IEnumerable<T>> func, int depth)
+        public static IEnumerable<(int, T, T)> visit<T>(T current, T parent, Func<T, IEnumerable<T>> leafs, int depth, int maxDepth)
         {
             yield return (depth, current, parent);
+
+            if (depth >= maxDepth)
+                yield break;
+
             depth++;
-            IEnumerable<T> children = func(current);
+            IEnumerable<T> children = leafs(current);
 
             if (children == null)
                 yield break;
 
             if (children.Any())
                 foreach (var child in children)
-                    foreach (var (childDepth, subchild, subchildparent) in visit(child, current, func, depth))
+                    foreach (var (childDepth, subchild, subchildparent) in visit(current: child, parent: current, leafs: leafs, depth: depth, maxDepth: maxDepth))
                         yield return (childDepth, subchild, subchildparent);
             else
                 depth--;
