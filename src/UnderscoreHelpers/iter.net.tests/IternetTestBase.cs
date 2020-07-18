@@ -439,11 +439,12 @@ namespace iter.net.tests
                 }
             };
 
-            var flat = _.visitor<ExampleTree>(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
+            var branches = _.climber<ExampleTree>(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
 
-            foreach (var item in flat)
+            foreach (var (depth, leaf) in branches)
             {
-                WriteLine($"{string.Concat(Enumerable.Range(1, item.Item1).Select(x => "–"))} {item.Item2}");
+                string message = $"{string.Concat(Enumerable.Range(1, depth).Select(x => "–"))} {leaf} \t\t [{depth}]";
+                WriteLine(message);
             }
 
             /*

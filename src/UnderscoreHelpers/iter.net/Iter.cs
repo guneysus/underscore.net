@@ -355,7 +355,7 @@ namespace iter.net
         [Pure]
         public static IEnumerable<char> TurkishAndEnglishAlphabets() => "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ";
 
-        public static IEnumerable<(int, T)> visitor<T>(T root, Func<T, IEnumerable<T>> func, int depth)
+        public static IEnumerable<(int, T)> climber<T>(T root, Func<T, IEnumerable<T>> func, int depth)
         {
             return visit(root, func, depth);
         }
