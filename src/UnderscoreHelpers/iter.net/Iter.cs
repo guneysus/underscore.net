@@ -367,21 +367,13 @@ namespace iter.net
             IEnumerable<T> children = func(parent);
 
             if (children.Any())
-            {
                 foreach (var child in children)
-                {
                     foreach (var subchild in visit(child, func, depth))
-                    {
                         yield return subchild;
-                    }
-                }
-            }
             else
-            {
                 depth--;
-            }
-            yield break;
 
+            yield break;
         }
 
         /// <summary>
