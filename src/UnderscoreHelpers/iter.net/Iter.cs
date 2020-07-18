@@ -360,13 +360,13 @@ namespace iter.net
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="root"></param>
-        /// <param name="func"></param>
-        /// <param name="depth"></param>
+        /// <param name="leafs"></param>
+        /// <param name="startDepth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> func, int depth)
+        public static IEnumerable<(int, T, T)> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth)
         {
-            return visit(root, default, func, depth);
+            return visit(root, default, leafs, startDepth);
         }
 
         /// <summary>
@@ -381,14 +381,14 @@ namespace iter.net
         [Pure]
         public static IEnumerable<(int, T, T)> visit<T>(T current, T parent, Func<T, IEnumerable<T>> func, int depth)
         {
-            yield return (depth, parent, current);
+            yield return (depth, current, parent);
             depth++;
             IEnumerable<T> children = func(current);
 
             if (children.Any())
                 foreach (var child in children)
-                    foreach (var (childDepth, subchildparent, subchild) in visit(child, current, func, depth))
-                        yield return (childDepth, subchildparent, subchild);
+                    foreach (var (childDepth, subchild, subchildparent) in visit(child, current, func, depth))
+                        yield return (childDepth, subchild, subchildparent);
             else
                 depth--;
 

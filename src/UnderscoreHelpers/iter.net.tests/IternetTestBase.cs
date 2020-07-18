@@ -388,49 +388,49 @@ namespace iter.net.tests
         [Fact]
         public void Simple_tests()
         {
-            var tree = new ExampleTree()
+            var tree = new Tree()
             {
                 Id = "1",
-                Children = new List<ExampleTree>()
+                Leafs = new List<Tree>()
                 {
-                    new ExampleTree() {
+                    new Tree() {
                         Id = "1.1",
-                        Children = new List<ExampleTree>
+                        Leafs = new List<Tree>
                         {
-                            new ExampleTree() {
+                            new Tree() {
                                 Id = "1.1.1"
                             },
-                            new ExampleTree() {
+                            new Tree() {
                                 Id = "1.1.2"
                             }
                         }
                     },
-                    new ExampleTree() {
+                    new Tree() {
                         Id = "1.2",
-                        Children = new List<ExampleTree>
+                        Leafs = new List<Tree>
                         {
-                            new ExampleTree() {
+                            new Tree() {
                                 Id = "1.2.1",
-                                Children = new List<ExampleTree>() {
-                                    new ExampleTree() {
+                                Leafs = new List<Tree>() {
+                                    new Tree() {
                                         Id = "1.2.1.1",
-                                        Children = new List<ExampleTree> () {
-                                            new ExampleTree {
+                                        Leafs = new List<Tree> () {
+                                            new Tree {
                                                 Id = "1.2.1.1.1"
                                             }
                                         }
                                     },
-                                    new ExampleTree() {
+                                    new Tree() {
                                         Id = "1.2.1.2",
-                                        Children = new List<ExampleTree> () {
-                                            new ExampleTree {
+                                        Leafs = new List<Tree> () {
+                                            new Tree {
                                                 Id = "1.2.1.2.1"
                                             }
                                         }
                                     }
                                 }
                             },
-                            new ExampleTree() {
+                            new Tree() {
                                 Id = "1.2.2"
                             }
 
@@ -439,11 +439,12 @@ namespace iter.net.tests
                 }
             };
 
-            var branches = _.climber(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
+            var leafs = _.climber(root: tree, leafs: t => t?.Leafs ?? new List<Tree>(), startDepth: 1);
 
-            foreach (var (depth, parent, leaf) in branches)
+            foreach (var (depth, leaf, parent) in leafs)
             {
-                string message = $"{string.Concat(Enumerable.Range(1, depth).Select(x => "–"))} {leaf} of {parent} \t\t [{depth}]";
+                //string message = $"{string.Concat(Enumerable.Range(1, depth).Select(x => "–"))} {leaf} of {parent} \t\t [{depth}]";
+                string message = $"({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
                 WriteLine(message);
             }
 
@@ -462,12 +463,11 @@ namespace iter.net.tests
              */
         }
 
-        class ExampleTree
+        class Tree
         {
+            public List<Tree> Leafs { get; set; }
             public string Id { get; set; }
-            public List<ExampleTree> Children { get; set; }
-
-            public override string ToString() => $"#{Id}";
+            public override string ToString() =>  $"{Id}";
         }
     }
 }
