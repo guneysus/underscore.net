@@ -218,28 +218,6 @@ namespace www.net
             return result;
         }
 
-        /// <summary>
-        /// https://stackoverflow.com/a/249126/1766716
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        [Pure]
-        public static string RemoveDiacritics(string text)
-        {
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
-
-            foreach (var c in normalizedString)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-        }
 
         [Pure]
         public static string slug(string text, int maxlength = 50)

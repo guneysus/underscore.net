@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using Xunit;
 using Xunit.Abstractions;
+using _ = underscore.net.Underscore;
+
 namespace underscore.net.tests
 {
     public abstract class UnderscoreTestBase : ITestOutputHelper

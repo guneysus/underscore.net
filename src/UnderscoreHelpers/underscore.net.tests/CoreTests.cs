@@ -35,7 +35,7 @@ namespace underscore.net.tests
         [Fact]
         public void new_instance()
         {
-            Assert.Equal(default, Underscore.New<DateTime>());
+            Assert.Equal(default, _.create<DateTime>());
         }
     }
 }

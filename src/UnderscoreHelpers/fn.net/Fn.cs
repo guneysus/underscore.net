@@ -257,5 +257,13 @@ namespace fn.net
 
             return chunks;
         }
+
+        public static Action noop<T1>(Func<T1> func) => () => func();
+        public static Func<T2> curry<T1, T2>(Func<T1, T2> act, T1 t1) => () => act(t1);
+
+        public static Action curry<T1>(Action<T1> act, T1 t1) => () => act(t1);
+        public static Action<T2> curry<T1, T2>(Action<T1, T2> act, T1 t1) => t2 => act(t1, t2);
+
+
     }
 }

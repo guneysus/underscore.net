@@ -388,7 +388,7 @@ namespace iter.net.tests
         [Fact]
         public void Simple_tests()
         {
-            var flat = _.visitor<ExampleTree>(new ExampleTree()
+            var tree = new ExampleTree()
             {
                 Id = "1",
                 Children = new List<ExampleTree>()
@@ -437,12 +437,28 @@ namespace iter.net.tests
                         }
                     },
                 }
-            }, t => t?.Children ?? new List<ExampleTree>());
+            };
+
+            var flat = _.visitor<ExampleTree>(tree, t => t?.Children ?? new List<ExampleTree>(), 1);
 
             foreach (var item in flat)
             {
-                WriteLine(item);
+                WriteLine($"{string.Concat(Enumerable.Range(1, item.Item1).Select(x => "–"))} {item.Item2}");
             }
+
+            /*
+– #1
+–– #1.1
+––– #1.1.1
+––– #1.1.2
+–– #1.2
+––– #1.2.1
+–––– #1.2.1.1
+––––– #1.2.1.1.1
+–––– #1.2.1.2
+––––– #1.2.1.2.1
+––– #1.2.2
+             */
         }
 
         class ExampleTree
