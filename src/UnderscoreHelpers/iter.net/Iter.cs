@@ -370,6 +370,27 @@ namespace iter.net
         }
 
         /// <summary>
+        /// Recursively visits a tree-like data structure.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="current"></param>
+        /// <param name="parent"></param>
+        /// <param name="func"></param>
+        /// <param name="depth"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<TResult> climber<T, TResult>(T root,
+            Func<T, IEnumerable<T>> leafs,
+            Func<(int, T, T), TResult> gen,
+            int startDepth)
+        {
+            foreach (var item in visit(root, default, leafs, startDepth))
+            {
+                yield return gen(item);
+            }
+        }
+
+        /// <summary>
         /// Recursive visitor pattern generator
         /// </summary>
         /// <typeparam name="T"></typeparam>

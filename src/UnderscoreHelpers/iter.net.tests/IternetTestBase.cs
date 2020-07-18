@@ -464,11 +464,98 @@ namespace iter.net.tests
              */
         }
 
+        [Fact]
+        public void Advanced_usage()
+        {
+            var tree = new Tree()
+            {
+                Id = "1",
+                Leafs = new List<Tree>()
+                {
+                    new Tree() {
+                        Id = "1.1",
+                        Leafs = new List<Tree>
+                        {
+                            new Tree() {
+                                Id = "1.1.1"
+                            },
+                            new Tree() {
+                                Id = "1.1.2"
+                            }
+                        }
+                    },
+                    new Tree() {
+                        Id = "1.2",
+                        Leafs = new List<Tree>
+                        {
+                            new Tree() {
+                                Id = "1.2.1",
+                                Leafs = new List<Tree>() {
+                                    new Tree() {
+                                        Id = "1.2.1.1",
+                                        Leafs = new List<Tree> () {
+                                            new Tree {
+                                                Id = "1.2.1.1.1"
+                                            }
+                                        }
+                                    },
+                                    new Tree() {
+                                        Id = "1.2.1.2",
+                                        Leafs = new List<Tree> () {
+                                            new Tree {
+                                                Id = "1.2.1.2.1"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            new Tree() {
+                                Id = "1.2.2"
+                            }
+
+                        }
+                    },
+                }
+            };
+
+            var leafs = _.climber<Tree, FlatTree>(
+                root: tree,
+                leafs: t => t.Leafs,
+                (item) =>
+                {
+                    var (depth, current, parent) = item;
+
+                    return new FlatTree()
+                    {
+                        Depth = depth,
+                        Current = current,
+                        Parent = parent
+                    };
+                }, startDepth: 1);
+
+            foreach (FlatTree item in leafs)
+            {
+                var (depth, leaf, parent) = (item.Depth, item.Current, item.Parent);
+
+                var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "·")), "└");
+                string message = $"{dash} ({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
+                //string message = $"{dash} {item.Current}";
+                WriteLine(message);
+            }
+        }
+
         class Tree
         {
             public List<Tree> Leafs { get; set; }
             public string Id { get; set; }
             public override string ToString() => $"{Id}";
+        }
+
+        class FlatTree
+        {
+            public int Depth { get; set; }
+            public Tree Parent { get; set; }
+            public Tree Current { get; set; }
         }
     }
 }
