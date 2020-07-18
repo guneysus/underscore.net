@@ -385,6 +385,9 @@ namespace iter.net
             depth++;
             IEnumerable<T> children = func(current);
 
+            if (children == null)
+                yield break;
+
             if (children.Any())
                 foreach (var child in children)
                     foreach (var (childDepth, subchild, subchildparent) in visit(child, current, func, depth))

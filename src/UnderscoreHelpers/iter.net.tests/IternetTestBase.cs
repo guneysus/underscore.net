@@ -153,13 +153,13 @@ namespace iter.net.tests
         public void Flatten()
         {
             Dictionary<string, List<string>> data = dict(
-                ("TR#1", list("Ýstanbul", "Ýzmir", "Bursa")),
-                ("TR#2", list("Konya", "Ankara", "Eskiþehir"))
+                ("TR#1", list("Ä°stanbul", "Ä°zmir", "Bursa")),
+                ("TR#2", list("Konya", "Ankara", "EskiÅŸehir"))
             );
 
             IEnumerable<string> expected = list(
-                "Ýstanbul", "Ýzmir", "Bursa",
-                "Konya", "Ankara", "Eskiþehir"
+                "Ä°stanbul", "Ä°zmir", "Bursa",
+                "Konya", "Ankara", "EskiÅŸehir"
              );
 
             IEnumerable<string> actual = flatten(data.Select(c => c.Value));
@@ -439,27 +439,28 @@ namespace iter.net.tests
                 }
             };
 
-            var leafs = _.climber(root: tree, leafs: t => t?.Leafs ?? new List<Tree>(), startDepth: 1);
+            var leafs = _.climber(root: tree, leafs: t => t.Leafs, startDepth: 1);
 
             foreach (var (depth, leaf, parent) in leafs)
             {
-                //string message = $"{string.Concat(Enumerable.Range(1, depth).Select(x => "–"))} {leaf} of {parent} \t\t [{depth}]";
-                string message = $"({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
+                var dash = string.Concat(string.Concat(Enumerable.Range(1, depth - 1).Select(x => "Â·")), "â””");
+                //string message = $"{dash} ({depth}, {leaf}, {(parent?.Id ?? "NULL")})";
+                string message = $"{dash} {leaf}";
                 WriteLine(message);
             }
 
             /*
-– #1
-–– #1.1
-––– #1.1.1
-––– #1.1.2
-–– #1.2
-––– #1.2.1
-–––– #1.2.1.1
-––––– #1.2.1.1.1
-–––– #1.2.1.2
-––––– #1.2.1.2.1
-––– #1.2.2
+â€“ #1
+â€“â€“ #1.1
+â€“â€“â€“ #1.1.1
+â€“â€“â€“ #1.1.2
+â€“â€“ #1.2
+â€“â€“â€“ #1.2.1
+â€“â€“â€“â€“ #1.2.1.1
+â€“â€“â€“â€“â€“ #1.2.1.1.1
+â€“â€“â€“â€“ #1.2.1.2
+â€“â€“â€“â€“â€“ #1.2.1.2.1
+â€“â€“â€“ #1.2.2
              */
         }
 
@@ -467,7 +468,7 @@ namespace iter.net.tests
         {
             public List<Tree> Leafs { get; set; }
             public string Id { get; set; }
-            public override string ToString() =>  $"{Id}";
+            public override string ToString() => $"{Id}";
         }
     }
 }
