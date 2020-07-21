@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace fn.net
@@ -211,5 +212,112 @@ namespace fn.net
         /// <returns></returns>
         [Pure]
         public static TResult reduce<TSource, TAccumulate, TResult>(IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector) => source.Aggregate(seed, func, resultSelector);
+
+        /// <summary>
+        /// TODO #Doc #FN
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="fn"></param>
+        public static IEnumerable<(T value, int index)> iter<T>(IEnumerable<T> source) => source.Select((item, index) => (item, index));
+
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="count"></param>
+        /// <param name="function"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<T> repeat<T>(Func<T> function, int count)
+        {
+            for (int i = 0; i < count; i++)
+                yield return function();
+        }
+
+
+        /// <summary>
+        /// https://codereview.stackexchange.com/a/90198/32074
+        /// TODO with yield return
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<IEnumerable<T>> chunks<T>(IEnumerable<T> collection, int size)
+        {
+            List<List<T>> chunks = new List<List<T>>();
+            int chunkCount = collection.Count() / size;
+
+            if (collection.Count() % size > 0)
+            {
+                ++chunkCount;
+            }
+
+            for (int i = 0; i < chunkCount; i++)
+            {
+                chunks.Add(collection.Skip(i * size).Take(size).ToList());
+            }
+
+            return chunks;
+        }
+
+        #region Instance
+        /// <summary>
+        /// Returns the default constructor as delegate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static Func<T> ctor<T>() where T : new()
+        {
+            return () => new T();
+        }
+
+        /// <summary>
+        /// Returns the constructor with single argument
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T1"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static Func<T1, T> ctor<T1, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1) });
+
+            return t1 => ctor != null ? (T)ctor.Invoke(new object[] { t1 }) : default;
+        }
+
+        /// <summary>
+        /// Returns the constructor with two arguments
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <returns></returns>
+        public static Func<T1, T2, T> ctor<T1, T2, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2) });
+
+            return (t1, t2) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2 }) : default;
+        }
+
+        /// <summary>
+        /// Returns the constructor with three arguments
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="T3"></typeparam>
+        /// <returns></returns>
+        public static Func<T1, T2, T3, T> ctor<T1, T2, T3, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3) });
+
+            return (t1, t2, t3) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3 }) : default;
+        }
+        #endregion
     }
 }

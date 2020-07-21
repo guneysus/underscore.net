@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
-using static fn.net.FnX;
 using _ = fn.net.Fn;
 
 namespace fn.net.tests

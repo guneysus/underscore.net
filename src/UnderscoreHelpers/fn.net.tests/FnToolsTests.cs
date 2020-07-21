@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
-using static fn.net.FnX;
 using _ = fn.net.Fn;
 
 namespace fn.net.tests
@@ -24,9 +23,9 @@ namespace fn.net.tests
 
             int[] expected = new int[] { 10, 10, 10 };
 
-            Assert.Equal(expected.AsEnumerable(), repeat(fn, 3));
-            Assert.Equal(expected.AsEnumerable(), repeat(fn2, 3));
-            Assert.Equal(expected.AsEnumerable(), repeat(fn3, 3));
+            Assert.Equal(expected.AsEnumerable(), _.repeat(fn, 3));
+            Assert.Equal(expected.AsEnumerable(), _.repeat(fn2, 3));
+            Assert.Equal(expected.AsEnumerable(), _.repeat(fn3, 3));
         }
 
         [Fact]
@@ -41,7 +40,7 @@ namespace fn.net.tests
                 new List<int>{5},
             };
 
-            IEnumerable<IEnumerable<int>> actual = chunk(mylist, 2);
+            IEnumerable<IEnumerable<int>> actual = _.chunks(mylist, 2);
 
             for (int i = 0; i < expected.Count; i++)
             {
