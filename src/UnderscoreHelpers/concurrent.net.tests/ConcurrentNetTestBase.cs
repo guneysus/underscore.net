@@ -24,7 +24,7 @@ namespace concurrent.net.tests
         [Fact]
         public void Simple_lazy_tests()
         {
-            var panda = _.lazy(new Panda());
+            var panda = _.lazy(() => new Panda());
         }
 
         class Panda

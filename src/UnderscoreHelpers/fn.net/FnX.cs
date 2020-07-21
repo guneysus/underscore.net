@@ -114,13 +114,6 @@ namespace fn.net
         public static Func<TResult, TResult> pipe<TResult>(Func<TResult, TResult> f1, Func<TResult, TResult> f2, Func<TResult, TResult> f3, Func<TResult, TResult> f4, Func<TResult, TResult> f5, Func<TResult, TResult> f6, Func<TResult, TResult> f7, Func<TResult, TResult> f8, Func<TResult, TResult> f9, Func<TResult, TResult> f10, Func<TResult, TResult> f11, Func<TResult, TResult> f12, Func<TResult, TResult> f13, Func<TResult, TResult> f14, Func<TResult, TResult> f15, Func<TResult, TResult> f16, Func<TResult, TResult> f17, Func<TResult, TResult> f18, Func<TResult, TResult> f19, Func<TResult, TResult> f20, Func<TResult, TResult> f21, Func<TResult, TResult> f22, Func<TResult, TResult> f23, Func<TResult, TResult> f24, Func<TResult, TResult> f25) => v => f25(f24(f23(f22(f21(f20(f19(f18(f17(f16(f15(f14(f13(f12(f11(f10(f9(f8(f7(f6(f5(f4(f3(f2(f1(v)))))))))))))))))))))))));
         #endregion
 
-        #region bind
-
-        
-        public static Func<T2, TResult> bind<T1, T2, TResult>(Func<T1> ft1, Func<T1, T2, TResult> ft1t2tr) => (T2 t2) => ft1t2tr(ft1(), t2);
-        public static Func<T2, T3, TResult> bind<T1, T2, T3, TResult>(Func<T1> ft1, Func<T1, T2, T3, TResult> ft1t2t3tr) => (T2 t2, T3 t3) => ft1t2t3tr(ft1(), t2, t3);
-        public static Func<T2, T3, T4, TResult> bind<T1, T2, T3, T4, TResult>(Func<T1> ft1, Func<T1, T2, T3, T4, TResult> ft1t2t3t4tr) => (T2 t2, T3 t3, T4 t4) => ft1t2t3t4tr(ft1(), t2, t3, t4);
-        #endregion
 
         #region IEnumerable functions
         /// <summary>

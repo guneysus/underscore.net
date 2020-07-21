@@ -6,7 +6,7 @@ namespace fn.net
 {
     public static class Fn
     {
-        #region bind | compose functions up to 5
+        #region bind | compose functions up to 5 starting a generator func
         public static Func<TResult> bind<T1, TResult>(
     Func<T1> f1,
     Func<T1, TResult> fr) => () => fr(f1());
@@ -15,11 +15,6 @@ namespace fn.net
             Func<T1> f1,
             Func<T1, T2> f2,
             Func<T2, TResult> fr) => () => fr(f2(f1()));
-
-        public static Func<TResult> curry<T1, T2, TResult>(
-            T1 t1,
-            Func<T1, T2> f1,
-            Func<T2, TResult> fr) => () => fr(f1(t1));
 
         public static Func<TResult> bind<T1, T2, T3, TResult>(
             Func<T1> f1,
@@ -33,6 +28,24 @@ namespace fn.net
             Func<T2, T3> f3,
             Func<T3, T4> f4,
             Func<T4, TResult> fr) => () => fr(f4(f3(f2(f1()))));
+        #endregion
+
+        #region bind | compose functions up to 5
+
+        public static Func<T1, TResult> bind<T1, T2, TResult>(
+            Func<T1, T2> f1,
+            Func<T2, TResult> fr) => t1 => fr(f1(t1));
+
+        public static Func<T1, TResult> bind<T1, T2, T3, TResult>(
+            Func<T1, T2> f1,
+            Func<T2, T3> f2,
+            Func<T3, TResult> fr) => t1 => fr(f2(f1(t1)));
+
+        public static Func<T1, TResult> bind<T1, T2, T3, T4, TResult>(
+            Func<T1, T2> f1,
+            Func<T2, T3> f2,
+            Func<T3, T4> f3,
+            Func<T4, TResult> fr) => t1 => fr(f3(f2(f1(t1))));
         #endregion
 
         #region curry | decrease the degree of functions by 1

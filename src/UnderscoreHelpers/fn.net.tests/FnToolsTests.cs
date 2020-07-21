@@ -98,9 +98,5 @@ namespace fn.net.tests
 
             Assert.Equal(60, reduce(new int[] { 10, 20, 30 }, 0, (a, b) => a + b));
         }
-
-
     }
-
-
 }
