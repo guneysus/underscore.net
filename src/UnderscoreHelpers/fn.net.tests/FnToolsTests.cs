@@ -25,7 +25,7 @@ namespace fn.net.tests
 
             Assert.Equal(expected.AsEnumerable(), repeat(fn, 3));
             Assert.Equal(expected.AsEnumerable(), repeat(fn2, 3));
-            Assert.Equal(expected.AsEnumerable(), repeat(fn3, 2));
+            Assert.Equal(expected.AsEnumerable(), repeat(fn3, 3));
         }
 
         [Fact]
