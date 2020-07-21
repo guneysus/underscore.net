@@ -4,6 +4,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using static fn.net.FnX;
+using _ = fn.net.Fn;
 
 namespace fn.net.tests
 {
@@ -39,32 +40,6 @@ namespace fn.net.tests
             var expected = 1000.0m;
 
             Assert.Equal(expected, actual);
-        }
-
-
-        [Fact]
-        public void Simple_pipe()
-        {
-            var msg = "   lorem ipsum di amet           ";
-
-            Func<string, string> trimSpaces = new Func<string, string>(s => s.Trim());
-            Func<string, string> trimLodashes = new Func<string, string>(s => s.Trim('_'));
-            Func<string, string> padRight = s => s.PadRight(30, '_');
-            Func<string, string> padLeft = s => s.PadLeft(45, '_');
-            Func<string, string> upper = s => s.ToUpperInvariant();
-
-            var pipeline = pipe(
-                trimSpaces
-                , padRight
-                , padLeft
-                , trimLodashes
-                , upper
-                );
-
-            var actual = pipeline(msg);
-
-            WriteLine(actual);
-            Assert.Equal("LOREM IPSUM DI AMET", actual);
         }
     }
 }

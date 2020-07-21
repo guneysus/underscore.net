@@ -84,7 +84,6 @@ namespace fn.net.tests
             Assert.Equal(expected, actual);
         }
 
-
         [Fact]
         public void bind_four_functions_1()
         {
@@ -101,9 +100,6 @@ namespace fn.net.tests
 
             Assert.Equal(expected, actual);
         }
-
-
-
 
         [Fact]
         public void bind_five_functions()
@@ -122,7 +118,45 @@ namespace fn.net.tests
 
             Assert.Equal(expected, actual);
         }
+    }
 
+    public class PipeTests : FnTestBase
+    {
+        public PipeTests(ITestOutputHelper output) : base(output)
+        {
+        }
 
+        [Fact]
+        public void pipe_tests_with_number()
+        {
+            Func<int, int> incr = a => ++a;
+
+            Assert.Equal(13, _.pipe(incr, incr, incr)(10));
+        }
+
+        [Fact]
+        public void Simple_pipe()
+        {
+            var msg = "   lorem ipsum di amet           ";
+
+            Func<string, string> trimSpaces = new Func<string, string>(s => s.Trim());
+            Func<string, string> trimLodashes = new Func<string, string>(s => s.Trim('_'));
+            Func<string, string> padRight = s => s.PadRight(30, '_');
+            Func<string, string> padLeft = s => s.PadLeft(45, '_');
+            Func<string, string> upper = s => s.ToUpperInvariant();
+
+            var pipeline = _.pipe(
+                trimSpaces
+                , padRight
+                , padLeft
+                , trimLodashes
+                , upper
+                );
+
+            var actual = pipeline(msg);
+
+            WriteLine(actual);
+            Assert.Equal("LOREM IPSUM DI AMET", actual);
+        }
     }
 }

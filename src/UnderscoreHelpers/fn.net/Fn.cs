@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace fn.net
@@ -77,5 +78,17 @@ namespace fn.net
         public static Func<TR> curry<T1, T2, T3, T4, TR>(Func<T1, T2, T3, T4, TR> f, T1 t1, T2 t2, T3 t3, T4 t4) => () => f(t1, t2, t3, t4);
 
         #endregion
+
+        /// <summary>
+        /// compose N functions that parameter and return type is same
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="functions"></param>
+        /// <returns></returns>
+        public static Func<T, T> pipe<T>(params Func<T, T>[] functions)
+        {
+            Func<Func<T, T>, Func<T, T>, Func<T, T>> f = (Func<T, T> fl, Func<T, T> fr) => t => fr(fl(t));
+            return functions.Aggregate(f);
+        }
     }
 }
