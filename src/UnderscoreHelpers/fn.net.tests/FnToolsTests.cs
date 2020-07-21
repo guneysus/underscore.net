@@ -4,6 +4,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using static fn.net.FnX;
+using _ = fn.net.Fn;
 
 namespace fn.net.tests
 {
@@ -60,11 +61,15 @@ namespace fn.net.tests
                 new Product{ Price = 300 },
             };
 
-            Action<Product> campaign = (p) => p.Price *= 0.95m;
+            Func<Product, Product> campaign = (p) =>
+            {
+                p.Price *= 0.95m;
+                return p;
+            };
 
-            apply(products, campaign);
+            var result = _.apply(products, campaign);
 
-            Assert.Equal(95.00m, products.First().Price);
+            Assert.Equal(95.00m, result.First().Price);
         }
 
         [Fact]
@@ -79,7 +84,7 @@ namespace fn.net.tests
 
             Func<Product, Product> campaign = (p) => new Product { Price = p.Price + 5.00m };
 
-            IEnumerable<Product> newProducts = apply<Product, Product>(products, campaign);
+            IEnumerable<Product> newProducts = _.apply(products, campaign);
 
             Assert.Equal(105.00m, newProducts.First().Price);
         }

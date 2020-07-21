@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -135,5 +136,45 @@ namespace fn.net
             Func<Func<T, T>, Func<T, T>, Func<T, T>> f = (Func<T, T> fl, Func<T, T> fr) => t => fr(fl(t));
             return functions.Aggregate(f);
         }
+
+
+        /// <summary>
+        /// TODO #Test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="seed"></param>
+        /// <param name="fns"></param>
+        /// <returns></returns>
+        public static Func<T, T> aggregate<T>(Func<T> seed, params Func<T, T>[] fns) => _ => fns.Aggregate(seed(), (t, f) => f(t));
+
+        /// <summary>
+        /// /// TODO #Doc #FN
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="fn"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<T> apply<T>(IEnumerable<T> source, Func<T, T> fn)
+        {
+            foreach (T item in source)
+                yield return fn(item);
+        }
+
+        /// <summary>
+        /// /// TODO #Doc #FN
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="fn"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<TResult> map<T, TResult>(IEnumerable<T> source, Func<T, TResult> fn)
+        {
+            //return source.Select(fn);
+            foreach (T item in source)
+                yield return fn(item);
+        }
+
     }
 }
