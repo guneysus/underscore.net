@@ -99,9 +99,9 @@ namespace fn.net.tests
         {
             Func<int, int, int> fn = (a, b) => a * b;
 
-            Assert.Equal(120, reduce(new int[] { 1, 2, 3, 4, 5 }, 1, fn));
+            Assert.Equal(120, _.reduce(new int[] { 1, 2, 3, 4, 5 }, 1, fn));
 
-            Assert.Equal(60, reduce(new int[] { 10, 20, 30 }, 0, (a, b) => a + b));
+            Assert.Equal(60, _.reduce(new int[] { 10, 20, 30 }, 0, (a, b) => a + b));
         }
     }
 }

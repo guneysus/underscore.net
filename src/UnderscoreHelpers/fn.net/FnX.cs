@@ -22,51 +22,6 @@ namespace fn.net
         /// TODO #doc
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        [Pure]
-        public static T reduce<T>(IEnumerable<T> source, Func<T, T, T> func)
-        {
-            return source.Aggregate(func);
-        }
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <typeparam name="R"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="seed"></param>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        [Pure]
-        public static R reduce<T, R>(IEnumerable<T> source, R seed, Func<R, T, R> func)
-        {
-            return source.Aggregate(seed, func);
-        }
-
-        /// <summary>
-        /// TODO #test #doc
-        /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <typeparam name="TAccumulate"></typeparam>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="seed"></param>
-        /// <param name="func"></param>
-        /// <param name="resultSelector"></param>
-        /// <returns></returns>
-        [Pure]
-        public static TResult reduce<TSource, TAccumulate, TResult>(IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
-        {
-            return source.Aggregate(seed, func, resultSelector);
-        }
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="count"></param>
         /// <param name="function"></param>
         /// <returns></returns>
