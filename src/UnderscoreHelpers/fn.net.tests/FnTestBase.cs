@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
-using static fn.net.Fn;
+using static fn.net.FnX;
 
 namespace fn.net.tests
 {
@@ -21,132 +21,50 @@ namespace fn.net.tests
         public void WriteLine(string format, params object[] args) => output.WriteLine(format, args);
     }
 
-    public class FnToolsTests : FnTestBase
+    public class ComposeTests : FnTestBase
     {
-        public FnToolsTests(ITestOutputHelper output) : base(output)
-        {
-        }
-        [Fact]
-        public void times_tests()
-        {
-            Func<int> fn = delegate () { return 10; };
-            Func<int> fn2 = () => 10;
-            Func<int> fn3 = () => 10;
-
-            int[] expected = new int[] { 10, 10, 10 };
-
-            Assert.Equal(expected.AsEnumerable(), times(3, fn));
-            Assert.Equal(expected.AsEnumerable(), times(3, fn2));
-            Assert.Equal(expected.AsEnumerable(), times(3, fn3));
-        }
-
-        [Fact]
-        public void Chunk_Tests()
-        {
-            var mylist = new List<int>() { 1, 2, 3, 4, 5 };
-
-            List<List<int>> expected = new List<List<int>>
-            {
-                new List<int>{1, 2},
-                new List<int>{3, 4},
-                new List<int>{5},
-            };
-
-            IEnumerable<IEnumerable<int>> actual = chunk(mylist, 2);
-
-            for (int i = 0; i < expected.Count; i++)
-            {
-                List<int> exp = expected[i];
-                IEnumerable<int> act = actual.ElementAt(i);
-                Assert.Equal(exp, act);
-            }
-        }
-
-        [Fact]
-        public void Apply()
-        {
-            Product[] products = new Product[]
-            {
-                new Product{ Price = 100 },
-                new Product{ Price = 200 },
-                new Product{ Price = 300 },
-            };
-
-            Action<Product> campaign = (p) => p.Price *= 0.95m;
-
-            apply(products, campaign);
-
-            Assert.Equal(95.00m, products.First().Price);
-        }
-
-        [Fact]
-        public void Map()
-        {
-            Product[] products = new Product[]
-            {
-                new Product{ Price = 100 },
-                new Product{ Price = 200 },
-                new Product{ Price = 300 },
-            };
-
-            Func<Product, Product> campaign = (p) => new Product { Price = p.Price + 5.00m };
-
-            IEnumerable<Product> newProducts = map(products, campaign);
-
-            Assert.Equal(105.00m, newProducts.First().Price);
-        }
-
-        private class Product
-        {
-            public decimal Price { get; set; }
-        }
-
-        [Fact]
-        public void Reduce()
-        {
-            Func<int, int, int> fn = (a, b) => a * b;
-
-            Assert.Equal(120, reduce(new int[] { 1, 2, 3, 4, 5 }, 1, fn));
-
-            Assert.Equal(60, reduce(new int[] { 10, 20, 30 }, 0, (a, b) => a + b));
-        }
-
-
-    }
-
-    public class ReflectionHelpersTests : FnTestBase
-    {
-        public ReflectionHelpersTests(ITestOutputHelper output) : base(output)
+        public ComposeTests(ITestOutputHelper output) : base(output)
         {
         }
 
         [Fact]
-        public void Parameterless_constructor()
+        public void Simple_Compose()
         {
-            var datetime = ctor<DateTime>()();
-            Assert.Equal(new DateTime(), datetime);
+            string num = " 1000.0  ";
+            var trim = new Func<string, string>(s => s.Trim());
+            Func<string, Decimal> toDecimal = decimal.Parse;
+
+            Func<string, decimal> composed = compose(trim, toDecimal);
+            var actual = composed(num);
+            var expected = 1000.0m;
+
+            Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void Noexisting_Constructor()
-        {
-            var datetime = ctor<DateTime, string>()("dummy-string");
-            Assert.Equal(default, datetime);
-        }
 
         [Fact]
-        public void Constructors_with_parameters()
+        public void Simple_pipe()
         {
-            var datetime1 = ctor<DateTime, int, int, int>()(2006, 12, 31);
-            Assert.Equal(new DateTime(2006, 12, 31), datetime1);
+            var msg = "   lorem ipsum di amet           ";
 
-            var datetime2 = ctor<DateTime, long, DateTimeKind>()(0, DateTimeKind.Utc);
-            Assert.Equal(default, datetime2);
+            Func<string, string> trimSpaces = new Func<string, string>(s => s.Trim());
+            Func<string, string> trimLodashes = new Func<string, string>(s => s.Trim('_'));
+            Func<string, string> padRight = s => s.PadRight(30, '_');
+            Func<string, string> padLeft = s => s.PadLeft(45, '_');
+            Func<string, string> upper = s => s.ToUpperInvariant();
 
-            var datetime3 = ctor<DateTime, int, int, int>()(2006, 12, 31);
+            var pipeline = pipe(
+                trimSpaces
+                , padRight
+                , padLeft
+                , trimLodashes
+                , upper
+                );
 
+            var actual = pipeline(msg);
+
+            WriteLine(actual);
+            Assert.Equal("LOREM IPSUM DI AMET", actual);
         }
     }
-
-
 }
