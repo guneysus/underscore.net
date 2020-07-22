@@ -129,12 +129,6 @@ namespace std.net.tests
             Assert.Equal(3, len(list(1, 3, 5)));
         }
 
-        [Fact]
-        public void Factorial_Tests()
-        {
-            Assert.Equal(6, Factorial(3));
-        }
-
         #region Bin
 
         [Fact]

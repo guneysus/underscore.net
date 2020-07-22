@@ -65,10 +65,14 @@ namespace underscore.net
             // TODO REVIEW return new DateTime(1970, 1, 1, 0, 0, 0, 0, dateTimeKind).AddSeconds(unixTimeStamp);
         }
 
+        [Pure]
+        public static DateTime datetimeunix(DateTimeKind dateTimeKind, long seconds) => datetimeunix(seconds, dateTimeKind);
+
         #region TODO datetime and timespan factory methods
         public static DateTime datetime() => default;
         public static DateTime datetime(long ticks) => new DateTime(ticks);
         public static DateTime datetime(long ticks, DateTimeKind kind) => new DateTime(ticks, kind);
+        public static DateTime datetime(DateTimeKind kind, long ticks) => datetime(ticks, kind);
         public static DateTime datetime(int year, int month, int day) => new DateTime(year, month, day);
         public static DateTime datetime(int year, int month, int day, Calendar calendar) => new DateTime(year, month, day, calendar);
         public static DateTime datetime(int year, int month, int day, int hour, int minute, int second) => new DateTime(year, month, day, hour, minute, second);
@@ -473,13 +477,16 @@ namespace underscore.net
         /// TODO #Doc 
         /// </summary>
         /// <param name="c"></param>
-        /// <param name="repeat"></param>
+        /// <param name="times"></param>
         /// <returns></returns>
         [Pure]
-        public static string repeat(char c, int repeat)
+        public static string repeat(char c, int times)
         {
-            return new string(c, repeat);
+            return new string(c, times);
         }
+
+        [Pure]
+        public static string repeat(int times, char c) => repeat(c, times);
 
         /// <summary>
         /// TODO #Doc 
@@ -492,6 +499,9 @@ namespace underscore.net
         {
             return string.Concat(Enumerable.Repeat(v, repeat));
         }
+
+        [Pure]
+        public static string repeat(int times, string v) => repeat(v, times);
 
         /// <summary>
         /// TODO #Doc 

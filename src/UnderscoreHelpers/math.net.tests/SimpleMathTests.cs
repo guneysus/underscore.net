@@ -28,5 +28,13 @@ namespace math.net.tests
             Assert.Equal(expected, _.floor(number));
         }
 
+
+        [Fact]
+        public void Factorial_Tests()
+        {
+            Assert.Equal(6, _.factorial(3));
+        }
+
+
     }
 }

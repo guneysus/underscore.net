@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Text;
 
 namespace math.net
@@ -84,6 +85,9 @@ namespace math.net
             return Math.Round(number, precision);
         }
 
+        [Pure]
+        public static decimal round(int precision, decimal number) => round(number, precision);
+
         /// <summary>
         /// TODO #doc #test
         /// </summary>
@@ -94,6 +98,21 @@ namespace math.net
         public static double round(double number, int precision)
         {
             return Math.Round(number, precision);
+        }
+
+        [Pure]
+        public static double round(int precision, double number) => round(number, precision);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int factorial(int number)
+        {
+            IEnumerable<int> source = Enumerable.Range(1, number);
+            return source.Aggregate((a, b) => a * b);
         }
     }
 }

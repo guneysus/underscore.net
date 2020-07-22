@@ -435,5 +435,65 @@ namespace iter.net
         /// </summary>
         [Pure]
         public static IEnumerable<char> digits() => "0123456789";
+
+
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<T> drop<T>(List<T> collection, int size)
+        {
+            return collection.Skip(size);
+        }
+
+        [Pure]
+        public static IEnumerable<T> drop<T>(int size, List<T> collection) => drop(collection, size);
+
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IQueryable<T> drop<T>(IQueryable<T> collection, int size)
+        {
+            return collection.Skip(size);
+        }
+
+        [Pure]
+        public static IQueryable<T> drop<T>(int size, IQueryable<T> collection) => drop(collection, size);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<T> dropWhile<T>(List<T> collection, Func<T, bool> predicate)
+        {
+            return collection.Where(x => !predicate(x));
+        }
+
+        [Pure]
+        public static IQueryable<T> dropWhile<T>(IQueryable<T> collection, Func<T, bool> predicate)
+        {
+            return collection.Where(x => !predicate(x));
+        }
+
+        [Pure]
+        public static IQueryable<T> dropWhile<T>(Func<T, bool> predicate, IQueryable<T> collection) => dropWhile(collection, predicate);
+
+        [Pure]
+        public static IEnumerable<T> dropWhile<T>(Func<T, bool> predicate, List<T> collection) => dropWhile(collection, predicate);
     }
 }

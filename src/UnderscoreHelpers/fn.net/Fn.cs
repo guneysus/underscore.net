@@ -237,6 +237,9 @@ namespace fn.net
                 yield return function();
         }
 
+        [Pure]
+        public static IEnumerable<T> repeat<T>(int count, Func<T> function) => repeat(count, function);
+
 
         /// <summary>
         /// https://codereview.stackexchange.com/a/90198/32074
@@ -264,6 +267,17 @@ namespace fn.net
 
             return chunks;
         }
+
+        /// <summary>
+        /// https://codereview.stackexchange.com/a/90198/32074
+        /// TODO with yield return
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<IEnumerable<T>> chunks<T>(int size, IEnumerable<T> collection) => chunks(size, collection);
 
         #region Instance
         /// <summary>
@@ -330,28 +344,6 @@ namespace fn.net
         public static Compose<object> compose(params Expression<Func<string, object>>[] exps) => new Compose<object>(exps);
 
         #endregion
-    }
-
-    public class Compose<T> : Compose
-    {
-        internal Compose(params Expression<Func<string, object>>[] exps)
-        {
-            data = exps.ToList().ToDictionary(x => x.Parameters.Single().Name, x => new Func<object>(() => x.Compile()(default)));
-        }
-    }
-
-    public class Compose
-    {
-        protected Dictionary<string, Func<object>> data;
-        protected Compose() { }
-
-        public TResult Get<TResult>(string name) => data.ContainsKey(name) ? (TResult)data[name]() : default;
-
-        public TResult Get<TResult>(Expression<Func<Compose, TResult>> prop)
-        {
-            string name = prop.Parameters.Single().Name;
-            return data.ContainsKey(name) ? (TResult)data[name]() : default;
-        }
     }
 
 

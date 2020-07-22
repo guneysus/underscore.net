@@ -484,23 +484,6 @@ namespace std.net
             return new SortedDictionary<TKey, TValue>(items.ToDictionary(x => x.Item1, x => x.Item2), comparer);
         }
 
-        #region math
-
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        [Pure]
-        public static int Factorial(int number)
-        {
-            IEnumerable<int> source = Enumerable.Range(1, number);
-            return source.Aggregate((a, b) => a * b);
-        }
-
-        #endregion
-
         public static Guid guid() => Guid.NewGuid();
 
         #region Bin
@@ -672,5 +655,14 @@ namespace std.net
         {
             return RegexReplace(text, pattern, string.Empty);
         }
+
+        [Pure]
+        public static string join<T>(string seperator, IEnumerable<T> arr)
+        {
+            return string.Join(seperator, arr);
+        }
+
+        [Pure]
+        public static string join<T>(IEnumerable<T> arr, string seperator) => join(seperator, arr);
     }
 }
