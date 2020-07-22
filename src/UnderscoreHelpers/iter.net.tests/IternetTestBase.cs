@@ -114,10 +114,10 @@ namespace iter.net.tests
         {
             IComparer<string> comparer = comparator((string a, string b) => a == b ? 0 : -1);
 
-            SortedDictionary<string, int> actual1 = sortedDict(comparer, ("TR", 90), ("MY", 60), ("CY", 357));
-            SortedDictionary<string, int> actual2 = sortedDict(comparer, ("CY", 357), ("TR", 90), ("MY", 60));
-            SortedDictionary<string, int> actual3 = sortedDict(("CY", 357), ("TR", 90), ("MY", 60));
-            SortedDictionary<string, int> actual4 = sortedDict(("TR", 90), ("MY", 60), ("CY", 357));
+            SortedDictionary<string, int> actual1 = sorteddict(comparer, ("TR", 90), ("MY", 60), ("CY", 357));
+            SortedDictionary<string, int> actual2 = sorteddict(comparer, ("CY", 357), ("TR", 90), ("MY", 60));
+            SortedDictionary<string, int> actual3 = sorteddict(("CY", 357), ("TR", 90), ("MY", 60));
+            SortedDictionary<string, int> actual4 = sorteddict(("TR", 90), ("MY", 60), ("CY", 357));
 
             SortedDictionary<string, int> expected = new SortedDictionary<string, int> {
                 { "TR", 90 },

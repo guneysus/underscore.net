@@ -464,7 +464,7 @@ namespace std.net
         /// <param name="items"></param>
         /// <returns></returns>
         [Pure]
-        public static SortedDictionary<TKey, TValue> sortedDict<TKey, TValue>(params ValueTuple<TKey, TValue>[] items)
+        public static SortedDictionary<TKey, TValue> sorteddict<TKey, TValue>(params ValueTuple<TKey, TValue>[] items)
         {
             return new SortedDictionary<TKey, TValue>(items.ToDictionary(x => x.Item1, x => x.Item2));
         }
@@ -479,97 +479,13 @@ namespace std.net
         /// <param name="items"></param>
         /// <returns></returns>
         [Pure]
-        public static SortedDictionary<TKey, TValue> sortedDict<TKey, TValue>(IComparer<TKey> comparer, params ValueTuple<TKey, TValue>[] items)
+        public static SortedDictionary<TKey, TValue> sorteddict<TKey, TValue>(IComparer<TKey> comparer, params ValueTuple<TKey, TValue>[] items)
         {
             return new SortedDictionary<TKey, TValue>(items.ToDictionary(x => x.Item1, x => x.Item2), comparer);
         }
 
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="number"></param>
-        /// <param name="precision"></param>
-        /// <returns></returns>
-        [Pure]
-        public static decimal round(decimal number, int precision)
-        {
-            return Math.Round(number, precision);
-        }
-
-        /// <summary>
-        /// TODO #doc #test
-        /// </summary>
-        /// <param name="number"></param>
-        /// <param name="precision"></param>
-        /// <returns></returns>
-        [Pure]
-        public static double round(double number, int precision)
-        {
-            return Math.Round(number, precision);
-        }
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        [Pure]
-        public static decimal floor(decimal number)
-        {
-            return Math.Floor(number);
-        }
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        [Pure]
-        public static double floor(double number)
-        {
-            return Math.Floor(number);
-        }
-
-
         #region math
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="ir"></param>
-        /// <param name="np"></param>
-        /// <param name="pv"></param>
-        /// <param name="fv"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        [Pure]
-        public static decimal pmt(double ir, int np, decimal pv, decimal fv = 0, int type = 0)
-        {
-            /*
-              from: https://stackoverflow.com/a/22385930/1766716
-               * ir   - interest rate per month
-               * np   - number of periods (months)
-               * pv   - present value
-               * fv   - future value
-               * type - when the payments are due:
-               *        0: end of the period, e.g. end of month (default)
-               *        1: beginning of period
-               */
-            if (ir == 0)
-            {
-                return -(pv + fv) / np;
-            }
 
-            decimal pvif = (decimal)Math.Pow(1 + ir, np);
-            decimal pmt = (-(decimal)ir * pv * (pvif + fv)) / (pvif - 1);
-
-            if (type == 1)
-            {
-                pmt /= 1 + (decimal)ir;
-            }
-
-            return pmt;
-        }
 
         /// <summary>
         /// TODO #doc

@@ -129,25 +129,10 @@ namespace std.net.tests
             Assert.Equal(3, len(list(1, 3, 5)));
         }
 
-        [Theory]
-        [InlineData(0.0175d, 6, 1799.00, -318.46d)]
-        public void pmt_tests(double rate, int term, decimal amount, decimal expected)
-        {
-            Assert.Equal(expected, round(pmt(rate, term, amount), 2));
-        }
-
         [Fact]
         public void Factorial_Tests()
         {
             Assert.Equal(6, Factorial(3));
-        }
-
-        [Theory]
-        [InlineData(4.006, 4.0)]
-        [InlineData(0.046, 0)]
-        public void floor_tests(decimal number, decimal expected)
-        {
-            Assert.Equal(expected, floor(number));
         }
 
         #region Bin
