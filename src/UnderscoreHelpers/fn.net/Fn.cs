@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
@@ -319,5 +320,40 @@ namespace fn.net
             return (t1, t2, t3) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3 }) : default;
         }
         #endregion
+
+        #region Compose Object
+        /// <summary>
+        /// Compose object like tuples
+        /// </summary>
+        /// <param name="exps"></param>
+        /// <returns></returns>
+        public static Compose<object> compose(params Expression<Func<string, object>>[] exps) => new Compose<object>(exps);
+
+        #endregion
     }
+
+    public class Compose<T> : Compose
+    {
+        internal Compose(params Expression<Func<string, object>>[] exps)
+        {
+            data = exps.ToList().ToDictionary(x => x.Parameters.Single().Name, x => new Func<object>(() => x.Compile()(default)));
+        }
+    }
+
+    public class Compose
+    {
+        protected Dictionary<string, Func<object>> data;
+        protected Compose() { }
+
+        public TResult Get<TResult>(string name) => data.ContainsKey(name) ? (TResult)data[name]() : default;
+
+        public TResult Get<TResult>(Expression<Func<Compose, TResult>> prop)
+        {
+            string name = prop.Parameters.Single().Name;
+            return data.ContainsKey(name) ? (TResult)data[name]() : default;
+        }
+    }
+
+
+
 }

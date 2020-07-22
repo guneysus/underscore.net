@@ -45,5 +45,7 @@ namespace concurrent.net
         /// <param name="minBufferSize"></param>
         /// <returns></returns>
         public static IMemoryOwner<T> memory<T>(int minBufferSize) => MemoryPool<T>.Shared.Rent(minBufferSize);
+
+
     }
 }

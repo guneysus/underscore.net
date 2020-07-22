@@ -11,6 +11,10 @@ namespace fn.net.tests
     {
         protected readonly ITestOutputHelper output;
 
+        protected FnTestBase()
+        {
+
+        }
         public FnTestBase(ITestOutputHelper output)
         {
             this.output = output;
@@ -21,9 +25,9 @@ namespace fn.net.tests
         public void WriteLine(string format, params object[] args) => output.WriteLine(format, args);
     }
 
-    public class ComposeTests : FnTestBase
+    public class BindTests : FnTestBase
     {
-        public ComposeTests(ITestOutputHelper output) : base(output)
+        public BindTests(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -39,6 +43,43 @@ namespace fn.net.tests
             var expected = 1000.0m;
 
             Assert.Equal(expected, actual);
+        }
+    }
+
+    public class ComposeTests : FnTestBase
+    {
+        public ComposeTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void Simple_Compose_tests()
+        {
+            var ahmed = _.compose(
+                FirstName => "Ahmed Şeref",
+                LastName => "Güneysu",
+                BirthDate => new DateTime(1989, 8, 21)
+            );
+
+            var mehmet = _.compose(
+                FirstName => "Mehmet",
+                LastName => "YILMAZ",
+                Age => 30);
+
+            var firstName = ahmed.Get<string>(FirstName => default);
+            var birthDate = ahmed.Get<DateTime>(BirthDate => default);
+            var ageOfMehmet = mehmet.Get<int>(Age => default);
+
+            Assert.Equal("Ahmed Şeref", firstName);
+
+            Assert.Throws<System.InvalidCastException>(() => {
+                var err = mehmet.Get<long>(Age => default);
+            });
+
+            Assert.Equal(30, ageOfMehmet);
+            Assert.Equal(default, ahmed.Get<int>(Age => default));
+
+
         }
     }
 }
