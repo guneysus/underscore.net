@@ -111,7 +111,7 @@ namespace underscore.net
         public static TimeSpan minutes(double minute) => TimeSpan.FromMinutes(minute);
         public static TimeSpan seconds(double second) => TimeSpan.FromSeconds(second);
         public static TimeSpan miliseconds(double milisecond) => TimeSpan.FromMilliseconds(milisecond);
-        public static TimeSpan ticks(long tick) => TimeSpan.FromTicks(tick); 
+        public static TimeSpan ticks(long tick) => TimeSpan.FromTicks(tick);
         #endregion
 
         /// <summary>
@@ -280,6 +280,31 @@ namespace underscore.net
                 }
             }
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// TODO Improve with yield return
+        /// </summary>
+        /// <param name="end"></param>
+        /// <param name="start"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<int> rrange(int end, int start = 0)
+        {
+            int current = end;
+            //List<int> result = new List<int>();
+
+            while (current > start)
+            {
+                current--;
+                yield return current;
+                //result.Add(current);
+            }
+
+            //return result;
+            yield break;
+        }
+
 
         #endregion
 
