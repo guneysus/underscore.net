@@ -72,14 +72,31 @@ namespace fn.net.tests
 
             Assert.Equal("Ahmed Þeref", firstName);
 
-            Assert.Throws<System.InvalidCastException>(() => {
+            Assert.Throws<System.InvalidCastException>(() =>
+            {
                 var err = mehmet.Get<long>(Age => default);
             });
 
             Assert.Equal(30, ageOfMehmet);
             Assert.Equal(default, ahmed.Get<int>(Age => default));
+        }
 
+        [Fact]
+        public void Swap()
+        {
+            Func<decimal, int, decimal> rounder = decimal.Round;
+            Func<int, decimal, decimal> swappedRounder = _.swap<decimal, int, decimal>(decimal.Round);
+
+            Func<decimal, decimal> oneDecimalRounder = _.curry(swappedRounder, 1);
+            Func<decimal, decimal> twoDecimalRounder = _.curry(swappedRounder, 2);
+
+            var result1 = oneDecimalRounder(100.244m);
+            var result2 = twoDecimalRounder(100.244m);
+
+            Assert.Equal(100.2m, result1);
+            Assert.Equal(100.24m, result2);
 
         }
+
     }
 }

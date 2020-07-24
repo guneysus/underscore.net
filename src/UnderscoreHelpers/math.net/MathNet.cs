@@ -85,9 +85,6 @@ namespace math.net
             return Math.Round(number, precision);
         }
 
-        [Pure]
-        public static decimal round(int precision, decimal number) => round(number, precision);
-
         /// <summary>
         /// TODO #doc #test
         /// </summary>
@@ -99,9 +96,6 @@ namespace math.net
         {
             return Math.Round(number, precision);
         }
-
-        [Pure]
-        public static double round(int precision, double number) => round(number, precision);
 
         /// <summary>
         /// TODO #doc

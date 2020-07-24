@@ -344,6 +344,16 @@ namespace fn.net
         public static Compose<object> compose(params Expression<Func<string, object>>[] exps) => new Compose<object>(exps);
 
         #endregion
+
+        /// <summary>
+        /// swap parameter orders and returns new function
+        /// </summary>
+        /// <typeparam name="T1"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <typeparam name="R"></typeparam>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static Func<T2, T1, R> swap<T1, T2, R>(Func<T1, T2, R> f) => (t2, t1) => f(t1, t2);
     }
 
 
