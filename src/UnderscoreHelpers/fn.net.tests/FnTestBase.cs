@@ -4,6 +4,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 using _ = fn.net.Fn;
+using math.net;
 
 namespace fn.net.tests
 {
@@ -95,7 +96,15 @@ namespace fn.net.tests
 
             Assert.Equal(100.2m, result1);
             Assert.Equal(100.24m, result2);
+        }
 
+        [Fact]
+        public void Memoizer_Tests()
+        {
+            var factorial = _.memoizer<int>(MathNet.factorial);
+
+            var fiveFactorial1 = factorial(5);
+            var fiveFactorial2 = factorial(5);
         }
 
     }

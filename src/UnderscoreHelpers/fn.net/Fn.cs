@@ -355,18 +355,90 @@ namespace fn.net
         /// <returns></returns>
         public static Func<T2, T1, R> swap<T1, T2, R>(Func<T1, T2, R> f) => (t2, t1) => f(t1, t2);
 
-        public static Action multicast(params Action[] actions)
+        public static Action combine(params Action[] actions)
         {
             return (Action)Delegate.Combine(actions.ToArray());
         }
 
-        public static Action multicast<T>(params Func<T>[] actions)
+        public static Action combine<T>(params Func<T>[] actions)
         {
             return () => { _ = (Func<T>)Delegate.Combine(actions.ToArray()); };
         }
 
+        /// <summary>
+        /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<T, TResult> memoizer<T, TResult>(Func<T, TResult> func)
+        {
+            var map = new Dictionary<T, TResult>();
+
+            return a =>
+            {
+                TResult value;
+                if (map.TryGetValue(a, out value))
+                {
+                    return value;
+                }
+
+                value = func(a);
+                map.Add(a, value);
+                return value;
+            };
+        }
+
+        /// <summary>
+        /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<T, T> memoizer<T>(Func<T, T> func)
+        {
+            var map = new Dictionary<T, T>();
+
+            return a =>
+            {
+                T value;
+                if (map.TryGetValue(a, out value))
+                {
+                    return value;
+                }
+
+                value = func(a);
+                map.Add(a, value);
+                return value;
+            };
+        }
+
+        /// <summary>
+        /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<(T1, T2), TResult> memoizer<T1, T2, TResult>(Func<(T1, T2), TResult> func)
+        {
+            var map = new Dictionary<(T1, T2), TResult>();
+
+            return a =>
+            {
+                TResult value;
+                if (map.TryGetValue(a, out value))
+                {
+                    return value;
+                }
+
+                value = func(a);
+                map.Add(a, value);
+                return value;
+            };
+        }
+
     }
-
-
-
 }
