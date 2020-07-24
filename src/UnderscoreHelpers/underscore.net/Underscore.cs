@@ -69,7 +69,8 @@ namespace underscore.net
         public static DateTime datetimeunix(DateTimeKind dateTimeKind, long seconds) => datetimeunix(seconds, dateTimeKind);
 
         #region TODO datetime and timespan factory methods
-        public static DateTime datetime() => default;
+        public static IDateTimeCalendarBuilder datetime() => SingletonFullyLazy<DateTimeBuilder>.Instance;
+
         public static DateTime datetime(long ticks) => new DateTime(ticks);
         public static DateTime datetime(long ticks, DateTimeKind kind) => new DateTime(ticks, kind);
         public static DateTime datetime(DateTimeKind kind, long ticks) => datetime(ticks, kind);
@@ -772,4 +773,52 @@ namespace underscore.net
         public static bool boolean(string value, params string[] trueValues) => trueValues.Contains(value.ToLowerInvariant());
         #endregion
     }
+
+    public static class Extensions
+    {
+        #region Extension Methods
+        public static IDateTimeYearBuilder calendar(
+            this IDateTimeCalendarBuilder that,
+            Calendar calendar) => that.Calendar(calendar);
+
+        public static IDateTimeMonthBuilder year(
+            this IDateTimeYearBuilder that,
+            int year) => that.Year(year);
+
+        public static IDateTimeDayBuilder month(
+            this IDateTimeMonthBuilder that,
+            int month) => that.Month(month);
+
+        public static IDateTimeHourBuilder day(
+            this IDateTimeDayBuilder that,
+            int day) => that.Day(day);
+
+        public static IDateTimeBuilderBuilder hour(
+            this IDateTimeHourBuilder that,
+            int hour) => that.Hour(hour);
+
+        public static IDateTimeSecondBuilder minute(
+            this IDateTimeBuilderBuilder that,
+            int minute) => that.Minute(minute);
+
+        public static IDateTimeMilisecondBuilder second(
+            this IDateTimeSecondBuilder that,
+            int second) => that.Second(second);
+
+        public static IDateTimeKindBuilder milisecond(
+            this IDateTimeMilisecondBuilder that,
+            int milisecond) => that.Milisecond(milisecond);
+
+        public static IDateTimeTimezoneBuilder kind(
+            this IDateTimeKindBuilder that,
+            DateTimeKind kind) => that.Kind(kind);
+
+        public static IDateTimeBuilder timezone(
+            this IDateTimeTimezoneBuilder that,
+            TimeZoneInfo tz) => that.TimeZone(tz);
+
+        public static DateTime build(this IDateTimeBuilder that) => that.Build();
+        #endregion
+    }
+
 }
