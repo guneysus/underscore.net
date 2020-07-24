@@ -88,4 +88,27 @@ namespace www.net.tests
             Assert.Equal(expected, actual);
         }
     }
+
+    public class UrlBuilderTests : WwwTestBase
+    {
+        public UrlBuilderTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void UrlBuilder_simple()
+        {
+            IUrlBuilder urlBuilder = new UrlBuilder()
+                .SetScheme(Scheme.Https)
+                .SetHost("foo.example.com")
+                .SetPort(81)
+                .SetPath("/about")
+                ;
+
+            var url = urlBuilder.Build();
+
+            Assert.Equal("https://foo.example.com:81/about", url.ToString());
+
+        }
+    }
 }
