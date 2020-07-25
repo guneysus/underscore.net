@@ -69,5 +69,36 @@ namespace underscore.net.tests
             output.WriteLine(actualHash);
             Assert.Equal(expectedHash, actualHash);
         }
+
+        [Fact]
+        public void sha1_hashable_model ()
+        {
+            var product1 = new Sha1<Product>(new Product()
+            {
+                Id = 1000,
+                Name = "Acme Engine",
+                Price = 999.98m
+            });
+
+            var product2 = new Sha1<Product>(new Product()
+            {
+                Id = 1000,
+                Name = "Acme Engine",
+                Price = 999.98m
+            });
+
+            var product3 = new Sha1<Product>(new Product()
+            {
+                Id = 1001,
+                Name = "Acme Engine",
+                Price = 999.98m
+            });
+
+            Assert.Equal(product1, product2);
+            Assert.NotEqual(product1, product3);
+
+          
+        }
     }
+
 }
