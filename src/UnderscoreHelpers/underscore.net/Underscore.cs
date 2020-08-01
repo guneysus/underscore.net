@@ -829,6 +829,16 @@ namespace underscore.net
         #endregion
     }
 
+    /// <summary>
+    ///
+    /// credits:
+    /// https://stackoverflow.com/a/415396/
+    /// https://stackoverflow.com/a/10502856/
+    /// https://stackoverflow.com/a/33446914/1766716
+    /// https://stackoverflow.com/a/12680454/1766716
+    /// https://stackoverflow.com/a/737156/1766716
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Sha1<T>
     {
         public readonly T _inner;

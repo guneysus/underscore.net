@@ -139,7 +139,6 @@ namespace fn.net
             return functions.Aggregate(f);
         }
 
-
         /// <summary>
         /// TODO #Test
         /// </summary>
@@ -148,6 +147,12 @@ namespace fn.net
         /// <param name="fns"></param>
         /// <returns></returns>
         public static Func<T, T> aggregate<T>(Func<T> seed, params Func<T, T>[] fns) => _ => fns.Aggregate(seed(), (t, f) => f(t));
+
+        public static Func<T, T> aggregate<T>(params Func<T, T>[] fns)
+        {
+            Func<Func<T, T>, Func<T, T>, Func<T, T>> accumulator = (fl, fr) => input => fr(fl(input));
+            return fns.Aggregate(accumulator);
+        }
 
         /// <summary>
         /// /// TODO #Doc #FN
@@ -161,6 +166,13 @@ namespace fn.net
         {
             foreach (T item in source)
                 yield return fn(item);
+        }
+
+
+        [Pure]
+        public static Func<T, T> apply<T>(Func<T, T> func, int times)
+        {
+            return aggregate(Enumerable.Range(1, times).Select(x => func).ToArray());
         }
 
         /// <summary>
@@ -236,10 +248,6 @@ namespace fn.net
             for (int i = 0; i < count; i++)
                 yield return function();
         }
-
-        [Pure]
-        public static IEnumerable<T> repeat<T>(int count, Func<T> function) => repeat(count, function);
-
 
         /// <summary>
         /// https://codereview.stackexchange.com/a/90198/32074

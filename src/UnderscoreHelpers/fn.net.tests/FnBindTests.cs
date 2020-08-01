@@ -159,4 +159,21 @@ namespace fn.net.tests
             Assert.Equal("LOREM IPSUM DI AMET", actual);
         }
     }
+
+    public class ApplyTests : FnTestBase
+    {
+        public ApplyTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void Apply_Times()
+        {
+            const decimal price = 100.00m;
+            Func<decimal, decimal> discount20 = price => price * (decimal)0.80;
+            Func<decimal, decimal> campaign = _.apply(discount20, 2);
+
+            Assert.Equal(64.00m, campaign(price));
+        }
+    }
 }
