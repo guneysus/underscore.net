@@ -2469,6 +2469,278 @@ namespace std.net
         {
             return Math.Floor(number);
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        #region InRange
+        [Pure]
+        public static bool InRange(sbyte number, sbyte start, sbyte end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(sbyte number, sbyte end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(byte number, byte start, byte end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(byte number, byte end)
+        {
+            return number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(short number, short start, short end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(short number, short end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(ushort number, ushort start, ushort end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(ushort number, ushort end)
+        {
+            return number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(int number, int start, int end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(int number, int end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(uint number, uint start, uint end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(uint number, uint end)
+        {
+            return number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(long number, long start, long end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(long number, long end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(ulong number, ulong start, ulong end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(ulong number, ulong end)
+        {
+            return number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(float number, float start, float end)
+        {
+            return start <= number && number <= end;
+        }
+
+        [Pure]
+        public static bool InRange(float number, float end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(double number, double start, double end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(double number, double end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(decimal number, decimal start, decimal end)
+        {
+            return start <= number && number <= end;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool InRange(decimal number, decimal end)
+        {
+            return 0 <= number && number <= end;
+        }
+
+        #endregion
     }
 }
 
