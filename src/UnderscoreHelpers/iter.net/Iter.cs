@@ -639,5 +639,19 @@ namespace iter.net
         public static IEnumerable<T> dropWhile<T>(
             Func<T, bool> predicate,
             List<T> collection) => dropWhile(collection, predicate);
+
+
+
+        [Pure]
+        public static IQueryable<TResult> distinct<TSource, TKey, TResult>(
+            IQueryable<TSource> queryable, 
+            Func<TSource, TKey> keySelector, 
+            Func<IGrouping<TKey, TSource>, TResult> selector)
+        {
+            var result = queryable.GroupBy(x => keySelector(x)).Select(group => selector(group));
+
+            return result;
+        }
+
     }
 }

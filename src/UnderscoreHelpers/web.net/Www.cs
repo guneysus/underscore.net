@@ -234,6 +234,38 @@ namespace www.net
 
             return result;
         }
+
+
+        /// <summary>
+        /// TODO #doc
+        /// TODO Implement alternatives, pronouncable, weird character and secure alternative
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string Password(IEnumerable<char> from, int length)
+        {
+            Random rnd = new Random();
+            string result = concat(Enumerable.Range(1, length).Select(c => from.ElementAt(rnd.Next(0, maxValue: from.Count() - 1))));
+            return result;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// TODO Implement alternatives, pronouncable, weird character and secure alternative
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string Password(int length)
+        {
+            var from = iter.net.Iter.asciiall();
+            Random rnd = new Random();
+            string result = concat(Enumerable.Range(1, length).Select(c => from.ElementAt(rnd.Next(0, maxValue: from.Count() - 1))));
+            return result;
+        }
     }
 
 

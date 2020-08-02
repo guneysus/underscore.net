@@ -329,6 +329,80 @@ namespace std.net
         }
 
 
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool IsBool(string v)
+        {
+            return bool.TryParse(LowerCase(v), out bool result);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool IsDecimal(string v)
+        {
+            return decimal.TryParse(v, out decimal result);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool IsNumber(string v, IFormatProvider formatProvider = null)
+        {
+            return IsDecimal(v) || IsFloat(v, formatProvider) || IsInteger(v);
+        }
+
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="formatProvider"></param>
+        /// <param name="numberStyles"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool IsFloat(string v, IFormatProvider formatProvider = null, NumberStyles numberStyles = NumberStyles.Any)
+        {
+            return float.TryParse(v, numberStyles, formatProvider, out float result);
+        }
+
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool IsInteger(string v)
+        {
+            return int.TryParse(v, out int result);
+        }
+
+#pragma warning disable RCS1163 // Unused parameter.
+        /// <summary>
+        /// TODO #Doc 
+        /// TODO Implement formatProvider
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool IsNan(string v, IFormatProvider formatProvider = null)
+#pragma warning restore RCS1163 // Unused parameter.
+        {
+            return !(IsDecimal(v) || IsFloat(v, null) || IsInteger(v));
+        }
+
 
         /// <summary>
         /// TODO #Doc 
@@ -682,5 +756,1719 @@ namespace std.net
 
         [Pure]
         public static string join<T>(IEnumerable<T> arr, string seperator) => join(seperator, arr);
+
+
+        [Pure]
+        public static T parse<T>(object value) where T : Enum
+        { 
+            if (Enum.IsDefined(typeof(T), value))
+            {
+                return (T)value;
+            }
+
+            throw new ArgumentException($"The value {value} is  not valid for the Enum {typeof(T)}");
+        }
+
+        [Pure]
+        public static T parse<T>(string enumString) where T : struct
+        {
+            return (T)Enum.Parse(enumType: typeof(T), value: enumString, ignoreCase: true);
+        }
+
+        /// <summary>
+        /// From http://stackoverflow.com/a/972323/1766716
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<T> values<T>() where T : struct
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
+        }
+
+        [Pure]
+        public static IEnumerable<string> names<T>() where T : struct
+        {
+            return Enum.GetNames(typeof(T)).ToArray();
+        }
+
+        #region Eq
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(bool value, bool other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(sbyte value, sbyte other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(byte value, byte other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(short value, short other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(ushort value, ushort other) => value.Equals(other);
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(int value, int other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(uint value, uint other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(long value, long other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(ulong value, ulong other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(float value, float other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(double value, double other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(decimal value, decimal other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(char value, char other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(Enum value, Enum other) => value.Equals(other);
+
+        /// <summary>
+        /// TODO See: https://docs.microsoft.com/en-us/dotnet/api/system.string.intern?view=netframework-4.8
+        /// TODO #doc #test
+        /// Use string.intern for performance 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Eq(string value, string other) => value.Equals(other);
+        #endregion
+
+        #region Gt
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(sbyte value, sbyte other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(byte value, byte other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(short value, short other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(ushort value, ushort other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(int value, int other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(uint value, uint other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(long value, long other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(ulong value, ulong other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(float value, float other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(double value, double other) => value > other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gt(decimal value, decimal other) => value > other;
+        #endregion
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        #region Gte
+        [Pure]
+        public static bool Gte(sbyte value, sbyte other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(byte value, byte other) => value >= other;
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(short value, short other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(ushort value, ushort other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(int value, int other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(uint value, uint other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(long value, long other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(ulong value, ulong other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(float value, float other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(double value, double other) => value >= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Gte(decimal value, decimal other) => value >= other;
+        #endregion
+
+        #region Lt
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(sbyte value, sbyte other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(byte value, byte other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(short value, short other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(ushort value, ushort other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(int value, int other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(uint value, uint other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(long value, long other) => value < other;
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(ulong value, ulong other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(float value, float other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(double value, double other) => value < other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lt(decimal value, decimal other) => value < other;
+        #endregion
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        #region Lte
+        [Pure]
+        public static bool Lte(sbyte value, sbyte other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(byte value, byte other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(short value, short other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(ushort value, ushort other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(int value, int other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(uint value, uint other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(long value, long other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(ulong value, ulong other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(float value, float other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(double value, double other) => value <= other;
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Lte(decimal value, decimal other) => value <= other;
+        #endregion
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool Not(bool value)
+        {
+            return !value;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool And(bool value, bool other)
+        {
+            return value ^ other;
+        }
+
+        #region XOr
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte XOr(sbyte a, sbyte b)
+        {
+            return (sbyte)(a ^ b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte XOr(byte a, byte b)
+        {
+            return (byte)(a ^ b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short XOr(short a, short b)
+        {
+            return (short)(a ^ b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort XOr(ushort a, ushort b)
+        {
+            return (ushort)(a ^ b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int XOr(int a, int b)
+        {
+            return a ^ b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint XOr(uint a, uint b)
+        {
+            return a ^ b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long XOr(long a, long b)
+        {
+            return a ^ b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong XOr(ulong a, ulong b)
+        {
+            return a ^ b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool XOr(bool a, bool b)
+        {
+            return a ^ b;
+        }
+        #endregion
+
+        #region LOr
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte LOr(sbyte a, sbyte b)
+        {
+            return (sbyte)(a | b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte LOr(byte a, byte b)
+        {
+            return (byte)(a | b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short LOr(short a, short b)
+        {
+            return (short)(a | b);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort LOr(ushort a, ushort b)
+        {
+            return (ushort)(a | b);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int LOr(int a, int b)
+        {
+            return a | b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint LOr(uint a, uint b)
+        {
+            return a | b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long LOr(long a, long b)
+        {
+            return a | b;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong LOr(ulong a, ulong b)
+        {
+            return a | b;
+        }
+
+#pragma warning disable RCS1233 // Use short-circuiting operator.
+#pragma warning disable S2178 // Short-circuit logic should be used in boolean contexts
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool LOr(bool a, bool b)
+        {
+            return a | b;
+        }
+#pragma warning restore S2178 // Short-circuit logic should be used in boolean contexts
+#pragma warning restore RCS1233 // Use short-circuiting operator.
+        #endregion
+
+        #region add
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte Incr(sbyte augend, sbyte addend = 1)
+        {
+            return (sbyte)(augend + addend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte Incr(byte augend, byte addend = 1)
+        {
+            return (byte)(augend + addend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short Incr(short augend, short addend = 1)
+        {
+            return (short)(augend + addend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort Incr(ushort augend, ushort addend = 1)
+        {
+            return (ushort)(augend + addend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int Incr(int augend, int addend = 1)
+        {
+            return augend + addend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint Incr(uint augend, uint addend = 1)
+        {
+            return augend + addend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long Incr(long augend, long addend = 1)
+        {
+            return augend + addend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong Incr(ulong augend, ulong addend = 1)
+        {
+            return augend + addend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static float Incr(float augend, float addend = 1)
+        {
+            return augend + addend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Incr(double augend, double addend = 1)
+        {
+            return augend + addend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="augend"></param>
+        /// <param name="addend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Incr(decimal augend, decimal addend = 1)
+        {
+            return augend + addend;
+        }
+
+        #endregion
+
+        #region Divide
+        [Pure]
+        public static sbyte Divide(sbyte dividend, sbyte divisor)
+        {
+            return (sbyte)(dividend / divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte Divide(byte dividend, byte divisor)
+        {
+            return (byte)(dividend / divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short Divide(short dividend, short divisor)
+        {
+            return (short)(dividend / divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort Divide(ushort dividend, ushort divisor)
+        {
+            return (ushort)(dividend / divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int Divide(int dividend, int divisor)
+        {
+            return dividend / divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint Divide(uint dividend, uint divisor)
+        {
+            return dividend / divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long Divide(long dividend, long divisor)
+        {
+            return dividend / divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong Divide(ulong dividend, ulong divisor)
+        {
+            return dividend / divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static float Divide(float dividend, float divisor)
+        {
+            return dividend / divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Divide(double dividend, double divisor)
+        {
+            return dividend / divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Divide(decimal dividend, decimal divisor)
+        {
+            return dividend / divisor;
+        }
+        #endregion
+
+        #region Subtract
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte Decr(sbyte minuend, sbyte subtrahend)
+        {
+            return (sbyte)(minuend - subtrahend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte Decr(byte minuend, byte subtrahend = 1)
+        {
+            return (byte)(minuend - subtrahend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short Decr(short minuend, short subtrahend = 1)
+        {
+            return (short)(minuend - subtrahend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort Decr(ushort minuend, ushort subtrahend = 1)
+        {
+            return (ushort)(minuend - subtrahend);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int Decr(int minuend, int subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        [Pure]
+        public static uint Decr(uint minuend, uint subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long Decr(long minuend, long subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong Decr(ulong minuend, ulong subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static float Decr(float minuend, float subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Decr(double minuend, double subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Decr(decimal minuend, decimal subtrahend)
+        {
+            return minuend - subtrahend;
+        }
+        #endregion
+
+        #region Multiply
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte Multiply(sbyte multiplier, sbyte multiplicand)
+        {
+            return (sbyte)(multiplier * multiplicand);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte Multiply(byte multiplier, byte multiplicand)
+        {
+            return (byte)(multiplier * multiplicand);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short Multiply(short multiplier, short multiplicand)
+        {
+            return (short)(multiplier * multiplicand);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort Multiply(ushort multiplier, ushort multiplicand)
+        {
+            return (ushort)(multiplier * multiplicand);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int Multiply(int multiplier, int multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint Multiply(uint multiplier, uint multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long Multiply(long multiplier, long multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong Multiply(ulong multiplier, ulong multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static float Multiply(float multiplier, float multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Multiply(double multiplier, double multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <param name="multiplicand"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Multiply(decimal multiplier, decimal multiplicand)
+        {
+            return multiplier * multiplicand;
+        }
+        #endregion
+
+        #region Remainder
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte Remainder(sbyte dividend, sbyte divisor)
+        {
+            return (sbyte)(dividend % divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte Remainder(byte dividend, byte divisor)
+        {
+            return (byte)(dividend % divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short Remainder(short dividend, short divisor)
+        {
+            return (short)(dividend % divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort Remainder(ushort dividend, ushort divisor)
+        {
+            return (ushort)(dividend % divisor);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int Remainder(int dividend, int divisor)
+        {
+            return dividend % divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint Remainder(uint dividend, uint divisor)
+        {
+            return dividend % divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long Remainder(long dividend, long divisor)
+        {
+            return dividend % divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong Remainder(ulong dividend, ulong divisor)
+        {
+            return dividend % divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static float Remainder(float dividend, float divisor)
+        {
+            return dividend % divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Remainder(double dividend, double divisor)
+        {
+            return dividend % divisor;
+        }
+
+        /// <summary>
+        /// TODO #doc 
+        /// </summary>
+        /// <param name="dividend"></param>
+        /// <param name="divisor"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Remainder(decimal dividend, decimal divisor)
+        {
+            return dividend % divisor;
+        }
+
+        #endregion
+
+
+        #region ShiftLeft
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte ShiftLeft(sbyte value, int count)
+        {
+            return (sbyte)(value << count);
+        }
+
+        [Pure]
+        public static byte ShiftLeft(byte value, int count)
+        {
+            return (byte)(value << count);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short ShiftLeft(short value, int count)
+        {
+            return (short)(value << count);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort ShiftLeft(ushort value, int count)
+        {
+            return (ushort)(value << count);
+        }
+
+        [Pure]
+        public static int ShiftLeft(int value, int count)
+        {
+            return value << count;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint ShiftLeft(uint value, int count)
+        {
+            return value << count;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long ShiftLeft(long value, int count)
+        {
+            return value << count;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong ShiftLeft(ulong value, int count)
+        {
+            return value << count;
+        }
+        #endregion
+
+        #region ShiftRight
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static sbyte ShiftRight(sbyte value, int count)
+        {
+            return (sbyte)(value >> count);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static byte ShiftRight(byte value, int count)
+        {
+            return (byte)(value >> count);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static short ShiftRight(short value, int count)
+        {
+            return (short)(value >> count);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ushort ShiftRight(ushort value, int count)
+        {
+            return (ushort)(value >> count);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int ShiftRight(int value, int count)
+        {
+            return value >> count;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static uint ShiftRight(uint value, int count)
+        {
+            return value >> count;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static long ShiftRight(long value, int count)
+        {
+            return value >> count;
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ulong ShiftRight(ulong value, int count)
+        {
+            return value >> count;
+        }
+        #endregion
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Round(decimal number, int precision)
+        {
+            return Math.Round(number, precision);
+        }
+
+        /// <summary>
+        /// TODO #doc #test
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Round(double number, int precision)
+        {
+            return Math.Round(number, precision);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal Floor(decimal number)
+        {
+            return Math.Floor(number);
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        [Pure]
+        public static double Floor(double number)
+        {
+            return Math.Floor(number);
+        }
     }
 }
+

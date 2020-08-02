@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\fn.net\fn.net.csproj" />
-    <ProjectReference Include="..\iter.net\iter.net.csproj" />
-    <ProjectReference Include="..\refl.net\refl.net.csproj" />
-    <ProjectReference Include="..\std.net\std.net.csproj" />
-    <ProjectReference Include="..\underscore.net\underscore.net.csproj" />
+    <ProjectReference Include="..\fs.net\fs.net.csproj" />
   </ItemGroup>
 
 </Project>
