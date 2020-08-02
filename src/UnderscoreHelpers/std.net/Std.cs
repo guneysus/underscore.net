@@ -335,9 +335,9 @@ namespace std.net
         /// <param name="v"></param>
         /// <returns></returns>
         [Pure]
-        public static bool IsBool(string v)
+        public static bool isbool(string v)
         {
-            return bool.TryParse(LowerCase(v), out bool result);
+            return bool.TryParse(lower(v), out bool result);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace std.net
         /// <param name="v"></param>
         /// <returns></returns>
         [Pure]
-        public static bool IsDecimal(string v)
+        public static bool isdecimal(string v)
         {
             return decimal.TryParse(v, out decimal result);
         }
@@ -358,9 +358,9 @@ namespace std.net
         /// <param name="formatProvider"></param>
         /// <returns></returns>
         [Pure]
-        public static bool IsNumber(string v, IFormatProvider formatProvider = null)
+        public static bool isnumber(string v, IFormatProvider formatProvider = null)
         {
-            return IsDecimal(v) || IsFloat(v, formatProvider) || IsInteger(v);
+            return isdecimal(v) || isfloat(v, formatProvider) || isinteger(v);
         }
 
 
@@ -372,7 +372,7 @@ namespace std.net
         /// <param name="numberStyles"></param>
         /// <returns></returns>
         [Pure]
-        public static bool IsFloat(string v, IFormatProvider formatProvider = null, NumberStyles numberStyles = NumberStyles.Any)
+        public static bool isfloat(string v, IFormatProvider formatProvider = null, NumberStyles numberStyles = NumberStyles.Any)
         {
             return float.TryParse(v, numberStyles, formatProvider, out float result);
         }
@@ -383,7 +383,7 @@ namespace std.net
         /// <param name="v"></param>
         /// <returns></returns>
         [Pure]
-        public static bool IsInteger(string v)
+        public static bool isinteger(string v)
         {
             return int.TryParse(v, out int result);
         }
@@ -400,7 +400,7 @@ namespace std.net
         public static bool IsNan(string v, IFormatProvider formatProvider = null)
 #pragma warning restore RCS1163 // Unused parameter.
         {
-            return !(IsDecimal(v) || IsFloat(v, null) || IsInteger(v));
+            return !(isdecimal(v) || isfloat(v, null) || isinteger(v));
         }
 
 
@@ -676,7 +676,7 @@ namespace std.net
         }
 
         [Pure]
-        public static string CompactSpaces(string v)
+        public static string compact(string v)
         {
             return RegexReplace(v, @"\s+", " ");
         }
@@ -687,7 +687,7 @@ namespace std.net
         /// <param name="v"></param>
         /// <returns></returns>
         [Pure]
-        public static string LowerCase(string v)
+        public static string lower(string v)
         {
             Regex regexFindWords = new Regex("([A-Z][a-z0-9]+)+");
             Regex regexStrip = new Regex(@"\s+");
@@ -701,7 +701,7 @@ namespace std.net
         /// <param name="v"></param>
         /// <returns></returns>
         [Pure]
-        public static string UpperCase(string v)
+        public static string upper(string v)
         {
             return v.ToUpper();
         }
@@ -800,7 +800,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(bool value, bool other) => value.Equals(other);
+        public static bool eq(bool value, bool other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -809,7 +809,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(sbyte value, sbyte other) => value.Equals(other);
+        public static bool eq(sbyte value, sbyte other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -818,7 +818,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(byte value, byte other) => value.Equals(other);
+        public static bool eq(byte value, byte other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -827,7 +827,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(short value, short other) => value.Equals(other);
+        public static bool eq(short value, short other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -836,7 +836,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(ushort value, ushort other) => value.Equals(other);
+        public static bool eq(ushort value, ushort other) => value.Equals(other);
         /// <summary>
         /// TODO #doc
         /// </summary>
@@ -844,7 +844,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(int value, int other) => value.Equals(other);
+        public static bool eq(int value, int other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -853,7 +853,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(uint value, uint other) => value.Equals(other);
+        public static bool eq(uint value, uint other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -862,7 +862,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(long value, long other) => value.Equals(other);
+        public static bool eq(long value, long other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -871,7 +871,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(ulong value, ulong other) => value.Equals(other);
+        public static bool eq(ulong value, ulong other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -880,7 +880,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(float value, float other) => value.Equals(other);
+        public static bool eq(float value, float other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -889,7 +889,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(double value, double other) => value.Equals(other);
+        public static bool eq(double value, double other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -898,7 +898,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(decimal value, decimal other) => value.Equals(other);
+        public static bool eq(decimal value, decimal other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -907,7 +907,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(char value, char other) => value.Equals(other);
+        public static bool eq(char value, char other) => value.Equals(other);
 
         /// <summary>
         /// TODO #doc
@@ -916,7 +916,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(Enum value, Enum other) => value.Equals(other);
+        public static bool eq(Enum value, Enum other) => value.Equals(other);
 
         /// <summary>
         /// TODO See: https://docs.microsoft.com/en-us/dotnet/api/system.string.intern?view=netframework-4.8
@@ -927,7 +927,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Eq(string value, string other) => value.Equals(other);
+        public static bool eq(string value, string other) => value.Equals(other);
         #endregion
 
         #region Gt
@@ -938,7 +938,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(sbyte value, sbyte other) => value > other;
+        public static bool gt(sbyte value, sbyte other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -947,7 +947,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(byte value, byte other) => value > other;
+        public static bool gt(byte value, byte other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -956,7 +956,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(short value, short other) => value > other;
+        public static bool gt(short value, short other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -965,7 +965,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(ushort value, ushort other) => value > other;
+        public static bool gt(ushort value, ushort other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -974,7 +974,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(int value, int other) => value > other;
+        public static bool gt(int value, int other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -983,7 +983,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(uint value, uint other) => value > other;
+        public static bool gt(uint value, uint other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -992,7 +992,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(long value, long other) => value > other;
+        public static bool gt(long value, long other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -1001,7 +1001,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(ulong value, ulong other) => value > other;
+        public static bool gt(ulong value, ulong other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -1010,7 +1010,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(float value, float other) => value > other;
+        public static bool gt(float value, float other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -1019,7 +1019,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(double value, double other) => value > other;
+        public static bool gt(double value, double other) => value > other;
 
         /// <summary>
         /// TODO #doc
@@ -1028,7 +1028,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gt(decimal value, decimal other) => value > other;
+        public static bool gt(decimal value, decimal other) => value > other;
         #endregion
 
         /// <summary>
@@ -1039,7 +1039,7 @@ namespace std.net
         /// <returns></returns>
         #region Gte
         [Pure]
-        public static bool Gte(sbyte value, sbyte other) => value >= other;
+        public static bool gte(sbyte value, sbyte other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1048,7 +1048,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(byte value, byte other) => value >= other;
+        public static bool gte(byte value, byte other) => value >= other;
         /// <summary>
         /// TODO #doc
         /// </summary>
@@ -1056,7 +1056,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(short value, short other) => value >= other;
+        public static bool gte(short value, short other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1065,7 +1065,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(ushort value, ushort other) => value >= other;
+        public static bool gte(ushort value, ushort other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1074,7 +1074,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(int value, int other) => value >= other;
+        public static bool gte(int value, int other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1083,7 +1083,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(uint value, uint other) => value >= other;
+        public static bool gte(uint value, uint other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1092,7 +1092,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(long value, long other) => value >= other;
+        public static bool gte(long value, long other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1101,7 +1101,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(ulong value, ulong other) => value >= other;
+        public static bool gte(ulong value, ulong other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1110,7 +1110,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(float value, float other) => value >= other;
+        public static bool gte(float value, float other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1119,7 +1119,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(double value, double other) => value >= other;
+        public static bool gte(double value, double other) => value >= other;
 
         /// <summary>
         /// TODO #doc
@@ -1128,7 +1128,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Gte(decimal value, decimal other) => value >= other;
+        public static bool gte(decimal value, decimal other) => value >= other;
         #endregion
 
         #region Lt
@@ -1139,7 +1139,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(sbyte value, sbyte other) => value < other;
+        public static bool lt(sbyte value, sbyte other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1148,7 +1148,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(byte value, byte other) => value < other;
+        public static bool lt(byte value, byte other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1157,7 +1157,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(short value, short other) => value < other;
+        public static bool lt(short value, short other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1166,7 +1166,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(ushort value, ushort other) => value < other;
+        public static bool lt(ushort value, ushort other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1175,7 +1175,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(int value, int other) => value < other;
+        public static bool lt(int value, int other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1184,7 +1184,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(uint value, uint other) => value < other;
+        public static bool lt(uint value, uint other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1193,7 +1193,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(long value, long other) => value < other;
+        public static bool lt(long value, long other) => value < other;
         /// <summary>
         /// TODO #doc
         /// </summary>
@@ -1201,7 +1201,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(ulong value, ulong other) => value < other;
+        public static bool lt(ulong value, ulong other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1210,7 +1210,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(float value, float other) => value < other;
+        public static bool lt(float value, float other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1219,7 +1219,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(double value, double other) => value < other;
+        public static bool lt(double value, double other) => value < other;
 
         /// <summary>
         /// TODO #doc
@@ -1228,7 +1228,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lt(decimal value, decimal other) => value < other;
+        public static bool lt(decimal value, decimal other) => value < other;
         #endregion
 
         /// <summary>
@@ -1239,7 +1239,7 @@ namespace std.net
         /// <returns></returns>
         #region Lte
         [Pure]
-        public static bool Lte(sbyte value, sbyte other) => value <= other;
+        public static bool lte(sbyte value, sbyte other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1248,7 +1248,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(byte value, byte other) => value <= other;
+        public static bool lte(byte value, byte other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1257,7 +1257,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(short value, short other) => value <= other;
+        public static bool lte(short value, short other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1266,7 +1266,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(ushort value, ushort other) => value <= other;
+        public static bool lte(ushort value, ushort other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1275,7 +1275,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(int value, int other) => value <= other;
+        public static bool lte(int value, int other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1284,7 +1284,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(uint value, uint other) => value <= other;
+        public static bool lte(uint value, uint other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1293,7 +1293,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(long value, long other) => value <= other;
+        public static bool lte(long value, long other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1302,7 +1302,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(ulong value, ulong other) => value <= other;
+        public static bool lte(ulong value, ulong other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1311,7 +1311,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(float value, float other) => value <= other;
+        public static bool lte(float value, float other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1320,7 +1320,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(double value, double other) => value <= other;
+        public static bool lte(double value, double other) => value <= other;
 
         /// <summary>
         /// TODO #doc
@@ -1329,7 +1329,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Lte(decimal value, decimal other) => value <= other;
+        public static bool lte(decimal value, decimal other) => value <= other;
         #endregion
 
         /// <summary>
@@ -1338,7 +1338,7 @@ namespace std.net
         /// <param name="value"></param>
         /// <returns></returns>
         [Pure]
-        public static bool Not(bool value)
+        public static bool not(bool value)
         {
             return !value;
         }
@@ -1350,7 +1350,7 @@ namespace std.net
         /// <param name="other"></param>
         /// <returns></returns>
         [Pure]
-        public static bool And(bool value, bool other)
+        public static bool and(bool value, bool other)
         {
             return value ^ other;
         }
@@ -1363,7 +1363,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte XOr(sbyte a, sbyte b)
+        public static sbyte xor(sbyte a, sbyte b)
         {
             return (sbyte)(a ^ b);
         }
@@ -1375,7 +1375,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static byte XOr(byte a, byte b)
+        public static byte xor(byte a, byte b)
         {
             return (byte)(a ^ b);
         }
@@ -1387,7 +1387,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static short XOr(short a, short b)
+        public static short xor(short a, short b)
         {
             return (short)(a ^ b);
         }
@@ -1399,7 +1399,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort XOr(ushort a, ushort b)
+        public static ushort xor(ushort a, ushort b)
         {
             return (ushort)(a ^ b);
         }
@@ -1411,7 +1411,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static int XOr(int a, int b)
+        public static int xor(int a, int b)
         {
             return a ^ b;
         }
@@ -1423,7 +1423,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static uint XOr(uint a, uint b)
+        public static uint xor(uint a, uint b)
         {
             return a ^ b;
         }
@@ -1435,7 +1435,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static long XOr(long a, long b)
+        public static long xor(long a, long b)
         {
             return a ^ b;
         }
@@ -1447,7 +1447,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong XOr(ulong a, ulong b)
+        public static ulong xor(ulong a, ulong b)
         {
             return a ^ b;
         }
@@ -1459,7 +1459,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static bool XOr(bool a, bool b)
+        public static bool xor(bool a, bool b)
         {
             return a ^ b;
         }
@@ -1473,7 +1473,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte LOr(sbyte a, sbyte b)
+        public static sbyte lor(sbyte a, sbyte b)
         {
             return (sbyte)(a | b);
         }
@@ -1485,7 +1485,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static byte LOr(byte a, byte b)
+        public static byte lor(byte a, byte b)
         {
             return (byte)(a | b);
         }
@@ -1497,7 +1497,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static short LOr(short a, short b)
+        public static short lor(short a, short b)
         {
             return (short)(a | b);
         }
@@ -1509,7 +1509,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort LOr(ushort a, ushort b)
+        public static ushort lor(ushort a, ushort b)
         {
             return (ushort)(a | b);
         }
@@ -1521,7 +1521,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static int LOr(int a, int b)
+        public static int lor(int a, int b)
         {
             return a | b;
         }
@@ -1533,7 +1533,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static uint LOr(uint a, uint b)
+        public static uint lor(uint a, uint b)
         {
             return a | b;
         }
@@ -1545,7 +1545,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static long LOr(long a, long b)
+        public static long lor(long a, long b)
         {
             return a | b;
         }
@@ -1557,7 +1557,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong LOr(ulong a, ulong b)
+        public static ulong lor(ulong a, ulong b)
         {
             return a | b;
         }
@@ -1571,7 +1571,7 @@ namespace std.net
         /// <param name="b"></param>
         /// <returns></returns>
         [Pure]
-        public static bool LOr(bool a, bool b)
+        public static bool lor(bool a, bool b)
         {
             return a | b;
         }
@@ -1587,7 +1587,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte Incr(sbyte augend, sbyte addend = 1)
+        public static sbyte incr(sbyte augend, sbyte addend = 1)
         {
             return (sbyte)(augend + addend);
         }
@@ -1599,7 +1599,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static byte Incr(byte augend, byte addend = 1)
+        public static byte incr(byte augend, byte addend = 1)
         {
             return (byte)(augend + addend);
         }
@@ -1611,7 +1611,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static short Incr(short augend, short addend = 1)
+        public static short incr(short augend, short addend = 1)
         {
             return (short)(augend + addend);
         }
@@ -1623,7 +1623,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort Incr(ushort augend, ushort addend = 1)
+        public static ushort incr(ushort augend, ushort addend = 1)
         {
             return (ushort)(augend + addend);
         }
@@ -1635,7 +1635,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static int Incr(int augend, int addend = 1)
+        public static int incr(int augend, int addend = 1)
         {
             return augend + addend;
         }
@@ -1647,7 +1647,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static uint Incr(uint augend, uint addend = 1)
+        public static uint incr(uint augend, uint addend = 1)
         {
             return augend + addend;
         }
@@ -1659,7 +1659,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static long Incr(long augend, long addend = 1)
+        public static long incr(long augend, long addend = 1)
         {
             return augend + addend;
         }
@@ -1671,7 +1671,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong Incr(ulong augend, ulong addend = 1)
+        public static ulong incr(ulong augend, ulong addend = 1)
         {
             return augend + addend;
         }
@@ -1683,7 +1683,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static float Incr(float augend, float addend = 1)
+        public static float incr(float augend, float addend = 1)
         {
             return augend + addend;
         }
@@ -1695,7 +1695,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static double Incr(double augend, double addend = 1)
+        public static double incr(double augend, double addend = 1)
         {
             return augend + addend;
         }
@@ -1707,7 +1707,7 @@ namespace std.net
         /// <param name="addend"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Incr(decimal augend, decimal addend = 1)
+        public static decimal incr(decimal augend, decimal addend = 1)
         {
             return augend + addend;
         }
@@ -1716,7 +1716,7 @@ namespace std.net
 
         #region Divide
         [Pure]
-        public static sbyte Divide(sbyte dividend, sbyte divisor)
+        public static sbyte divide(sbyte dividend, sbyte divisor)
         {
             return (sbyte)(dividend / divisor);
         }
@@ -1728,7 +1728,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static byte Divide(byte dividend, byte divisor)
+        public static byte divide(byte dividend, byte divisor)
         {
             return (byte)(dividend / divisor);
         }
@@ -1740,7 +1740,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static short Divide(short dividend, short divisor)
+        public static short divide(short dividend, short divisor)
         {
             return (short)(dividend / divisor);
         }
@@ -1752,7 +1752,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort Divide(ushort dividend, ushort divisor)
+        public static ushort divide(ushort dividend, ushort divisor)
         {
             return (ushort)(dividend / divisor);
         }
@@ -1764,7 +1764,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static int Divide(int dividend, int divisor)
+        public static int divide(int dividend, int divisor)
         {
             return dividend / divisor;
         }
@@ -1776,7 +1776,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static uint Divide(uint dividend, uint divisor)
+        public static uint divide(uint dividend, uint divisor)
         {
             return dividend / divisor;
         }
@@ -1788,7 +1788,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static long Divide(long dividend, long divisor)
+        public static long divide(long dividend, long divisor)
         {
             return dividend / divisor;
         }
@@ -1800,7 +1800,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong Divide(ulong dividend, ulong divisor)
+        public static ulong divide(ulong dividend, ulong divisor)
         {
             return dividend / divisor;
         }
@@ -1812,7 +1812,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static float Divide(float dividend, float divisor)
+        public static float divide(float dividend, float divisor)
         {
             return dividend / divisor;
         }
@@ -1824,7 +1824,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static double Divide(double dividend, double divisor)
+        public static double divide(double dividend, double divisor)
         {
             return dividend / divisor;
         }
@@ -1836,7 +1836,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Divide(decimal dividend, decimal divisor)
+        public static decimal divide(decimal dividend, decimal divisor)
         {
             return dividend / divisor;
         }
@@ -1850,7 +1850,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte Decr(sbyte minuend, sbyte subtrahend)
+        public static sbyte decr(sbyte minuend, sbyte subtrahend)
         {
             return (sbyte)(minuend - subtrahend);
         }
@@ -1862,7 +1862,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static byte Decr(byte minuend, byte subtrahend = 1)
+        public static byte decr(byte minuend, byte subtrahend = 1)
         {
             return (byte)(minuend - subtrahend);
         }
@@ -1874,7 +1874,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static short Decr(short minuend, short subtrahend = 1)
+        public static short decr(short minuend, short subtrahend = 1)
         {
             return (short)(minuend - subtrahend);
         }
@@ -1886,7 +1886,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort Decr(ushort minuend, ushort subtrahend = 1)
+        public static ushort decr(ushort minuend, ushort subtrahend = 1)
         {
             return (ushort)(minuend - subtrahend);
         }
@@ -1898,25 +1898,13 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static int Decr(int minuend, int subtrahend = 1)
+        public static int decr(int minuend, int subtrahend = 1)
         {
             return minuend - subtrahend;
         }
 
         [Pure]
-        public static uint Decr(uint minuend, uint subtrahend = 1)
-        {
-            return minuend - subtrahend;
-        }
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        /// <param name="minuend"></param>
-        /// <param name="subtrahend"></param>
-        /// <returns></returns>
-        [Pure]
-        public static long Decr(long minuend, long subtrahend = 1)
+        public static uint decr(uint minuend, uint subtrahend = 1)
         {
             return minuend - subtrahend;
         }
@@ -1928,7 +1916,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong Decr(ulong minuend, ulong subtrahend = 1)
+        public static long decr(long minuend, long subtrahend = 1)
         {
             return minuend - subtrahend;
         }
@@ -1940,7 +1928,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static float Decr(float minuend, float subtrahend = 1)
+        public static ulong decr(ulong minuend, ulong subtrahend = 1)
         {
             return minuend - subtrahend;
         }
@@ -1952,7 +1940,7 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static double Decr(double minuend, double subtrahend = 1)
+        public static float decr(float minuend, float subtrahend = 1)
         {
             return minuend - subtrahend;
         }
@@ -1964,7 +1952,19 @@ namespace std.net
         /// <param name="subtrahend"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Decr(decimal minuend, decimal subtrahend)
+        public static double decr(double minuend, double subtrahend = 1)
+        {
+            return minuend - subtrahend;
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <param name="minuend"></param>
+        /// <param name="subtrahend"></param>
+        /// <returns></returns>
+        [Pure]
+        public static decimal decr(decimal minuend, decimal subtrahend)
         {
             return minuend - subtrahend;
         }
@@ -1978,7 +1978,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte Multiply(sbyte multiplier, sbyte multiplicand)
+        public static sbyte multiply(sbyte multiplier, sbyte multiplicand)
         {
             return (sbyte)(multiplier * multiplicand);
         }
@@ -1990,7 +1990,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static byte Multiply(byte multiplier, byte multiplicand)
+        public static byte multiply(byte multiplier, byte multiplicand)
         {
             return (byte)(multiplier * multiplicand);
         }
@@ -2002,7 +2002,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static short Multiply(short multiplier, short multiplicand)
+        public static short multiply(short multiplier, short multiplicand)
         {
             return (short)(multiplier * multiplicand);
         }
@@ -2014,7 +2014,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort Multiply(ushort multiplier, ushort multiplicand)
+        public static ushort multiply(ushort multiplier, ushort multiplicand)
         {
             return (ushort)(multiplier * multiplicand);
         }
@@ -2026,7 +2026,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static int Multiply(int multiplier, int multiplicand)
+        public static int multiply(int multiplier, int multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2038,7 +2038,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static uint Multiply(uint multiplier, uint multiplicand)
+        public static uint multiply(uint multiplier, uint multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2050,7 +2050,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static long Multiply(long multiplier, long multiplicand)
+        public static long multiply(long multiplier, long multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2062,7 +2062,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong Multiply(ulong multiplier, ulong multiplicand)
+        public static ulong multiply(ulong multiplier, ulong multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2074,7 +2074,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static float Multiply(float multiplier, float multiplicand)
+        public static float multiply(float multiplier, float multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2086,7 +2086,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static double Multiply(double multiplier, double multiplicand)
+        public static double multiply(double multiplier, double multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2098,7 +2098,7 @@ namespace std.net
         /// <param name="multiplicand"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Multiply(decimal multiplier, decimal multiplicand)
+        public static decimal multiply(decimal multiplier, decimal multiplicand)
         {
             return multiplier * multiplicand;
         }
@@ -2112,7 +2112,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte Remainder(sbyte dividend, sbyte divisor)
+        public static sbyte remainder(sbyte dividend, sbyte divisor)
         {
             return (sbyte)(dividend % divisor);
         }
@@ -2124,7 +2124,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static byte Remainder(byte dividend, byte divisor)
+        public static byte remainder(byte dividend, byte divisor)
         {
             return (byte)(dividend % divisor);
         }
@@ -2136,7 +2136,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static short Remainder(short dividend, short divisor)
+        public static short remainder(short dividend, short divisor)
         {
             return (short)(dividend % divisor);
         }
@@ -2148,7 +2148,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort Remainder(ushort dividend, ushort divisor)
+        public static ushort remainder(ushort dividend, ushort divisor)
         {
             return (ushort)(dividend % divisor);
         }
@@ -2160,7 +2160,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static int Remainder(int dividend, int divisor)
+        public static int remainder(int dividend, int divisor)
         {
             return dividend % divisor;
         }
@@ -2172,7 +2172,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static uint Remainder(uint dividend, uint divisor)
+        public static uint remainder(uint dividend, uint divisor)
         {
             return dividend % divisor;
         }
@@ -2184,7 +2184,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static long Remainder(long dividend, long divisor)
+        public static long remainder(long dividend, long divisor)
         {
             return dividend % divisor;
         }
@@ -2196,7 +2196,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong Remainder(ulong dividend, ulong divisor)
+        public static ulong remainder(ulong dividend, ulong divisor)
         {
             return dividend % divisor;
         }
@@ -2208,7 +2208,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static float Remainder(float dividend, float divisor)
+        public static float remainder(float dividend, float divisor)
         {
             return dividend % divisor;
         }
@@ -2220,7 +2220,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static double Remainder(double dividend, double divisor)
+        public static double remainder(double dividend, double divisor)
         {
             return dividend % divisor;
         }
@@ -2232,7 +2232,7 @@ namespace std.net
         /// <param name="divisor"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Remainder(decimal dividend, decimal divisor)
+        public static decimal remainder(decimal dividend, decimal divisor)
         {
             return dividend % divisor;
         }
@@ -2248,13 +2248,13 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte ShiftLeft(sbyte value, int count)
+        public static sbyte sleft(sbyte value, int count)
         {
             return (sbyte)(value << count);
         }
 
         [Pure]
-        public static byte ShiftLeft(byte value, int count)
+        public static byte sleft(byte value, int count)
         {
             return (byte)(value << count);
         }
@@ -2266,7 +2266,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static short ShiftLeft(short value, int count)
+        public static short sleft(short value, int count)
         {
             return (short)(value << count);
         }
@@ -2278,13 +2278,13 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort ShiftLeft(ushort value, int count)
+        public static ushort sleft(ushort value, int count)
         {
             return (ushort)(value << count);
         }
 
         [Pure]
-        public static int ShiftLeft(int value, int count)
+        public static int sleft(int value, int count)
         {
             return value << count;
         }
@@ -2296,7 +2296,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static uint ShiftLeft(uint value, int count)
+        public static uint sleft(uint value, int count)
         {
             return value << count;
         }
@@ -2308,7 +2308,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static long ShiftLeft(long value, int count)
+        public static long sleft(long value, int count)
         {
             return value << count;
         }
@@ -2320,7 +2320,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong ShiftLeft(ulong value, int count)
+        public static ulong sleft(ulong value, int count)
         {
             return value << count;
         }
@@ -2334,7 +2334,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static sbyte ShiftRight(sbyte value, int count)
+        public static sbyte sright(sbyte value, int count)
         {
             return (sbyte)(value >> count);
         }
@@ -2346,7 +2346,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static byte ShiftRight(byte value, int count)
+        public static byte sright(byte value, int count)
         {
             return (byte)(value >> count);
         }
@@ -2358,7 +2358,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static short ShiftRight(short value, int count)
+        public static short sright(short value, int count)
         {
             return (short)(value >> count);
         }
@@ -2370,7 +2370,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static ushort ShiftRight(ushort value, int count)
+        public static ushort sright(ushort value, int count)
         {
             return (ushort)(value >> count);
         }
@@ -2382,7 +2382,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static int ShiftRight(int value, int count)
+        public static int sright(int value, int count)
         {
             return value >> count;
         }
@@ -2394,7 +2394,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static uint ShiftRight(uint value, int count)
+        public static uint sright(uint value, int count)
         {
             return value >> count;
         }
@@ -2406,7 +2406,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static long ShiftRight(long value, int count)
+        public static long sright(long value, int count)
         {
             return value >> count;
         }
@@ -2418,7 +2418,7 @@ namespace std.net
         /// <param name="count"></param>
         /// <returns></returns>
         [Pure]
-        public static ulong ShiftRight(ulong value, int count)
+        public static ulong sright(ulong value, int count)
         {
             return value >> count;
         }
@@ -2431,7 +2431,7 @@ namespace std.net
         /// <param name="precision"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Round(decimal number, int precision)
+        public static decimal round(decimal number, int precision)
         {
             return Math.Round(number, precision);
         }
@@ -2443,7 +2443,7 @@ namespace std.net
         /// <param name="precision"></param>
         /// <returns></returns>
         [Pure]
-        public static double Round(double number, int precision)
+        public static double round(double number, int precision)
         {
             return Math.Round(number, precision);
         }
@@ -2454,7 +2454,7 @@ namespace std.net
         /// <param name="number"></param>
         /// <returns></returns>
         [Pure]
-        public static decimal Floor(decimal number)
+        public static decimal floor(decimal number)
         {
             return Math.Floor(number);
         }
@@ -2465,7 +2465,7 @@ namespace std.net
         /// <param name="number"></param>
         /// <returns></returns>
         [Pure]
-        public static double Floor(double number)
+        public static double floor(double number)
         {
             return Math.Floor(number);
         }
@@ -2479,7 +2479,7 @@ namespace std.net
         /// <returns></returns>
         #region InRange
         [Pure]
-        public static bool InRange(sbyte number, sbyte start, sbyte end)
+        public static bool inrange(sbyte number, sbyte start, sbyte end)
         {
             return start <= number && number <= end;
         }
@@ -2491,7 +2491,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(sbyte number, sbyte end)
+        public static bool inrange(sbyte number, sbyte end)
         {
             return 0 <= number && number <= end;
         }
@@ -2504,7 +2504,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(byte number, byte start, byte end)
+        public static bool inrange(byte number, byte start, byte end)
         {
             return start <= number && number <= end;
         }
@@ -2516,7 +2516,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(byte number, byte end)
+        public static bool inrange(byte number, byte end)
         {
             return number <= end;
         }
@@ -2529,7 +2529,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(short number, short start, short end)
+        public static bool inrange(short number, short start, short end)
         {
             return start <= number && number <= end;
         }
@@ -2541,7 +2541,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(short number, short end)
+        public static bool inrange(short number, short end)
         {
             return 0 <= number && number <= end;
         }
@@ -2554,7 +2554,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(ushort number, ushort start, ushort end)
+        public static bool inrange(ushort number, ushort start, ushort end)
         {
             return start <= number && number <= end;
         }
@@ -2566,7 +2566,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(ushort number, ushort end)
+        public static bool inrange(ushort number, ushort end)
         {
             return number <= end;
         }
@@ -2579,7 +2579,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(int number, int start, int end)
+        public static bool inrange(int number, int start, int end)
         {
             return start <= number && number <= end;
         }
@@ -2591,7 +2591,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(int number, int end)
+        public static bool inrange(int number, int end)
         {
             return 0 <= number && number <= end;
         }
@@ -2604,7 +2604,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(uint number, uint start, uint end)
+        public static bool inrange(uint number, uint start, uint end)
         {
             return start <= number && number <= end;
         }
@@ -2616,7 +2616,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(uint number, uint end)
+        public static bool inrange(uint number, uint end)
         {
             return number <= end;
         }
@@ -2629,7 +2629,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(long number, long start, long end)
+        public static bool inrange(long number, long start, long end)
         {
             return start <= number && number <= end;
         }
@@ -2641,7 +2641,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(long number, long end)
+        public static bool inrange(long number, long end)
         {
             return 0 <= number && number <= end;
         }
@@ -2654,7 +2654,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(ulong number, ulong start, ulong end)
+        public static bool inrange(ulong number, ulong start, ulong end)
         {
             return start <= number && number <= end;
         }
@@ -2666,7 +2666,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(ulong number, ulong end)
+        public static bool inrange(ulong number, ulong end)
         {
             return number <= end;
         }
@@ -2679,13 +2679,13 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(float number, float start, float end)
+        public static bool inrange(float number, float start, float end)
         {
             return start <= number && number <= end;
         }
 
         [Pure]
-        public static bool InRange(float number, float end)
+        public static bool inrange(float number, float end)
         {
             return 0 <= number && number <= end;
         }
@@ -2698,7 +2698,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(double number, double start, double end)
+        public static bool inrange(double number, double start, double end)
         {
             return start <= number && number <= end;
         }
@@ -2710,7 +2710,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(double number, double end)
+        public static bool inrange(double number, double end)
         {
             return 0 <= number && number <= end;
         }
@@ -2723,7 +2723,7 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(decimal number, decimal start, decimal end)
+        public static bool inrange(decimal number, decimal start, decimal end)
         {
             return start <= number && number <= end;
         }
@@ -2735,12 +2735,23 @@ namespace std.net
         /// <param name="end"></param>
         /// <returns></returns>
         [Pure]
-        public static bool InRange(decimal number, decimal end)
+        public static bool inrange(decimal number, decimal end)
         {
             return 0 <= number && number <= end;
         }
 
         #endregion
+
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        [Pure]
+        public static int integer(string s)
+        {
+            return isinteger(s) ? int.Parse(s) : default(int);
+        }
     }
 }
 

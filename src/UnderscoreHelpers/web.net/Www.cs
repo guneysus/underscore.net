@@ -225,9 +225,9 @@ namespace www.net
             var fns = new List<Func<string, string>>();
             fns.Add(s => s);
             fns.Add(RemoveAccents);
-            fns.Add(CompactSpaces);
+            fns.Add(compact);
             fns.Add(s => new string(truncate(s, maxlength).ToArray()));
-            fns.Add(LowerCase);
+            fns.Add(lower);
             fns.Add(ChangeSpacesToHypens);
 
             var result = fns.Aggregate(text, (s, f) => f(s));
