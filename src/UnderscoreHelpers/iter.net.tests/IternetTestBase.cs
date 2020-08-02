@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 using static iter.net.Iter;
 using _ = iter.net.Iter;
 using static std.net.Std;
+using std.net;
 
 namespace iter.net.tests
 {
@@ -344,6 +345,46 @@ namespace iter.net.tests
         public void List_factory()
         {
             Assert.True(same(new List<string> { "c", "a", "b" }, list("a", "b", "c")));
+        }
+    }
+
+    public class DiffTests : IternetTestBase
+    {
+        public DiffTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void diffA_list()
+        {
+            var first = Std.list(1, 2, 3, 4, 5);
+            var second = Std.list(2, 3, 4, 5, 6);
+
+            var diff = _.diffA(first, second);
+
+            Assert.True(_.same(Std.list(6), diff.Added));
+            Assert.True(_.same(Std.list(1), diff.Deleted));
+            Assert.True(_.same(Std.list(2, 3, 4, 5), diff.Same));
+        }
+
+        [Fact]
+        public void diff_list()
+        {
+            var first = new List<int>() { 1, 2, 3, 4, 5 };
+            var second = new List<int>() { 2, 3, 4, 5, 6 };
+
+            var diff = _.diff(first, second);
+
+            List<(DiffType, int)> expected = new List<(DiffType, int)>() {
+                (DiffType.Deleted, 1),
+                (DiffType.Added, 6),
+                (DiffType.Same, 2),
+                (DiffType.Same, 3),
+                (DiffType.Same, 5),
+                (DiffType.Same, 4)
+            };
+
+            Assert.True(_.same(expected, diff));
         }
     }
 

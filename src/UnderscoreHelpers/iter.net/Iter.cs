@@ -221,6 +221,74 @@ namespace iter.net
             return !firstNotSecond.Any() && !secondNotFirst.Any();
         }
 
+        [Pure]
+        public static IEnumerable<(DiffType, T)> diff<T>(IEnumerable<T> source, IEnumerable<T> target)
+        {
+            IEnumerable<T> added = target.Except(source);
+            IEnumerable<T> deleted = source.Except(target);
+            IEnumerable<T> same = source.Intersect(target);
+
+            foreach (var item in added)
+                yield return (DiffType.Added, item);
+
+            foreach (var item in deleted)
+                yield return (DiffType.Deleted, item);
+
+            foreach (var item in same)
+                yield return (DiffType.Same, item);
+        }
+
+        [Pure]
+        public static IEnumerable<(DiffType, KeyValuePair<TKey, TValue>)> diff<TKey, TValue>(
+            IDictionary<TKey, TValue> source,
+            IDictionary<TKey, TValue> target)
+        {
+            var added = target.Keys.Except(source.Keys).Select(k => new KeyValuePair<TKey, TValue>(k, target[k]));
+            var deleted = source.Keys.Except(target.Keys).Select(k => new KeyValuePair<TKey, TValue>(k, source[k]));
+
+            var commonKeys = source.Keys.Intersect(target.Keys);
+
+            var same = commonKeys.Where(k => source[k].Equals(target[k])).Select(k => new KeyValuePair<TKey, TValue>(k, source[k]));
+            var updated = commonKeys.Where(k => !source[k].Equals(target[k])).Select(k => new KeyValuePair<TKey, TValue>(k, target[k]));
+
+            foreach (var item in added)
+                yield return (DiffType.Added, item);
+
+            foreach (var item in deleted)
+                yield return (DiffType.Deleted, item);
+
+            foreach (var item in updated)
+                yield return (DiffType.Updated, item);
+
+            foreach (var item in same)
+                yield return (DiffType.Same, item);
+        }
+
+        [Pure]
+        public static DiffResult<T> diffA<T>(IEnumerable<T> source, IEnumerable<T> target)
+        {
+            IEnumerable<T> added = target.Except(source);
+            IEnumerable<T> deleted = source.Except(target);
+            IEnumerable<T> same = source.Intersect(target);
+            return new DiffResult<T>(added, deleted, same);
+        }
+
+        [Pure]
+        public static DiffResult<TKey, TValue> diffA<TKey, TValue>(
+            IDictionary<TKey, TValue> source,
+            IDictionary<TKey, TValue> target)
+        {
+            var added = target.Keys.Except(source.Keys).Select(k => new KeyValuePair<TKey, TValue>(k, target[k]));
+            var deleted = source.Keys.Except(target.Keys).Select(k => new KeyValuePair<TKey, TValue>(k, source[k]));
+
+            var sameKeys = source.Keys.Intersect(target.Keys);
+
+            var same = sameKeys.Where(k => source[k].Equals(target[k]));
+            var updated = sameKeys.Where(k => !source[k].Equals(target[k]));
+            return new DiffResult<TKey, TValue>(added, deleted, updated, same);
+        }
+
+
         /// <summary>
         /// TODO #Doc 
         /// </summary>
@@ -244,6 +312,12 @@ namespace iter.net
             }
 
             return dict2;
+        }
+
+        [Pure]
+        public static IEnumerable<char> merge(params IEnumerable<char>[] args)
+        {
+            return args.Aggregate((a, b) => a.Union(b));
         }
 
         /// <summary>
@@ -307,12 +381,6 @@ namespace iter.net
             }
 
             return result;
-        }
-
-        [Pure]
-        public static IEnumerable<char> merge(params IEnumerable<char>[] args)
-        {
-            return args.Aggregate((a, b) => a.Union(b));
         }
 
         /// <summary>
@@ -495,5 +563,44 @@ namespace iter.net
 
         [Pure]
         public static IEnumerable<T> dropWhile<T>(Func<T, bool> predicate, List<T> collection) => dropWhile(collection, predicate);
+    }
+
+    public class DiffResult<TKey, TValue>
+    {
+        public readonly IEnumerable<KeyValuePair<TKey, TValue>> Added;
+        public readonly IEnumerable<KeyValuePair<TKey, TValue>> Deleted;
+        public readonly IEnumerable<TKey> Updated;
+        public readonly IEnumerable<TKey> Same;
+
+        protected DiffResult() { }
+
+        public DiffResult(IEnumerable<KeyValuePair<TKey, TValue>> added, IEnumerable<KeyValuePair<TKey, TValue>> deleted, IEnumerable<TKey> updated, IEnumerable<TKey> same)
+        {
+            this.Added = added;
+            this.Deleted = deleted;
+            this.Updated = updated;
+            this.Same = same;
+        }
+    }
+
+    public class DiffResult<T>
+    {
+        public readonly IEnumerable<T> Added;
+        public readonly IEnumerable<T> Deleted;
+        public readonly IEnumerable<T> Same;
+
+        protected DiffResult() { }
+
+        public DiffResult(IEnumerable<T> added, IEnumerable<T> deleted, IEnumerable<T> same)
+        {
+            this.Added = added;
+            this.Deleted = deleted;
+            this.Same = same;
+        }
+    }
+
+    public enum DiffType
+    {
+        Added, Deleted, Updated, Same
     }
 }
