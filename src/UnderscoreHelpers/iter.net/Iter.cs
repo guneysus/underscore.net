@@ -21,7 +21,9 @@ namespace iter.net
         /// <param name="second"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<T> intersect<T>(IEnumerable<T> first, IEnumerable<T> second)
+        public static IEnumerable<T> intersect<T>(
+            IEnumerable<T> first,
+            IEnumerable<T> second)
         {
             return first.Intersect(second);
         }
@@ -35,7 +37,10 @@ namespace iter.net
         /// <param name="comparer"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<T> intersect<T>(IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer)
+        public static IEnumerable<T> intersect<T>(
+            IEnumerable<T> first, 
+            IEnumerable<T> second, 
+            IEqualityComparer<T> comparer)
         {
             return first.Intersect(second, comparer);
         }
@@ -119,7 +124,9 @@ namespace iter.net
 
 
         [Pure]
-        public static IEnumerable<T> sort<T>(IEnumerable<T> enumerable, IComparer<T> comparer)
+        public static IEnumerable<T> sort<T>(
+            IEnumerable<T> enumerable, 
+            IComparer<T> comparer)
         {
             List<T> sorted = enumerable.ToList();
             sorted.Sort(comparer);
@@ -144,7 +151,9 @@ namespace iter.net
         /// <param name="second"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<ValueTuple<T1, T2>> zip<T1, T2>(IEnumerable<T1> first, IEnumerable<T2> second)
+        public static IEnumerable<ValueTuple<T1, T2>> zip<T1, T2>(
+            IEnumerable<T1> first, 
+            IEnumerable<T2> second)
         {
             if (first.Count() != second.Count())
             {
@@ -163,13 +172,16 @@ namespace iter.net
         /// <typeparam name="TFirst"></typeparam>
         /// <typeparam name="TSecond"></typeparam>
         /// <typeparam name="TResult"></typeparam>
-        /// <param name="source1"></param>
-        /// <param name="source2"></param>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
         /// <param name="resultSelector"></param>
         /// <returns></returns>
-        public static IQueryable<TResult> zip<TFirst, TSecond, TResult>(IQueryable<TFirst> source1, IEnumerable<TSecond> source2, Expression<Func<TFirst, TSecond, TResult>> resultSelector)
+        public static IQueryable<TResult> zip<TFirst, TSecond, TResult>(
+            IQueryable<TFirst> first, 
+            IEnumerable<TSecond> second, 
+            Expression<Func<TFirst, TSecond, TResult>> resultSelector)
         {
-            return source1.Zip(source2, resultSelector);
+            return first.Zip(second, resultSelector);
         }
 
         /// <summary>
@@ -180,10 +192,33 @@ namespace iter.net
         /// <param name="second"></param>
         /// <returns></returns>
         [Pure]
-        public static bool same<T>(IEnumerable<T> first, IEnumerable<T> second)
+        public static bool same<T>(
+            IEnumerable<T> first, 
+            IEnumerable<T> second)
         {
             List<T> firstNotSecond = first.Except(second).ToList();
             List<T> secondNotFirst = second.Except(first).ToList();
+            return !firstNotSecond.Any() && !secondNotFirst.Any();
+        }
+
+        [Pure]
+        public static bool same<TKey, TValue>(
+            IEnumerable<KeyValuePair<TKey, TValue>> first,
+            IEnumerable<KeyValuePair<TKey, TValue>> second)
+        {
+            var firstNotSecond = first.Except(second).ToList();
+            var secondNotFirst = second.Except(first).ToList();
+            return !firstNotSecond.Any() && !secondNotFirst.Any();
+        }
+
+        [Pure]
+        public static bool same<TKey, TValue>(
+            IEnumerable<KeyValuePair<TKey, TValue>> first,
+            IEnumerable<KeyValuePair<TKey, TValue>> second,
+            IEqualityComparer<KeyValuePair<TKey, TValue>> equalityComparer)
+        {
+            var firstNotSecond = first.Except(second, equalityComparer).ToList();
+            var secondNotFirst = second.Except(first, equalityComparer).ToList();
             return !firstNotSecond.Any() && !secondNotFirst.Any();
         }
 
@@ -196,7 +231,8 @@ namespace iter.net
         /// <param name="equalityComparer"></param>
         /// <returns></returns>
         [Pure]
-        public static bool same<T>(IEnumerable<T> first,
+        public static bool same<T>(
+            IEnumerable<T> first,
             IEnumerable<T> second,
             IEqualityComparer<T> equalityComparer)
         {
@@ -214,7 +250,9 @@ namespace iter.net
         /// <param name="second"></param>
         /// <returns></returns>
         [Pure]
-        public static bool same<TKey, TValue>(Dictionary<TKey, TValue> first, Dictionary<TKey, TValue> second)
+        public static bool same<TKey, TValue>(
+            Dictionary<TKey, TValue> first,
+            Dictionary<TKey, TValue> second)
         {
             List<KeyValuePair<TKey, TValue>> firstNotSecond = first.Except(second).ToList();
             List<KeyValuePair<TKey, TValue>> secondNotFirst = second.Except(first).ToList();
@@ -222,7 +260,9 @@ namespace iter.net
         }
 
         [Pure]
-        public static IEnumerable<(DiffType, T)> diff<T>(IEnumerable<T> source, IEnumerable<T> target)
+        public static IEnumerable<(DiffType, T)> diff<T>(
+            IEnumerable<T> source,
+            IEnumerable<T> target)
         {
             IEnumerable<T> added = target.Except(source);
             IEnumerable<T> deleted = source.Except(target);
@@ -265,7 +305,9 @@ namespace iter.net
         }
 
         [Pure]
-        public static DiffResult<T> diffA<T>(IEnumerable<T> source, IEnumerable<T> target)
+        public static DiffResult<T> diffA<T>(
+            IEnumerable<T> source,
+            IEnumerable<T> target)
         {
             IEnumerable<T> added = target.Except(source);
             IEnumerable<T> deleted = source.Except(target);
@@ -274,7 +316,7 @@ namespace iter.net
         }
 
         [Pure]
-        public static DiffResult<TKey, TValue> diffA<TKey, TValue>(
+        public static DiffResult<TKey, TValue> diffa<TKey, TValue>(
             IDictionary<TKey, TValue> source,
             IDictionary<TKey, TValue> target)
         {
@@ -283,8 +325,9 @@ namespace iter.net
 
             var sameKeys = source.Keys.Intersect(target.Keys);
 
-            var same = sameKeys.Where(k => source[k].Equals(target[k]));
-            var updated = sameKeys.Where(k => !source[k].Equals(target[k]));
+            var same = sameKeys.Where(k => source[k].Equals(target[k])).Select(k => new KeyValuePair<TKey, TValue>(k, source[k]));
+            var updated = sameKeys.Where(k => !source[k].Equals(target[k])).Select(k => new KeyValuePair<TKey, TValue>(k, target[k]));
+
             return new DiffResult<TKey, TValue>(added, deleted, updated, same);
         }
 
@@ -294,24 +337,22 @@ namespace iter.net
         /// </summary>
         /// <typeparam name="K"></typeparam>
         /// <typeparam name="V"></typeparam>
-        /// <param name="dict1"></param>
-        /// <param name="dict2"></param>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
         /// <returns></returns>
         [Pure]
-        public static Dictionary<K, V> merge<K, V>(Dictionary<K, V> dict1, Dictionary<K, V> dict2)
+        public static Dictionary<K, V> merge<K, V>(
+            Dictionary<K, V> first,
+            Dictionary<K, V> second)
         {
             Dictionary<K, V> result = new Dictionary<K, V>();
-            foreach (KeyValuePair<K, V> item in dict1)
-            {
+            foreach (KeyValuePair<K, V> item in first)
                 result.Add(item.Key, item.Value);
-            }
 
-            foreach (KeyValuePair<K, V> item in dict2)
-            {
+            foreach (KeyValuePair<K, V> item in second)
                 result.Add(item.Key, item.Value);
-            }
 
-            return dict2;
+            return second;
         }
 
         [Pure]
@@ -329,7 +370,9 @@ namespace iter.net
         /// <param name="keys"></param>
         /// <returns></returns>
         [Pure]
-        public static Dictionary<K, V> omitKeys<K, V>(Dictionary<K, V> data, params K[] keys)
+        public static Dictionary<K, V> omitKeys<K, V>(
+            Dictionary<K, V> data,
+            params K[] keys)
         {
             IEnumerable<K> keyList = Iter.keys(data).Except(keys);
             Dictionary<K, V> result = new Dictionary<K, V>();
@@ -351,7 +394,9 @@ namespace iter.net
         /// <param name="predicate"></param>
         /// <returns></returns>
         [Pure]
-        public static Dictionary<K, V> omitBy<K, V>(Dictionary<K, V> data, Func<KeyValuePair<K, V>, bool> predicate)
+        public static Dictionary<K, V> omitBy<K, V>(
+            Dictionary<K, V> data,
+            Func<KeyValuePair<K, V>, bool> predicate)
         {
             return data.Where(x => !predicate(x)).ToDictionary(kv => kv.Key, kv => kv.Value);
         }
@@ -365,13 +410,17 @@ namespace iter.net
         /// <param name="predicate"></param>
         /// <returns></returns>
         [Pure]
-        public static Dictionary<K, V> pickBy<K, V>(Dictionary<K, V> data, Func<KeyValuePair<K, V>, bool> predicate)
+        public static Dictionary<K, V> pickBy<K, V>(
+            Dictionary<K, V> data,
+            Func<KeyValuePair<K, V>, bool> predicate)
         {
             return data.Where(x => predicate(x)).ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 
         [Pure]
-        public static Dictionary<K, V> pickKeys<K, V>(Dictionary<K, V> data, params K[] keys)
+        public static Dictionary<K, V> pickKeys<K, V>(
+            Dictionary<K, V> data,
+            params K[] keys)
         {
             Dictionary<K, V> result = new Dictionary<K, V>();
 
@@ -432,7 +481,11 @@ namespace iter.net
         /// <param name="startDepth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<Tuple<int, T, T>> climber<T>(T root, Func<T, IEnumerable<T>> leafs, int startDepth = 1, int maxDepth = 10)
+        public static IEnumerable<Tuple<int, T, T>> climber<T>(
+            T root,
+            Func<T, IEnumerable<T>> leafs,
+            int startDepth = 1,
+            int maxDepth = 10)
         {
             return climber<T, Tuple<int, T, T>>(root: root, leafs: leafs, factory: (item) => item, startDepth: startDepth, maxDepth: maxDepth);
             return visit(root, default, leafs, startDepth, maxDepth);
@@ -448,10 +501,12 @@ namespace iter.net
         /// <param name="depth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<TResult> climber<T, TResult>(T root,
+        public static IEnumerable<TResult> climber<T, TResult>(
+            T root,
             Func<T, IEnumerable<T>> leafs,
             Func<Tuple<int, T, T>, TResult> factory,
-            int startDepth = 1, int maxDepth = 10)
+            int startDepth = 1,
+            int maxDepth = 10)
         {
             foreach (var item in visit(current: root, parent: default, leafs: leafs, depth: startDepth = 1, maxDepth: maxDepth))
             {
@@ -469,7 +524,12 @@ namespace iter.net
         /// <param name="depth"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<Tuple<int, T, T>> visit<T>(T current, T parent, Func<T, IEnumerable<T>> leafs, int depth, int maxDepth)
+        public static IEnumerable<Tuple<int, T, T>> visit<T>(
+            T current,
+            T parent,
+            Func<T, IEnumerable<T>> leafs,
+            int depth,
+            int maxDepth)
         {
             yield return Tuple.Create(depth, current, parent);
 
@@ -514,13 +574,17 @@ namespace iter.net
         /// <param name="size"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<T> drop<T>(List<T> collection, int size)
+        public static IEnumerable<T> drop<T>(
+            List<T> collection,
+            int size)
         {
             return collection.Skip(size);
         }
 
         [Pure]
-        public static IEnumerable<T> drop<T>(int size, List<T> collection) => drop(collection, size);
+        public static IEnumerable<T> drop<T>(
+            int size,
+            List<T> collection) => drop(collection, size);
 
 
         /// <summary>
@@ -531,13 +595,17 @@ namespace iter.net
         /// <param name="size"></param>
         /// <returns></returns>
         [Pure]
-        public static IQueryable<T> drop<T>(IQueryable<T> collection, int size)
+        public static IQueryable<T> drop<T>(
+            IQueryable<T> collection,
+            int size)
         {
             return collection.Skip(size);
         }
 
         [Pure]
-        public static IQueryable<T> drop<T>(int size, IQueryable<T> collection) => drop(collection, size);
+        public static IQueryable<T> drop<T>(
+            int size,
+            IQueryable<T> collection) => drop(collection, size);
 
         /// <summary>
         /// TODO #doc
@@ -547,60 +615,29 @@ namespace iter.net
         /// <param name="predicate"></param>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<T> dropWhile<T>(List<T> collection, Func<T, bool> predicate)
+        public static IEnumerable<T> dropWhile<T>(
+            List<T> collection,
+            Func<T, bool> predicate)
         {
             return collection.Where(x => !predicate(x));
         }
 
         [Pure]
-        public static IQueryable<T> dropWhile<T>(IQueryable<T> collection, Func<T, bool> predicate)
+        public static IQueryable<T> dropWhile<T>(
+            IQueryable<T> collection,
+            Func<T, bool> predicate)
         {
             return collection.Where(x => !predicate(x));
         }
 
         [Pure]
-        public static IQueryable<T> dropWhile<T>(Func<T, bool> predicate, IQueryable<T> collection) => dropWhile(collection, predicate);
+        public static IQueryable<T> dropWhile<T>(
+            Func<T, bool> predicate,
+            IQueryable<T> collection) => dropWhile(collection, predicate);
 
         [Pure]
-        public static IEnumerable<T> dropWhile<T>(Func<T, bool> predicate, List<T> collection) => dropWhile(collection, predicate);
-    }
-
-    public class DiffResult<TKey, TValue>
-    {
-        public readonly IEnumerable<KeyValuePair<TKey, TValue>> Added;
-        public readonly IEnumerable<KeyValuePair<TKey, TValue>> Deleted;
-        public readonly IEnumerable<TKey> Updated;
-        public readonly IEnumerable<TKey> Same;
-
-        protected DiffResult() { }
-
-        public DiffResult(IEnumerable<KeyValuePair<TKey, TValue>> added, IEnumerable<KeyValuePair<TKey, TValue>> deleted, IEnumerable<TKey> updated, IEnumerable<TKey> same)
-        {
-            this.Added = added;
-            this.Deleted = deleted;
-            this.Updated = updated;
-            this.Same = same;
-        }
-    }
-
-    public class DiffResult<T>
-    {
-        public readonly IEnumerable<T> Added;
-        public readonly IEnumerable<T> Deleted;
-        public readonly IEnumerable<T> Same;
-
-        protected DiffResult() { }
-
-        public DiffResult(IEnumerable<T> added, IEnumerable<T> deleted, IEnumerable<T> same)
-        {
-            this.Added = added;
-            this.Deleted = deleted;
-            this.Same = same;
-        }
-    }
-
-    public enum DiffType
-    {
-        Added, Deleted, Updated, Same
+        public static IEnumerable<T> dropWhile<T>(
+            Func<T, bool> predicate,
+            List<T> collection) => dropWhile(collection, predicate);
     }
 }

@@ -443,6 +443,24 @@ namespace std.net
             return items.ToDictionary(x => x.Item1, x => x.Item2);
         }
 
+        [Pure]
+        public static IEnumerable<KeyValuePair<TKey, TValue>> keyvalues<TKey, TValue>(params ValueTuple<TKey, TValue>[] items)
+        {
+            return items.Select(kv => new KeyValuePair<TKey, TValue>(kv.Item1, kv.Item2));
+        }
+
+        [Pure]
+        public static IEnumerable<(TKey, TValue)> valuetuples<TKey, TValue>(params ValueTuple<TKey, TValue>[] items)
+        {
+            return items.Select(kv => (kv.Item1, kv.Item2));
+        }
+
+        [Pure]
+        public static KeyValuePair<TKey, TValue> kv<TKey, TValue>(TKey key, TValue value)
+        {
+            return new KeyValuePair<TKey, TValue>(key, value);
+        }
+
 
         /// <summary>
         /// TODO #fn
