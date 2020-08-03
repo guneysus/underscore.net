@@ -53,15 +53,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "exp.net.tests", "exp.net.te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fs-net", "fs-net", "{183557F0-3212-4616-B6A6-58B726D3EBBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fs.net", "fs.net\fs.net.csproj", "{1A38E330-E0F7-4900-AC51-387D675A35A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fs.net", "fs.net\fs.net.csproj", "{1A38E330-E0F7-4900-AC51-387D675A35A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fs.net.tests", "fs.net.tests\fs.net.tests.csproj", "{4E2E1926-ADD7-4EC4-921A-C366E76DB5DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fs.net.tests", "fs.net.tests\fs.net.tests.csproj", "{4E2E1926-ADD7-4EC4-921A-C366E76DB5DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "refl-net", "refl-net", "{CF2FB307-905B-42C0-B45C-13581CBBB17F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refl.net", "refl.net\refl.net.csproj", "{3E88FD97-CA48-4590-9E79-F2B1727F86A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "refl.net", "refl.net\refl.net.csproj", "{3E88FD97-CA48-4590-9E79-F2B1727F86A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refl.net.tests", "refl.net.tests\refl.net.tests.csproj", "{CAE309F0-A3FE-447D-9970-AC874D63B1E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "refl.net.tests", "refl.net.tests\refl.net.tests.csproj", "{CAE309F0-A3FE-447D-9970-AC874D63B1E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rgx-net", "rgx-net", "{F0F22F1A-6AC5-42CB-8AB9-E585542F0332}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rgx.net", "rgx.net\rgx.net.csproj", "{706E84F7-5E4C-4866-B3AC-BFFD51938F51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rgx.net.tests", "rgx.net.tests\rgx.net.tests.csproj", "{1AEDDD38-E2EC-4895-B76E-E51442417A4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,6 +155,14 @@ Global
 		{CAE309F0-A3FE-447D-9970-AC874D63B1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAE309F0-A3FE-447D-9970-AC874D63B1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAE309F0-A3FE-447D-9970-AC874D63B1E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{706E84F7-5E4C-4866-B3AC-BFFD51938F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{706E84F7-5E4C-4866-B3AC-BFFD51938F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{706E84F7-5E4C-4866-B3AC-BFFD51938F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{706E84F7-5E4C-4866-B3AC-BFFD51938F51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AEDDD38-E2EC-4895-B76E-E51442417A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AEDDD38-E2EC-4895-B76E-E51442417A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AEDDD38-E2EC-4895-B76E-E51442417A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AEDDD38-E2EC-4895-B76E-E51442417A4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,6 +188,8 @@ Global
 		{4E2E1926-ADD7-4EC4-921A-C366E76DB5DC} = {183557F0-3212-4616-B6A6-58B726D3EBBF}
 		{3E88FD97-CA48-4590-9E79-F2B1727F86A7} = {CF2FB307-905B-42C0-B45C-13581CBBB17F}
 		{CAE309F0-A3FE-447D-9970-AC874D63B1E3} = {CF2FB307-905B-42C0-B45C-13581CBBB17F}
+		{706E84F7-5E4C-4866-B3AC-BFFD51938F51} = {F0F22F1A-6AC5-42CB-8AB9-E585542F0332}
+		{1AEDDD38-E2EC-4895-B76E-E51442417A4E} = {F0F22F1A-6AC5-42CB-8AB9-E585542F0332}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA568839-4176-453F-A69B-F87F8C2323B7}

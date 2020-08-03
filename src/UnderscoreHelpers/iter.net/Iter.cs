@@ -38,8 +38,8 @@ namespace iter.net
         /// <returns></returns>
         [Pure]
         public static IEnumerable<T> intersect<T>(
-            IEnumerable<T> first, 
-            IEnumerable<T> second, 
+            IEnumerable<T> first,
+            IEnumerable<T> second,
             IEqualityComparer<T> comparer)
         {
             return first.Intersect(second, comparer);
@@ -125,7 +125,7 @@ namespace iter.net
 
         [Pure]
         public static IEnumerable<T> sort<T>(
-            IEnumerable<T> enumerable, 
+            IEnumerable<T> enumerable,
             IComparer<T> comparer)
         {
             List<T> sorted = enumerable.ToList();
@@ -152,7 +152,7 @@ namespace iter.net
         /// <returns></returns>
         [Pure]
         public static IEnumerable<ValueTuple<T1, T2>> zip<T1, T2>(
-            IEnumerable<T1> first, 
+            IEnumerable<T1> first,
             IEnumerable<T2> second)
         {
             if (first.Count() != second.Count())
@@ -177,8 +177,8 @@ namespace iter.net
         /// <param name="resultSelector"></param>
         /// <returns></returns>
         public static IQueryable<TResult> zip<TFirst, TSecond, TResult>(
-            IQueryable<TFirst> first, 
-            IEnumerable<TSecond> second, 
+            IQueryable<TFirst> first,
+            IEnumerable<TSecond> second,
             Expression<Func<TFirst, TSecond, TResult>> resultSelector)
         {
             return first.Zip(second, resultSelector);
@@ -193,7 +193,7 @@ namespace iter.net
         /// <returns></returns>
         [Pure]
         public static bool same<T>(
-            IEnumerable<T> first, 
+            IEnumerable<T> first,
             IEnumerable<T> second)
         {
             List<T> firstNotSecond = first.Except(second).ToList();
@@ -644,13 +644,30 @@ namespace iter.net
 
         [Pure]
         public static IQueryable<TResult> distinct<TSource, TKey, TResult>(
-            IQueryable<TSource> queryable, 
-            Func<TSource, TKey> keySelector, 
+            IQueryable<TSource> queryable,
+            Func<TSource, TKey> keySelector,
             Func<IGrouping<TKey, TSource>, TResult> selector)
         {
             var result = queryable.GroupBy(x => keySelector(x)).Select(group => selector(group));
 
             return result;
+        }
+
+        [Pure]
+        public static IEnumerable<T> iterator<T>(
+            Func<int> counter,
+            Func<int, T> generator)
+        {
+            return new Iterator<T>(counter, generator);
+        }
+
+        [Pure]
+        public static IEnumerable<KeyValuePair<TKey, TValue>> iterator<TKey, TValue>(
+            Func<IEnumerable<TKey>> keys,
+            Func<TKey, TValue> values
+            )
+        {
+            return new Iterator<TKey, TValue>(keys, values);
         }
 
     }

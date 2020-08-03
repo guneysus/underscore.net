@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -22,7 +23,5 @@ namespace fn.net
             return data.ContainsKey(name) ? (TResult)data[name]() : default;
         }
     }
-
-
 
 }

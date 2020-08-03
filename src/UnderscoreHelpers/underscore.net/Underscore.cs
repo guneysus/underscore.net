@@ -430,6 +430,97 @@ namespace underscore.net
 
             return (T)inst?.Invoke(obj, null);
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IList<T> clone<T>(IList<T> input)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, input);
+                stream.Position = 0;
+                return (IList<T>)formatter.Deserialize(stream);
+            }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Pure]
+        public static ICollection<T> clone<T>(ICollection<T> input)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, input);
+                stream.Position = 0;
+                return (ICollection<T>)formatter.Deserialize(stream);
+            }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<T> clone<T>(IEnumerable<T> input)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, input);
+                stream.Position = 0;
+                return (IEnumerable<T>)formatter.Deserialize(stream);
+            }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IReadOnlyCollection<T> clone<T>(IReadOnlyCollection<T> input)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, input);
+                stream.Position = 0;
+                return (IReadOnlyCollection<T>)formatter.Deserialize(stream);
+            }
+        }
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IReadOnlyList<T> clone<T>(IReadOnlyList<T> input)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, input);
+                stream.Position = 0;
+                return (IReadOnlyList<T>)formatter.Deserialize(stream);
+            }
+        }
+
         #endregion
 
         #region String Tools
@@ -620,18 +711,29 @@ namespace underscore.net
         #endregion
 
         #region Stream Helpers
-        /// <summary>
-        /// TODO #Doc 
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
+
         [Pure]
         public static string read(Stream stream)
         {
             stream.Seek(0, SeekOrigin.Begin);
-            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8, false, 4096))
-                return reader.ReadToEnd();
+            using StreamReader reader = new StreamReader(
+                stream,
+                encoding: Encoding.UTF8,
+                detectEncodingFromByteOrderMarks: false);
+            return reader.ReadToEnd();
         }
+
+        [Pure]
+        public static string read(Stream stream, Encoding encoding)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+            using StreamReader reader = new StreamReader(
+                stream,
+                encoding: encoding,
+                detectEncodingFromByteOrderMarks: false);
+            return reader.ReadToEnd();
+        }
+
         #endregion
 
         #region Gzip
@@ -780,164 +882,107 @@ namespace underscore.net
         [Pure]
         public static bool boolean(string value, params string[] trueValues) => trueValues.Contains(value.ToLowerInvariant());
         #endregion
-    }
 
-    public static class Extensions
-    {
-        #region Extension Methods
-        public static IDateTimeYearBuilder calendar(
-            this IDateTimeCalendarBuilder that,
-            Calendar calendar) => that.Calendar(calendar);
-
-        public static IDateTimeMonthBuilder year(
-            this IDateTimeYearBuilder that,
-            int year) => that.Year(year);
-
-        public static IDateTimeDayBuilder month(
-            this IDateTimeMonthBuilder that,
-            int month) => that.Month(month);
-
-        public static IDateTimeHourBuilder day(
-            this IDateTimeDayBuilder that,
-            int day) => that.Day(day);
-
-        public static IDateTimeBuilderBuilder hour(
-            this IDateTimeHourBuilder that,
-            int hour) => that.Hour(hour);
-
-        public static IDateTimeSecondBuilder minute(
-            this IDateTimeBuilderBuilder that,
-            int minute) => that.Minute(minute);
-
-        public static IDateTimeMilisecondBuilder second(
-            this IDateTimeSecondBuilder that,
-            int second) => that.Second(second);
-
-        public static IDateTimeKindBuilder milisecond(
-            this IDateTimeMilisecondBuilder that,
-            int milisecond) => that.Milisecond(milisecond);
-
-        public static IDateTimeTimezoneBuilder kind(
-            this IDateTimeKindBuilder that,
-            DateTimeKind kind) => that.Kind(kind);
-
-        public static IDateTimeBuilder timezone(
-            this IDateTimeTimezoneBuilder that,
-            TimeZoneInfo tz) => that.TimeZone(tz);
-
-        public static DateTime build(this IDateTimeBuilder that) => that.Build();
-        #endregion
-    }
-
-    /// <summary>
-    ///
-    /// credits:
-    /// https://stackoverflow.com/a/415396/
-    /// https://stackoverflow.com/a/10502856/
-    /// https://stackoverflow.com/a/33446914/1766716
-    /// https://stackoverflow.com/a/12680454/1766716
-    /// https://stackoverflow.com/a/737156/1766716
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Sha1<T>
-    {
-        public readonly T _inner;
-        Sha1() { }
-        public Sha1(T inner)
+        /// <summary>
+        /// TODO #Doc 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        [Pure]
+        public static IEnumerable<string> words(string v)
         {
-            _inner = inner;
+            // https://stackoverflow.com/a/12730562/1766716
+            Regex regex = new Regex(@"\w+");
+            MatchCollection matchList = regex.Matches(v);
+            return matchList.Cast<Match>().Select(match => match.Value).ToList();
         }
 
-        public byte[] ComputeHash()
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string text(decimal value)
         {
-            var hash = Combine(GetValueAsByteArray(_inner).ToArray());
-            return Underscore.sha1(hash);
+            return value.ToString();
         }
 
-        public override bool Equals(object obj)
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string text(decimal value, IFormatProvider formatProvider)
         {
-            var objHash = ((Sha1<T>)obj).ComputeHash();
-            var meHash = this.ComputeHash();
-            return Compare(objHash, meHash);
+            return value.ToString(formatProvider);
         }
 
-        public override int GetHashCode()
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string text(decimal value, string format)
         {
-            return this.ComputeHash().GetHashCode();
+            return value.ToString(format);
         }
 
-        public bool Compare(byte[] first, byte[] second)
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
+        /// <param name="formatProvider"></param>
+        /// <returns></returns>
+        [Pure]
+        public static string text(decimal value, string format, IFormatProvider formatProvider)
         {
-            if (first.Length != second.Length) return false;
-
-
-            for (int i = 0; i < first.Length; i++)
-                if (second[i] != first[i])
-                    return false;
-
-            return true;
-
+            return value.ToString(format, formatProvider);
         }
 
-        public IEnumerable<byte[]> GetValueAsByteArray(T obj)
-        {
-            int i = -1;
-            foreach (var member in GetPublicMembers(typeof(T)))
-            {
-                ++i;
-                yield return ObjectToByteArray(GetValue(member, obj));
-            }
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure]
+        public static T @default<T>() => default;
 
-            yield break;
-        }
+        [Pure]
+        public static T @default<T>(T obj) => default;
 
-        public MemberInfo[] GetPublicMembers(Type type)
-        {
-            const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-            return type
-               .GetFields(bindingFlags)
-               .Cast<MemberInfo>()
-               .Concat(type.GetProperties(bindingFlags))
-               .ToArray();
-        }
+        /// <summary>
+        /// TODO #Doc #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        [Pure]
+        public static Type type<T>() => typeof(T);
 
-        public object GetValue(MemberInfo memberInfo, object forObject)
-        {
-            switch (memberInfo.MemberType)
-            {
-                case MemberTypes.Field:
-                    return ((FieldInfo)memberInfo).GetValue(forObject);
-                case MemberTypes.Property:
-                    return ((PropertyInfo)memberInfo).GetValue(forObject);
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+        [Pure]
+        public static Type type<T>(T obj) => typeof(T);
 
 
-        // Convert an object to a byte array
-        public byte[] ObjectToByteArray(Object obj)
-        {
-            if (obj == null) return new byte[0];
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure] public static T min<T>() where T : struct => (T)typeof(T).GetField("MinValue").GetValue(null);
+        [Pure] public static T min<T>(T obj) where T : struct => (T)typeof(T).GetField("MinValue").GetValue(null);
 
-            BinaryFormatter bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                return ms.ToArray();
-            }
-        }
-
-        private byte[] Combine(params byte[][] arrays)
-        {
-            byte[] rv = new byte[arrays.Sum(a => a.Length)];
-            int offset = 0;
-            foreach (byte[] array in arrays)
-            {
-                System.Buffer.BlockCopy(array, 0, rv, offset, array.Length);
-                offset += array.Length;
-            }
-            return rv;
-        }
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        [Pure] public static T max<T>() where T : struct => (T)typeof(T).GetField("MaxValue").GetValue(null);
+        [Pure] public static T max<T>(T obj) where T : struct => (T)typeof(T).GetField("MaxValue").GetValue(null);
     }
 }

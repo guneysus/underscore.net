@@ -397,7 +397,7 @@ namespace std.net
         /// <param name="formatProvider"></param>
         /// <returns></returns>
         [Pure]
-        public static bool IsNan(string v, IFormatProvider formatProvider = null)
+        public static bool isnan(string v, IFormatProvider formatProvider = null)
 #pragma warning restore RCS1163 // Unused parameter.
         {
             return !(isdecimal(v) || isfloat(v, null) || isinteger(v));

@@ -254,10 +254,10 @@ namespace std.net.tests
         [Fact]
         public void Is_nan()
         {
-            Assert.True(IsNan("true"));
-            Assert.False(IsNan("0"));
-            Assert.False(IsNan("0.4"));
-            Assert.False(IsNan("1.1243459968574737722343"));
+            Assert.True(isnan("true"));
+            Assert.False(isnan("0"));
+            Assert.False(isnan("0.4"));
+            Assert.False(isnan("1.1243459968574737722343"));
         }
 
         [Fact]
