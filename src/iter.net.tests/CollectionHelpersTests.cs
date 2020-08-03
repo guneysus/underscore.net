@@ -182,7 +182,7 @@ namespace iter.net.tests
         [Fact]
         public void merge_tests()
         {
-            Assert.Equal(asciiletters(), merge(AsciiLowercase(), AsciiUppercase()));
+            Assert.Equal(asciiletters, merge(asciilower, asciiupper));
         }
 
 
@@ -331,6 +331,22 @@ namespace iter.net.tests
         public void List_factory()
         {
             Assert.True(same(new List<string> { "c", "a", "b" }, list("a", "b", "c")));
+        }
+
+        [Fact]
+        public void drop_tests()
+        {
+            var numbers = list(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+            var actual = drop(collection: numbers, size: 9);
+            Assert.True(same(list(9), actual));
+        }
+
+        [Fact]
+        public void drop_while_tests()
+        {
+            var numbers = list(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+            var evenNumbers = dropWhile(numbers, x => x % 2 != 0);
+            Assert.True(same(list(0, 2, 4, 6, 8), evenNumbers));
         }
     }
 }

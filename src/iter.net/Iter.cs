@@ -576,12 +576,6 @@ namespace iter.net
             return collection.Skip(size);
         }
 
-        [Pure]
-        public static IEnumerable<T> drop<T>(
-            int size,
-            List<T> collection) => drop(collection, size);
-
-
         /// <summary>
         /// TODO #doc
         /// </summary>
@@ -596,11 +590,6 @@ namespace iter.net
         {
             return collection.Skip(size);
         }
-
-        [Pure]
-        public static IQueryable<T> drop<T>(
-            int size,
-            IQueryable<T> collection) => drop(collection, size);
 
         /// <summary>
         /// TODO #doc
@@ -624,18 +613,6 @@ namespace iter.net
         {
             return collection.Where(x => !predicate(x));
         }
-
-        [Pure]
-        public static IQueryable<T> dropWhile<T>(
-            Func<T, bool> predicate,
-            IQueryable<T> collection) => dropWhile(collection, predicate);
-
-        [Pure]
-        public static IEnumerable<T> dropWhile<T>(
-            Func<T, bool> predicate,
-            List<T> collection) => dropWhile(collection, predicate);
-
-
 
         [Pure]
         public static IQueryable<TResult> distinct<TSource, TKey, TResult>(
