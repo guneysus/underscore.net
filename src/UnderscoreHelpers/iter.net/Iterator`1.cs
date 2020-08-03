@@ -8,7 +8,14 @@ namespace iter.net
 
     public class Iterator<T> : IReadOnlyList<T>
     {
-        public T this[int index] => _generator(index);
+        public T this[int index]
+        {
+            get
+            {
+                if (index > Count || index < 0) throw new ArgumentOutOfRangeException(nameof(index));
+                return _generator(index);
+            }
+        }
 
         public int Count => _counter();
 

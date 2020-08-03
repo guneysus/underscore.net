@@ -654,7 +654,7 @@ namespace iter.net
         }
 
         [Pure]
-        public static IEnumerable<T> iterator<T>(
+        public static Iterator<T> iterator<T>(
             Func<int> counter,
             Func<int, T> generator)
         {
@@ -662,7 +662,7 @@ namespace iter.net
         }
 
         [Pure]
-        public static IEnumerable<KeyValuePair<TKey, TValue>> iterator<TKey, TValue>(
+        public static Iterator<TKey, TValue> iterator<TKey, TValue>(
             Func<IEnumerable<TKey>> keys,
             Func<TKey, TValue> values
             )
