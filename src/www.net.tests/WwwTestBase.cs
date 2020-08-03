@@ -6,6 +6,7 @@ using Xunit;
 using Xunit.Abstractions;
 using static www.net.Www;
 using static std.net.Std;
+using static iter.net.Iter;
 using System.Collections.Generic;
 using Microsoft.Toolkit.Parsers.Rss;
 using System.Globalization;
@@ -110,6 +111,21 @@ namespace www.net.tests
 
             Assert.Equal("https://foo.example.com:81/about", url.ToString());
 
+        }
+    }
+
+    public class PasswordGenTests : WwwTestBase
+    {
+        public PasswordGenTests(ITestOutputHelper output) : base(output)
+        {
+        }
+
+        [Fact]
+        public void generate_password()
+        {
+            string pass = password(asciiall, 8);
+            output.WriteLine(pass);
+            Assert.NotEmpty(pass);
         }
     }
 

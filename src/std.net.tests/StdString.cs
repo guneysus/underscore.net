@@ -213,6 +213,5 @@ namespace std.net.tests
             Assert.Equal(Expected, lower("fooBar"));
             Assert.Equal(Expected, lower("FOO BAR"));
         }
-
     }
 }

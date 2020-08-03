@@ -437,40 +437,49 @@ namespace iter.net
         /// </summary>
         /// <returns></returns>
         [Pure]
-        public static IEnumerable<char> asciiall()
-        {
-            return merge(asciiletters(), asciipunc(), digits());
-        }
+        public static IEnumerable<char> asciiall => merge(asciiletters, asciipunc, digits);
 
         /// <summary>
         /// TODO #doc
         /// </summary>
         [Pure]
-        public static IEnumerable<char> asciiletters() => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public static IEnumerable<char> asciiletters => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         /// <summary>
         /// TODO #doc
         /// </summary>
         [Pure]
-        public static IEnumerable<char> asciipunc() => "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{\\¦}~";
+        public static IEnumerable<char> asciipunc => "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{\\¦}~";
 
         /// <summary>
         /// TODO #doc
         /// </summary>
         [Pure]
-        public static IEnumerable<char> AsciiLowercase() => "abcdefghijklmnopqrstuvwxyz";
+        public static IEnumerable<char> asciilower => "abcdefghijklmnopqrstuvwxyz";
 
         /// <summary>
         /// TODO #doc
         /// </summary>
         [Pure]
-        public static IEnumerable<char> AsciiUppercase() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public static IEnumerable<char> asciiupper => "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         /// <summary>
         /// TODO #doc
         /// </summary>
         [Pure]
-        public static IEnumerable<char> TurkishAndEnglishAlphabets() => "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ";
+        public static IEnumerable<char> turkishandenglish => "abcçdefgğhıijklmnoöpqrsştuüvwxyzABCÇDEFGĞHIİJKLMNOÖPQRSŞTUÜVWXYZ";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> turkish => "abcçdefgğhıijklmnoöprsştuüvyzABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        [Pure]
+        public static IEnumerable<char> digits => "0123456789";
 
         /// <summary>
         /// Recursively visits a tree-like data structure.
@@ -551,20 +560,6 @@ namespace iter.net
 
             yield break;
         }
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        [Pure]
-        public static IEnumerable<char> TurkishAlphabet() => "abcçdefgğhıijklmnoöprsştuüvyzABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
-
-        /// <summary>
-        /// TODO #doc
-        /// </summary>
-        [Pure]
-        public static IEnumerable<char> digits() => "0123456789";
-
-
 
         /// <summary>
         /// TODO #doc

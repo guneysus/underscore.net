@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using static std.net.Std;
+using static iter.net.Iter;
 
 namespace www.net
 {
@@ -244,7 +245,7 @@ namespace www.net
         /// <param name="length"></param>
         /// <returns></returns>
         [Pure]
-        public static string Password(IEnumerable<char> from, int length)
+        public static string password(IEnumerable<char> from, int length)
         {
             Random rnd = new Random();
             string result = concat(Enumerable.Range(1, length).Select(c => from.ElementAt(rnd.Next(0, maxValue: from.Count() - 1))));
@@ -259,11 +260,10 @@ namespace www.net
         /// <param name="length"></param>
         /// <returns></returns>
         [Pure]
-        public static string Password(int length)
+        public static string password(int length)
         {
-            var from = iter.net.Iter.asciiall();
             Random rnd = new Random();
-            string result = concat(Enumerable.Range(1, length).Select(c => from.ElementAt(rnd.Next(0, maxValue: from.Count() - 1))));
+            string result = concat(Enumerable.Range(1, length).Select(c => asciiall.ElementAt(rnd.Next(0, maxValue: asciiall.Count() - 1))));
             return result;
         }
     }
