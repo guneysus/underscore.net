@@ -1,9 +1,9 @@
 default: clean all
-
+	
 PROJECTS := underscore.net concurrent.net exp.net fn.net fs.net std.net iter.net math.net refl.net rgx.net www.net
 
 clean:
-	powershell -noexit "del dist\*.nupkg -ErrorAction Continue"
+	powershell "del dist\**.nupkg -ErrorAction Continue"
 	
 all: $(PROJECTS)
 		
@@ -28,7 +28,7 @@ $(PROJECTS):
 		src\$@\$@.csproj
 	
 push: $(PROJECTS)
-	powershell -noexit "nuget push dist\**.nupkg $(MYGET_SECRET) -Source $(MYGET_SOURCE)"
+	powershell "nuget push dist\**.nupkg $(MYGET_SECRET) -Source $(MYGET_SOURCE)"
 	
 test:
 	dotnet test .\src\UnderscoreHelpers.sln
