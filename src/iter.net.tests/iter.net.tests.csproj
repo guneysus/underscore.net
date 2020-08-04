@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\iter.net\iter.net.csproj" />
+    <ProjectReference Include="..\std.net\std.net.csproj" />
   </ItemGroup>
 
 </Project>

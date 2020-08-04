@@ -8,15 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.Toolkit.Parsers" Version="7.0.0-preview1" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\iter.net\iter.net.csproj" />
-    <ProjectReference Include="..\std.net\std.net.csproj" />
-    <ProjectReference Include="..\web.net\www.net.csproj" />
+    <ProjectReference Include="..\www.net\www.net.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using static www.net.Www;
-using static std.net.Std;
-using static iter.net.Iter;
 using System.Collections.Generic;
 using Microsoft.Toolkit.Parsers.Rss;
 using System.Globalization;
@@ -40,7 +38,7 @@ namespace www.net.tests
             const string uri = "http://feeds.feedburner.com/AmazonWebServicesBlog";
             feedContent = await HttpGetStringAsync(uri);
 
-            if (isnull(feedContent))
+            if (string.IsNullOrEmpty(feedContent))
             {
                 IEnumerable<RssSchema> rss = ParseRSS(feedContent);
 
@@ -121,9 +119,17 @@ namespace www.net.tests
         }
 
         [Fact]
-        public void generate_password()
+        public void generate_password_1()
         {
             string pass = password(asciiall, 8);
+            output.WriteLine(pass);
+            Assert.NotEmpty(pass);
+        }
+
+        [Fact]
+        public void generate_password2()
+        {
+            string pass = password(12);
             output.WriteLine(pass);
             Assert.NotEmpty(pass);
         }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Toolkit.Parsers.Markdown;
 using Microsoft.Toolkit.Parsers.Rss;
-using std.net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -10,8 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using static std.net.Std;
-using static iter.net.Iter;
+using System.Text.RegularExpressions;
 
 namespace www.net
 {
@@ -221,15 +219,21 @@ namespace www.net
 
 
         [Pure]
-        public static string slug(string text, int maxlength = 50)
+        public static string slug(string text, int maxlength = 50, string suffix = "…")
         {
             var fns = new List<Func<string, string>>();
             fns.Add(s => s);
             fns.Add(RemoveAccents);
-            fns.Add(compact);
-            fns.Add(s => new string(truncate(s, maxlength).ToArray()));
-            fns.Add(lower);
-            fns.Add(ChangeSpacesToHypens);
+            fns.Add(s => Regex.Replace(input: s, pattern: @"\s+", replacement: " ", options: RegexOptions.CultureInvariant));
+            fns.Add(s => string.Concat(s.Take(maxlength - 1).ToArray()) + suffix );
+            fns.Add(v =>
+            {
+                Regex regexFindWords = new Regex("([A-Z][a-z0-9]+)+");
+                Regex regexStrip = new Regex(@"\s+");
+                string s = regexStrip.Replace(regexFindWords.Replace(v, m => " " + m.Groups[0].Value), " ").ToLower();
+                return s.Trim();
+            });
+            fns.Add(s => Regex.Replace(input: s, pattern: @"\s+", replacement: "-", options: RegexOptions.CultureInvariant));
 
             var result = fns.Aggregate(text, (s, f) => f(s));
 
@@ -245,10 +249,10 @@ namespace www.net
         /// <param name="length"></param>
         /// <returns></returns>
         [Pure]
-        public static string password(IEnumerable<char> from, int length)
+        public static string password(char[] from, int length)
         {
             Random rnd = new Random();
-            string result = concat(Enumerable.Range(1, length).Select(c => from.ElementAt(rnd.Next(0, maxValue: from.Count() - 1))));
+            string result = new string(luckies(from, length, rnd));
             return result;
         }
 
@@ -263,9 +267,26 @@ namespace www.net
         public static string password(int length)
         {
             Random rnd = new Random();
-            string result = concat(Enumerable.Range(1, length).Select(c => asciiall.ElementAt(rnd.Next(0, maxValue: asciiall.Count() - 1))));
+            string result = new string(luckyAsciis(length, rnd));
             return result;
         }
+
+        private static char[] luckyAsciis(int length, Random rnd)
+        {
+            return Enumerable.Range(1, length).Select(luckyAscii(asciiall, rnd)).ToArray();
+        }
+
+        private static char[] luckies(char[] from, int length, Random rnd)
+        {
+            return Enumerable.Range(1, length).Select(luckyAscii(from, rnd)).ToArray();
+        }
+
+        private static Func<int, char> luckyAscii(char[] from, Random rnd)
+        {
+            return c => asciiall[rnd.Next(0, maxValue: from.Count() - 1)];
+        }
+
+        public static char[] asciiall = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{\\¦}~".ToArray();
     }
 
 
