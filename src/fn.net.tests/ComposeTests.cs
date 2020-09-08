@@ -5,6 +5,7 @@ using Xunit;
 using Xunit.Abstractions;
 using _ = fn.net.Fn;
 using math.net;
+using std.net;
 
 namespace fn.net.tests
 {
@@ -67,6 +68,20 @@ namespace fn.net.tests
 
             var fiveFactorial1 = factorial(5);
             var fiveFactorial2 = factorial(5);
+        }
+
+        [Fact]
+        public void Mapper_Tests()
+        {
+            var prices = Std.list(100.00m, 200.0m);
+
+            var calculatePricesWithTaxes = _.mapper<decimal>(x => x * 1.18m);
+
+            var realPrices = calculatePricesWithTaxes(prices);
+
+            Assert.Equal(118.00m, realPrices.ElementAt(prices.IndexOf(100.00m)));
+            Assert.Equal(236.00m, realPrices.ElementAt(prices.IndexOf(200.00m)));
+
         }
 
     }

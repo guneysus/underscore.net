@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\fn.net\fn.net.csproj" />
     <ProjectReference Include="..\math.net\math.net.csproj" />
+    <ProjectReference Include="..\std.net\std.net.csproj" />
   </ItemGroup>
 
 </Project>

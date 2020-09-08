@@ -176,7 +176,7 @@ namespace fn.net
         }
 
         /// <summary>
-        /// /// TODO #Doc #FN
+        /// /// TODO #test #Doc #FN
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -191,7 +191,7 @@ namespace fn.net
         }
 
         /// <summary>
-        /// TODO #doc
+        /// TODO #doc #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -227,7 +227,7 @@ namespace fn.net
         public static TResult reduce<TSource, TAccumulate, TResult>(IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector) => source.Aggregate(seed, func, resultSelector);
 
         /// <summary>
-        /// TODO #Doc #FN
+        /// TODO #test #Doc #FN
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -363,11 +363,22 @@ namespace fn.net
         /// <returns></returns>
         public static Func<T2, T1, R> swap<T1, T2, R>(Func<T1, T2, R> f) => (t2, t1) => f(t1, t2);
 
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="actions"></param>
+        /// <returns></returns>
         public static Action combine(params Action[] actions)
         {
             return (Action)Delegate.Combine(actions.ToArray());
         }
 
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actions"></param>
+        /// <returns></returns>
         public static Action combine<T>(params Func<T>[] actions)
         {
             return () => { _ = (Func<T>)Delegate.Combine(actions.ToArray()); };
@@ -375,6 +386,7 @@ namespace fn.net
 
         /// <summary>
         /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// TODO #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -400,6 +412,7 @@ namespace fn.net
 
         /// <summary>
         /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// TODO #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -425,6 +438,7 @@ namespace fn.net
 
         /// <summary>
         /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// TODO #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -447,6 +461,26 @@ namespace fn.net
                 return value;
             };
         }
+
+
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<IEnumerable<T>, IEnumerable<TResult>> mapper<T, TResult>(Func<T, TResult> func) => source => source.Select(func);
+
+
+        /// <summary>
+        /// Todo #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<IEnumerable<T>, IEnumerable<T>> mapper<T>(Func<T, T> func) => source => source.Select(func);
 
     }
 }
