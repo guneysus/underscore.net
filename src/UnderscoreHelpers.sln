@@ -69,6 +69,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rgx.net.tests", "rgx.net.te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "www.net", "www.net\www.net.csproj", "{32EAA1A3-D9F2-468A-A4C0-AB7152A39950}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C01857B6-125B-4D6F-B3DD-18D4593DF6EF}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

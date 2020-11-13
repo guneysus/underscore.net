@@ -496,7 +496,7 @@ namespace iter.net
             int startDepth = 1,
             int maxDepth = 10)
         {
-            return climber<T, Tuple<int, T, T>>(root: root, leafs: leafs, factory: (item) => item, startDepth: startDepth, maxDepth: maxDepth);
+            return climber<T, Tuple<int, T, T>>(root: root, leafs: leafs, factory: (item) => item, startIndex: startDepth, maxDepth: maxDepth);
             return visit(root, default, leafs, startDepth, maxDepth);
         }
 
@@ -514,10 +514,10 @@ namespace iter.net
             T root,
             Func<T, IEnumerable<T>> leafs,
             Func<Tuple<int, T, T>, TResult> factory,
-            int startDepth = 1,
+            int startIndex = 1,
             int maxDepth = 10)
         {
-            foreach (var item in visit(current: root, parent: default, leafs: leafs, depth: startDepth = 1, maxDepth: maxDepth))
+            foreach (var item in visit(current: root, parent: default, leafs: leafs, depth: startIndex = 1, maxDepth: maxDepth))
             {
                 yield return factory(item);
             }

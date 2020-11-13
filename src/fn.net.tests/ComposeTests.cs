@@ -84,5 +84,24 @@ namespace fn.net.tests
 
         }
 
+        [Fact]
+        public void Filterer_Tests()
+        {
+            var students = Std.list(
+                (Name: "Ahmed", Age: 31),
+                (Name: "Mehmet", Age: 30),
+                (Name: "Mert", Age: 20)
+            );
+
+            var youngFilter = _.filterer<(string, int)>(item => item.Item2 <= 20);
+            var oldFilter = _.filterer<(string, int)>(item => item.Item2 > 20);
+
+            var youngs = youngFilter(students);
+            var olds = oldFilter(students);
+
+            Assert.True(youngs.Count() == 1);
+            Assert.True(olds.Count() == 2);
+
+        }
     }
 }

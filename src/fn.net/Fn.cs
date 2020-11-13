@@ -474,13 +474,21 @@ namespace fn.net
 
 
         /// <summary>
-        /// Todo #test
+        /// TODO #doc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
         public static Func<IEnumerable<T>, IEnumerable<T>> mapper<T>(Func<T, T> func) => source => source.Select(func);
+
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public static Func<IEnumerable<T>, IEnumerable<T>> filterer<T>(Func<T, bool> filter) => source => source.Where(filter);
 
     }
 }
