@@ -199,8 +199,8 @@ namespace fn.net
             //return source.Select(fn);
             foreach (T item in source)
                 yield return fn(item);
-        } 
-        #endregion 
+        }
+        #endregion
 
         #region reduce | todo
         /// <summary>
@@ -264,7 +264,7 @@ namespace fn.net
         {
             for (int i = 0; i < count; i++)
                 yield return function();
-        } 
+        }
         #endregion
 
         #region chunks | split IEnumerable to chunks
@@ -361,7 +361,29 @@ namespace fn.net
             ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3) });
 
             return (t1, t2, t3) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3 }) : default;
-        } 
+        }
+
+        public static Func<T1, T2, T3, T4, T> ctor<T1, T2, T3, T4, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) });
+
+            return (t1, t2, t3, t4) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3, t4 }) : default;
+        }
+
+        public static Func<T1, T2, T3, T4, T5, T> ctor<T1, T2, T3, T4, T5, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) });
+
+            return (t1, t2, t3, t4, t5) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3, t4, t5 }) : default;
+        }
+
+        public static Func<T1, T2, T3, T4, T5, T6, T> ctor<T1, T2, T3, T4, T5, T6, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6) });
+
+            return (t1, t2, t3, t4, t5, t6) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3, t4, t5, t6 }) : default;
+        }
+
         #endregion
         #endregion
 
@@ -384,7 +406,7 @@ namespace fn.net
         /// <typeparam name="R"></typeparam>
         /// <param name="f"></param>
         /// <returns></returns>
-        public static Func<T2, T1, R> swap<T1, T2, R>(Func<T1, T2, R> f) => (t2, t1) => f(t1, t2); 
+        public static Func<T2, T1, R> swap<T1, T2, R>(Func<T1, T2, R> f) => (t2, t1) => f(t1, t2);
         #endregion
 
         #region combine | combine multiple delegates into single delegate
@@ -407,7 +429,7 @@ namespace fn.net
         public static Action combine<T>(params Func<T>[] actions)
         {
             return () => { _ = (Func<T>)Delegate.Combine(actions.ToArray()); };
-        } 
+        }
         #endregion
 
         #region memoizer | todo
@@ -517,7 +539,7 @@ namespace fn.net
         /// <typeparam name="T"></typeparam>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static Func<IEnumerable<T>, IEnumerable<T>> filter<T>(Func<T, bool> filter) => source => source.Where(filter); 
+        public static Func<IEnumerable<T>, IEnumerable<T>> filter<T>(Func<T, bool> filter) => source => source.Where(filter);
         #endregion
 
     }
