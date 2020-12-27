@@ -75,7 +75,7 @@ namespace fn.net.tests
         {
             var prices = Std.list(100.00m, 200.0m);
 
-            var calculatePricesWithTaxes = _.mapper<decimal>(x => x * 1.18m);
+            var calculatePricesWithTaxes = _.map<decimal>(x => x * 1.18m);
 
             var realPrices = calculatePricesWithTaxes(prices);
 
@@ -93,8 +93,8 @@ namespace fn.net.tests
                 (Name: "Mert", Age: 20)
             );
 
-            var youngFilter = _.filterer<(string, int)>(item => item.Item2 <= 20);
-            var oldFilter = _.filterer<(string, int)>(item => item.Item2 > 20);
+            var youngFilter = _.filter<(string, int)>(item => item.Item2 <= 20);
+            var oldFilter = _.filter<(string, int)>(item => item.Item2 > 20);
 
             var youngs = youngFilter(students);
             var olds = oldFilter(students);

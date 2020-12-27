@@ -23,7 +23,7 @@ namespace iter.net.tests
             var numbers = iterator(() => 10, index => index.ToString());
             var expected = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 
-            Assert.True(same(expected, numbers));
+            Assert.True(_.same(expected, numbers));
 
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {

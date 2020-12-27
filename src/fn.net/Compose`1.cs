@@ -11,7 +11,4 @@ namespace fn.net
             data = exps.ToList().ToDictionary(x => x.Parameters.Single().Name, x => new Func<object>(() => x.Compile()(default)));
         }
     }
-
-
-
 }

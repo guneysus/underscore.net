@@ -72,11 +72,11 @@ namespace iter.net.tests
             var actual = zip(names, ids);
             var expected = list(("one", 1), ("two", 2));
 
-            Assert.True(same(expected, actual));
+            Assert.True(_.same(expected, actual));
 
             var result = zip(names.AsQueryable(), ids, (name, id) => $"{id}.{name}");
 
-            Assert.True(same(list("1.one", "2.two"), result));
+            Assert.True(_.same(list("1.one", "2.two"), result));
         }
 
         [Fact]
@@ -86,14 +86,14 @@ namespace iter.net.tests
             List<int> b = new List<int>() { 2, 3, 1 };
             List<int> c = new List<int>() { 3, 2 };
 
-            Assert.True(same(a, b));
-            Assert.False(same(a, c));
+            Assert.True(_.same(a, b));
+            Assert.False(_.same(a, c));
         }
 
         [Fact]
         public void Hashset_factory()
         {
-            Assert.True(same(list(1, 2), hashset(1, 1, 2)));
+            Assert.True(_.same(list(1, 2), hashset(1, 1, 2)));
         }
 
         [Fact]
@@ -151,7 +151,7 @@ namespace iter.net.tests
 
             IEnumerable<string> actual = flatten(data.Select(c => c.Value));
 
-            Assert.True(same(expected, actual));
+            Assert.True(_.same(expected, actual));
         }
 
         [Fact]
@@ -330,7 +330,7 @@ namespace iter.net.tests
         [Fact]
         public void List_factory()
         {
-            Assert.True(same(new List<string> { "c", "a", "b" }, list("a", "b", "c")));
+            Assert.True(_.same(new List<string> { "c", "a", "b" }, list("a", "b", "c")));
         }
 
         [Fact]
@@ -338,7 +338,7 @@ namespace iter.net.tests
         {
             var numbers = list(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
             var actual = drop(collection: numbers, size: 9);
-            Assert.True(same(list(9), actual));
+            Assert.True(_.same(list(9), actual));
         }
 
         [Fact]
@@ -346,7 +346,7 @@ namespace iter.net.tests
         {
             var numbers = list(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
             var evenNumbers = dropWhile(numbers, x => x % 2 != 0);
-            Assert.True(same(list(0, 2, 4, 6, 8), evenNumbers));
+            Assert.True(_.same(list(0, 2, 4, 6, 8), evenNumbers));
         }
     }
 }
