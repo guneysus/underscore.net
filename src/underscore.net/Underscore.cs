@@ -416,23 +416,6 @@ namespace underscore.net
 
         /// <summary>
         /// TODO #doc
-        /// https://stackoverflow.com/a/39666660/1766716
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        [Pure]
-        public static T clone<T>(T obj)
-        {
-            MethodInfo inst = obj
-                .GetType()
-                .GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            return (T)inst?.Invoke(obj, null);
-        }
-
-        /// <summary>
-        /// TODO #doc
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="input"></param>
@@ -520,6 +503,34 @@ namespace underscore.net
                 return (IReadOnlyList<T>)formatter.Deserialize(stream);
             }
         }
+
+        /// <summary>
+        /// TODO #doc
+        /// https://stackoverflow.com/a/39666660/1766716
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [Pure]
+        public static T clone<T>(T obj)
+        {
+            MethodInfo inst = obj
+                .GetType()
+                .GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            return (T)inst?.Invoke(obj, null);
+        }
+
+        //[Pure]
+        // TODO @REVIEW
+        //public static T clone<T>(T obj) where T : ICloneable
+        //{
+        //    MethodInfo inst = obj
+        //        .GetType()
+        //        .GetMethod("MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        //    return (T)inst?.Invoke(obj, null);
+        //}
 
         #endregion
 

@@ -100,9 +100,13 @@ namespace fn.net
         #region curry | decrease the degree of functions by 1
 
         public static Func<TR> curry<T1, TR>(Func<T1, TR> f, T1 t1) => () => f(t1);
+        public static Func<TR> curry<T1, TR>(Func<T1, TR> f, Func<T1> f1) => () => f(f1());
         public static Func<T2, TR> curry<T1, T2, TR>(Func<T1, T2, TR> f, T1 t1) => (T2 t2) => f(t1, t2);
+        public static Func<T2, TR> curry<T1, T2, TR>(Func<T1, T2, TR> f, Func<T1> f1) => (T2 t2) => f(f1(), t2);
         public static Func<T2, T3, TR> curry<T1, T2, T3, TR>(Func<T1, T2, T3, TR> f, T1 t1) => (T2 t2, T3 t3) => f(t1, t2, t3);
+        public static Func<T2, T3, TR> curry<T1, T2, T3, TR>(Func<T1, T2, T3, TR> f, Func<T1> f1) => (T2 t2, T3 t3) => f(f1(), t2, t3);
         public static Func<T2, T3, T4, TR> curry<T1, T2, T3, T4, TR>(Func<T1, T2, T3, T4, TR> f, T1 t1) => (T2 t2, T3 t3, T4 t4) => f(t1, t2, t3, t4);
+        public static Func<T2, T3, T4, TR> curry<T1, T2, T3, T4, TR>(Func<T1, T2, T3, T4, TR> f, Func<T1> f1) => (T2 t2, T3 t3, T4 t4) => f(f1(), t2, t3, t4);
 
         #endregion
 
@@ -116,7 +120,7 @@ namespace fn.net
 
         #region curry | decrease the degree of functions by 3
 
-        public static Func<TR> curry<T0, T2, T3, TR>(Func<T0, T2, T3, TR> f, T0 t1, T2 t2, T3 t3) => () => f(t1, t2, t3);
+        public static Func<TR> curry<T1, T2, T3, TR>(Func<T1, T2, T3, TR> f, T1 t1, T2 t2, T3 t3) => () => f(t1, t2, t3);
         public static Func<T4, TR> curry<T1, T2, T3, T4, TR>(Func<T1, T2, T3, T4, TR> f, T1 t1, T2 t2, T3 t3) => (T4 t4) => f(t1, t2, t3, t4);
 
         #endregion
@@ -127,6 +131,7 @@ namespace fn.net
 
         #endregion
 
+        #region pipe | chain functions (monads)
         /// <summary>
         /// compose N functions that parameter and return type is same
         /// </summary>
@@ -138,6 +143,9 @@ namespace fn.net
             Func<Func<T, T>, Func<T, T>, Func<T, T>> f = (Func<T, T> fl, Func<T, T> fr) => t => fr(fl(t));
             return functions.Aggregate(f);
         }
+        #endregion
+
+        #region aggregate | todo
 
         /// <summary>
         /// TODO #Test
@@ -153,7 +161,9 @@ namespace fn.net
             Func<Func<T, T>, Func<T, T>, Func<T, T>> accumulator = (fl, fr) => input => fr(fl(input));
             return fns.Aggregate(accumulator);
         }
+        #endregion
 
+        #region apply | todo
         /// <summary>
         /// /// TODO #Doc #FN
         /// </summary>
@@ -168,15 +178,16 @@ namespace fn.net
                 yield return fn(item);
         }
 
-
         [Pure]
         public static Func<T, T> apply<T>(Func<T, T> func, int times)
         {
             return aggregate(Enumerable.Range(1, times).Select(x => func).ToArray());
         }
+        #endregion
 
+        #region map | todo
         /// <summary>
-        /// /// TODO #Doc #FN
+        /// /// TODO #test #Doc #FN
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -189,9 +200,11 @@ namespace fn.net
             foreach (T item in source)
                 yield return fn(item);
         }
+        #endregion
 
+        #region reduce | todo
         /// <summary>
-        /// TODO #doc
+        /// TODO #doc #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
@@ -226,15 +239,19 @@ namespace fn.net
         [Pure]
         public static TResult reduce<TSource, TAccumulate, TResult>(IEnumerable<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector) => source.Aggregate(seed, func, resultSelector);
 
+        #endregion
+
+        #region iter | todo
         /// <summary>
-        /// TODO #Doc #FN
+        /// TODO #test #Doc #FN
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source"></param>
         /// <param name="fn"></param>
         public static IEnumerable<(T value, int index)> iter<T>(IEnumerable<T> source) => source.Select((item, index) => (item, index));
+        #endregion
 
-
+        #region repeat | generate an IEnumerable by repeating a generator function
         /// <summary>
         /// TODO #doc
         /// </summary>
@@ -248,7 +265,9 @@ namespace fn.net
             for (int i = 0; i < count; i++)
                 yield return function();
         }
+        #endregion
 
+        #region chunks | split IEnumerable to chunks
         /// <summary>
         /// https://codereview.stackexchange.com/a/90198/32074
         /// TODO with yield return
@@ -286,8 +305,10 @@ namespace fn.net
         /// <returns></returns>
         [Pure]
         public static IEnumerable<IEnumerable<T>> chunks<T>(int size, IEnumerable<T> collection) => chunks(size, collection);
+        #endregion
 
         #region Instance
+        #region ctor | get constructor function of class
         /// <summary>
         /// Returns the default constructor as delegate
         /// </summary>
@@ -341,9 +362,32 @@ namespace fn.net
 
             return (t1, t2, t3) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3 }) : default;
         }
+
+        public static Func<T1, T2, T3, T4, T> ctor<T1, T2, T3, T4, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) });
+
+            return (t1, t2, t3, t4) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3, t4 }) : default;
+        }
+
+        public static Func<T1, T2, T3, T4, T5, T> ctor<T1, T2, T3, T4, T5, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) });
+
+            return (t1, t2, t3, t4, t5) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3, t4, t5 }) : default;
+        }
+
+        public static Func<T1, T2, T3, T4, T5, T6, T> ctor<T1, T2, T3, T4, T5, T6, T>()
+        {
+            ConstructorInfo ctor = typeof(T).GetConstructor(new Type[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6) });
+
+            return (t1, t2, t3, t4, t5, t6) => ctor != null ? (T)ctor.Invoke(new object[] { t1, t2, t3, t4, t5, t6 }) : default;
+        }
+
+        #endregion
         #endregion
 
-        #region Compose Object
+        #region Compose Object | create a Tuple like object
         /// <summary>
         /// Compose object like tuples
         /// </summary>
@@ -353,6 +397,7 @@ namespace fn.net
 
         #endregion
 
+        #region swap | reverses the parameters of two parametered functions
         /// <summary>
         /// swap parameter orders and returns new function
         /// </summary>
@@ -362,19 +407,35 @@ namespace fn.net
         /// <param name="f"></param>
         /// <returns></returns>
         public static Func<T2, T1, R> swap<T1, T2, R>(Func<T1, T2, R> f) => (t2, t1) => f(t1, t2);
+        #endregion
 
+        #region combine | combine multiple delegates into single delegate
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <param name="actions"></param>
+        /// <returns></returns>
         public static Action combine(params Action[] actions)
         {
             return (Action)Delegate.Combine(actions.ToArray());
         }
 
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="actions"></param>
+        /// <returns></returns>
         public static Action combine<T>(params Func<T>[] actions)
         {
             return () => { _ = (Func<T>)Delegate.Combine(actions.ToArray()); };
         }
+        #endregion
 
+        #region memoizer | todo
         /// <summary>
         /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// TODO #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -400,6 +461,7 @@ namespace fn.net
 
         /// <summary>
         /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// TODO #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -425,6 +487,7 @@ namespace fn.net
 
         /// <summary>
         /// https://www.infoq.com/news/2007/01/CSharp-memory/
+        /// TODO #test
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -447,6 +510,37 @@ namespace fn.net
                 return value;
             };
         }
+        #endregion
+
+        #region map | map: (mirror of select  ¯\_(ツ)_/¯)
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<IEnumerable<T>, IEnumerable<TResult>> map<T, TResult>(Func<T, TResult> func) => source => source.Select(func);
+
+        /// <summary>
+        /// TODO #doc
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static Func<IEnumerable<T>, IEnumerable<T>> map<T>(Func<T, T> func) => source => source.Select(func);
+        #endregion
+
+        #region filter | filter: (mirror of where  ¯\_(ツ)_/¯)
+        /// <summary>
+        /// TODO #test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public static Func<IEnumerable<T>, IEnumerable<T>> filter<T>(Func<T, bool> filter) => source => source.Where(filter);
+        #endregion
 
     }
 }

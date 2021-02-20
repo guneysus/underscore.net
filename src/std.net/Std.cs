@@ -855,6 +855,27 @@ namespace std.net
         [Pure]
         public static bool eq(uint value, uint other) => value.Equals(other);
 
+
+        /// <summary>
+        /// Determines whether two sequences are equal by comparing elements in a pair-wise manner.	
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool same<T>(IQueryable<T> left, IQueryable<T> right) => left.SequenceEqual(right);
+
+        /// <summary>
+        /// Determines whether two sequences are equal by comparing elements in a pair-wise manner.	
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        [Pure]
+        public static bool same<T>(IEnumerable<T> left, IEnumerable<T> right) => left.SequenceEqual(right);
+
         /// <summary>
         /// TODO #doc
         /// </summary>
@@ -2750,7 +2771,7 @@ namespace std.net
         [Pure]
         public static int integer(string s)
         {
-            return isinteger(s) ? int.Parse(s) : default(int);
+            return isinteger(s) ? int.Parse(s) : default;
         }
     }
 }

@@ -108,5 +108,13 @@ namespace math.net
             IEnumerable<int> source = Enumerable.Range(1, number);
             return source.Aggregate((a, b) => a * b);
         }
+
+        public static decimal percentage(decimal value, decimal percent) => value * percent / 100.0m;
+        public static decimal percentage(decimal value, float percent) => value * Convert.ToDecimal(percent) / 100.0m;
+        public static decimal percentage(decimal value, double percent) => value * Convert.ToDecimal(percent) / 100.0m;
+
+        public static Func<decimal, decimal> percentage(decimal percent) => value => value * percent / 100.0m;
+        public static Func<decimal, decimal> percentage(float percent) => value => value * Convert.ToDecimal(percent) / 100.0m;
+        public static Func<decimal, decimal> percentage(double percent) => value => value * Convert.ToDecimal(percent) / 100.0m;
     }
 }
